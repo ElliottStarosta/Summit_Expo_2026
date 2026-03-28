@@ -403,11 +403,12 @@
   align-items: center;
   gap: 0.8rem;
   padding: 3rem 0;
-  color: rgba(150, 120, 180, 0.45);
+  color: rgba(150, 120, 180, 0.95);
   font-family: var(--font-ui, "Chakra Petch", monospace);
   font-size: 0.68rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  border-radius: 2rem;
 }
 .faq-empty__icon {
   font-size: 1.5rem;
