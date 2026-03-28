@@ -95,6 +95,7 @@ export function Register() {
   // GSAP scroll entrances
   useEffect(() => {
     const ctx = gsap.context(() => {
+       gsap.set(".reg-footer", { opacity: 0, y: 16 });
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: "top 78%",
@@ -164,7 +165,6 @@ export function Register() {
               delay: 0.15,
             },
           );
-          // Draw the connecting line
           gsap.fromTo(
             ".reg-timeline__track",
             { scaleY: 0 },
@@ -178,6 +178,19 @@ export function Register() {
           );
         },
       });
+
+      ScrollTrigger.create({
+        trigger: ".reg-footer",
+        start: "top 90%",
+        onEnter() {
+          gsap.fromTo(
+            ".reg-footer",
+            { opacity: 0, y: 16 },
+            { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" },
+          );
+        },
+      });
+
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -329,7 +342,7 @@ export function Register() {
         </div>
 
         {/* Bottom CTA */}
-        <div className="reg-footer">
+        <div className="reg-footer" style={{ opacity: 0 }}>
           <p className="reg-footer__text">
             Questions?{" "}
             <a href="mailto:XXXXXX" className="reg-footer__link">

@@ -737,13 +737,13 @@ export function FAQ() {
         </div>
 
         {/* Bottom CTA */}
-        <div className="faq-cta">
+        {/* <div className="faq-cta">
           <p>Still have questions?</p>
           <a href="mailto:XXXXXX" className="faq-cta__link">
             <i className="fa-solid fa-paper-plane" />
             Shoot us an email
           </a>
-        </div>
+        </div> */}
       </div>
     </section>
   );

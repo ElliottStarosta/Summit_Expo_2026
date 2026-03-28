@@ -1,6 +1,6 @@
 .reg {
   position: relative;
-  background: linear-gradient(to bottom, hsl(252, 50%, 4%), #020008);
+  background: linear-gradient(to bottom, rgba(4, 1, 11), #020008);
   overflow: hidden;
   padding: 8rem 0 10rem;
   z-index: 2;
@@ -497,7 +497,8 @@
 .reg-sub,
 .reg-card,
 .reg-timeline__title,
-.reg-step {
+.reg-step,
+.reg-footer{
   opacity: 0;
 }
 

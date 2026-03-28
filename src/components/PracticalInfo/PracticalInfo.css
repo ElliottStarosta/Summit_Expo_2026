@@ -3,6 +3,7 @@
   background: #03010c;
   overflow: visible;
   padding: 0 0 9rem;
+   margin-bottom: -10rem;
 }
 .pi__canvas {
   position: absolute;
