@@ -9,6 +9,7 @@ import {
 import { gsap, ScrollTrigger } from "../../utils/gsap";
 import "./FAQ.css";
 import { useVisibleCanvas } from "../../utils/useVisibleCanvas";
+import Fuse from "fuse.js"; // word match for searching queries
 
 // Data
 export interface FaqItem {
@@ -531,17 +532,30 @@ export function FAQ() {
   useFaqCanvas(canvasRef);
 
   // Filter + search
-  const visible = useMemo(() => {
-    const q = search.trim().toLowerCase();
-    return FAQ_DATA.filter((item) => {
-      const catMatch = category === "All" || item.category === category;
-      const searchMatch =
-        !q ||
-        item.q.toLowerCase().includes(q) ||
-        item.a.toLowerCase().includes(q);
-      return catMatch && searchMatch;
+
+  const fuse = useMemo(() => {
+    return new Fuse(FAQ_DATA, {
+      keys: [
+        { name: "q", weight: 0.7 },
+        { name: "a", weight: 0.3 },
+      ],
+      threshold: 0.3,
     });
-  }, [category, search]);
+  }, []);
+
+  const visible = useMemo(() => {
+    const q = search.trim();
+
+    let results = FAQ_DATA;
+
+    if (q) {
+      results = fuse.search(q).map((r) => r.item);
+    }
+
+    return results.filter((item) => {
+      return category === "All" || item.category === category;
+    });
+  }, [search, category, fuse]);
 
   // When filter changes, close open item if it's now hidden
   useEffect(() => {
