@@ -629,7 +629,7 @@ export function Nav() {
         <canvas ref={canvasRef} className="nav__canvas" aria-hidden="true" />
 
         {/* Logo */}
-        <button className="nav__logo" onClick={() => handleClick("hero")}>
+        <button className="nav__logo" onClick={() => handleClick("about")}>
           <span className="nav__logo-star" aria-hidden="true">
             <svg
               width="20"

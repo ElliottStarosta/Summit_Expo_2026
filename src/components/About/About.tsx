@@ -1496,7 +1496,13 @@ export function About() {
               Where explorers connect and ideas collide.
             </p>
             <a
-              href="#register"
+              onClick={(e) => {
+                e.preventDefault();
+                const id = "register";
+                document
+                  .getElementById(id)
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
               className="about-cta-btn"
               aria-label="Register for Summit EXPO"
             >
