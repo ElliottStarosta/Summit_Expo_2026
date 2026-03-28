@@ -44,7 +44,7 @@ function SpaceMap() {
       html: `<div class="pi-marker">
           <div class="pi-marker__pulse"></div>
           <div class="pi-marker__pulse pi-marker__pulse--2"></div>
-          <div class="pi-marker__core"><i class="fa-solid fa-comet"></i></div>
+          <div class="pi-marker__core"><i class="fa-solid fa-rocket"></i></div>
         </div>`,
       className: "",
       iconSize: [48, 48],
