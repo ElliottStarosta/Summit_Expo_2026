@@ -3,6 +3,8 @@ import { createPortal } from "react-dom";
 import { gsap, ScrollTrigger } from "../../utils/gsap";
 import "./PracticalInfo.css";
 import { useVisibleCanvas } from "../../utils/useVisibleCanvas";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 
 const VENUE_LAT = 45.3232;
 const VENUE_LNG = -75.8947;
@@ -11,70 +13,61 @@ const VENUE_LNG = -75.8947;
 
 function SpaceMap() {
   const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<any>(null);
+  const mapInstanceRef = useRef<L.Map | null>(null);
 
   useEffect(() => {
-    if (mapInstanceRef.current || !mapRef.current) return;
+    if (!mapRef.current || mapInstanceRef.current) return;
 
-    const linkEl = document.createElement("link");
-    linkEl.rel = "stylesheet";
-    linkEl.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-    document.head.appendChild(linkEl);
+    // Create map (optimized)
+    const map = L.map(mapRef.current, {
+      center: [VENUE_LAT, VENUE_LNG],
+      zoom: 15,
+      preferCanvas: true,
+      zoomControl: false,
+      attributionControl: false,
+      inertia: false,
+    });
 
-    const script = document.createElement("script");
-    script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-    script.onload = () => {
-      const L = (window as any).L;
-      if (!mapRef.current || mapInstanceRef.current) return;
+    mapInstanceRef.current = map;
 
-      const map = L.map(mapRef.current, {
-        center: [VENUE_LAT, VENUE_LNG],
-        zoom: 15,
-        zoomControl: false,
-        attributionControl: false,
-      });
-      mapInstanceRef.current = map;
+    L.tileLayer(
+      "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+      {
+        maxZoom: 18,
+        updateWhenIdle: true,
+        updateWhenZooming: false,
+        keepBuffer: 2,
+      },
+    ).addTo(map);
 
-      L.tileLayer(
-        "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-        {
-          maxZoom: 20,
-        },
-      ).addTo(map);
-
-      const icon = L.divIcon({
-        html: `<div class="pi-marker">
+    const icon = L.divIcon({
+      html: `<div class="pi-marker">
           <div class="pi-marker__pulse"></div>
           <div class="pi-marker__pulse pi-marker__pulse--2"></div>
-          <div class="pi-marker__core"><i class="fa-solid fa-rocket"></i></div>
+          <div class="pi-marker__core"><i class="fa-solid fa-comet"></i></div>
         </div>`,
-        className: "",
-        iconSize: [48, 48],
-        iconAnchor: [24, 24],
-      });
+      className: "",
+      iconSize: [48, 48],
+      iconAnchor: [24, 24],
+    });
 
-      L.marker([VENUE_LAT, VENUE_LNG], { icon })
-        .addTo(map)
-        .bindPopup(
-          `<div class="pi-popup">
-            <p class="pi-popup__title">Earl of March SS</p>
-            <p class="pi-popup__sub">Summit EXPO 2026</p>
-          </div>`,
-          { className: "pi-leaflet-popup" },
-        );
+    L.marker([VENUE_LAT, VENUE_LNG], { icon })
+      .addTo(map)
+      .bindPopup(
+        `<div class="pi-popup">
+          <p class="pi-popup__title">Earl of March SS</p>
+          <p class="pi-popup__sub">Summit EXPO 2026</p>
+        </div>`,
+        { className: "pi-leaflet-popup" },
+      );
 
-      L.control.zoom({ position: "bottomright" }).addTo(map);
-      L.control
-        .attribution({ position: "bottomleft", prefix: false })
-        .addTo(map);
-    };
-    document.head.appendChild(script);
+    // Controls
+    L.control.zoom({ position: "bottomright" }).addTo(map);
+    L.control.attribution({ position: "bottomleft", prefix: false }).addTo(map);
 
     return () => {
-      if (mapInstanceRef.current) {
-        mapInstanceRef.current.remove();
-        mapInstanceRef.current = null;
-      }
+      map.remove();
+      mapInstanceRef.current = null;
     };
   }, []);
 
@@ -90,10 +83,12 @@ function SpaceMap() {
           45.3232°N · 75.8951°W
         </span>
       </div>
+
       <span className="pi-map-corner pi-map-corner--tl" />
       <span className="pi-map-corner pi-map-corner--tr" />
       <span className="pi-map-corner pi-map-corner--bl" />
       <span className="pi-map-corner pi-map-corner--br" />
+
       <div ref={mapRef} className="pi-map" />
     </div>
   );
@@ -681,32 +676,32 @@ export function PracticalInfo() {
   usePiCanvas(canvasRef);
 
   useEffect(() => {
-  const ctx = gsap.context(() => {
-    sectionRef.current
-      ?.querySelectorAll<HTMLElement>(".pi-row")
-      .forEach((row) => {
-        // Set initial state explicitly on the children
-        gsap.set(row.querySelectorAll(".pi-animate"), { opacity: 0, y: 28 });
+    const ctx = gsap.context(() => {
+      sectionRef.current
+        ?.querySelectorAll<HTMLElement>(".pi-row")
+        .forEach((row) => {
+          // Set initial state explicitly on the children
+          gsap.set(row.querySelectorAll(".pi-animate"), { opacity: 0, y: 28 });
 
-        ScrollTrigger.create({
-          trigger: row,
-          start: "top 83%",
-          onEnter() {
-            gsap.to(row.querySelectorAll(".pi-animate"), {
-              opacity: 1,
-              y: 0,
-              stagger: 0.1,
-              duration: 0.65,
-              ease: "power3.out",
-            });
-          },
+          ScrollTrigger.create({
+            trigger: row,
+            start: "top 83%",
+            onEnter() {
+              gsap.to(row.querySelectorAll(".pi-animate"), {
+                opacity: 1,
+                y: 0,
+                stagger: 0.1,
+                duration: 0.65,
+                ease: "power3.out",
+              });
+            },
+          });
         });
-      });
 
-    ScrollTrigger.refresh(); // ← recalculate positions after mount
-  }, sectionRef);
-  return () => ctx.revert();
-}, []);
+      ScrollTrigger.refresh(); // ← recalculate positions after mount
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section ref={sectionRef} id="practical-info" className="pi">
