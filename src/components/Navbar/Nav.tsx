@@ -607,16 +607,25 @@ export function Nav() {
   }, [openMenu, closeMenu]);
 
   const handleClick = useCallback(
-    (id: string) => {
-      closeMenu();
-      setTimeout(() => {
-        if (id === "hero") window.scrollTo({ top: 0, behavior: "smooth" });
-        else
-          document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-      }, 300);
-    },
-    [closeMenu],
-  );
+  (id: string) => {
+    closeMenu();
+    setTimeout(() => {
+      if (id === "hero") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+      // Refresh so lazy-loaded sections have correct positions
+      ScrollTrigger.refresh();
+      requestAnimationFrame(() => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const top = el.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top, behavior: "smooth" });
+      });
+    }, 300);
+  },
+  [closeMenu],
+);
 
   return (
     <>

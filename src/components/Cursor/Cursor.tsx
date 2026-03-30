@@ -126,7 +126,7 @@ export function Cursor() {
         }
       };
     },
-    { fps: 60 },
+    { fps: 24 },
   );
 
   return (
