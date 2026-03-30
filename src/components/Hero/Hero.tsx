@@ -1,5 +1,5 @@
-import { useEffect, useRef, useCallback } from "react";
-import {gsap, ScrollTrigger} from "../../utils/gsap";
+import { useEffect, useRef, useCallback, useState } from "react";
+import { gsap, ScrollTrigger } from "../../utils/gsap";
 import "./Hero.css";
 
 const STAR_COUNT = 300;
@@ -34,18 +34,39 @@ function makeStar(): Star {
   };
 }
 
-const C_STARS = [
-  { x: 500, y: 20, r: 7.0 },
-  { x: 160, y: 90, r: 5.0 },
-  { x: 840, y: 90, r: 5.0 },
-  { x: 80, y: 260, r: 4.2 },
-  { x: 920, y: 260, r: 4.2 },
-  { x: 140, y: 380, r: 4.0 },
-  { x: 860, y: 380, r: 4.0 },
-  { x: 280, y: 520, r: 4.5 },
-  { x: 720, y: 520, r: 4.5 },
-  { x: 500, y: 558, r: 5.5 },
+const C_STARS_WIDE = [
+  { x: 500, y: 18, r: 7.0 }, // 0 — apex, centred
+  { x: 60, y: 75, r: 5.0 }, // 1 — upper-left, near edge
+  { x: 945, y: 88, r: 5.0 }, // 2 — upper-right, near edge
+  { x: 22, y: 215, r: 4.2 }, // 3 — far-left, very edge
+  { x: 972, y: 195, r: 4.2 }, // 4 — far-right, very edge
+  { x: 155, y: 375, r: 4.0 }, // 5 — mid-left, pulled in slightly
+  { x: 845, y: 375, r: 4.0 }, // 6 — mid-right, offset vertically from 5
+  { x: 35, y: 500, r: 4.5 }, // 7 — low-left, back to edge
+  { x: 962, y: 480, r: 4.5 }, // 8 — low-right, back to edge
+  { x: 500, y: 558, r: 5.5 }, // 9 — bottom apex, centred
 ] as const;
+
+const C_STARS_NARROW = [
+  { x: 500, y: -50, r: 7.0 }, // 0 — apex, centred
+  { x: 60, y: 75, r: 5.0 }, // 1 — upper-left, near edge
+  { x: 945, y: 88, r: 5.0 }, // 2 — upper-right, near edge
+  { x: 22, y: 215, r: 4.2 }, // 3 — far-left, very edge
+  { x: 972, y: 195, r: 4.2 }, // 4 — far-right, very edge
+  { x: 155, y: 375, r: 4.0 }, // 5 — mid-left, pulled in slightly
+  { x: 845, y: 375, r: 4.0 }, // 6 — mid-right, offset vertically from 5
+  { x: 35, y: 500, r: 4.5 }, // 7 — low-left, back to edge
+  { x: 962, y: 480, r: 4.5 }, // 8 — low-right, back to edge
+  { x: 500, y: 658, r: 5.5 }, // 9 — bottom apex, centred (lower)
+] as const;
+
+type StarSet = typeof C_STARS_WIDE;
+
+function getStars(): StarSet {
+  return window.innerWidth < 768
+    ? (C_STARS_NARROW as unknown as StarSet)
+    : (C_STARS_WIDE as unknown as StarSet);
+}
 
 const C_EDGES: readonly [number, number][] = [
   [0, 1],
@@ -82,6 +103,13 @@ export function Hero() {
   const mouseTgtRef = useRef({ x: 0.5, y: 0.5 });
   const warpRef = useRef({ v: 1.0 });
   const guardedRenderRef = useRef<() => void>(() => {});
+  const [cStars, setCStars] = useState<StarSet>(getStars);
+
+  useEffect(() => {
+    const onResize = () => setCStars(getStars());
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   /* Canvas render loop */
   const render = useCallback(() => {
@@ -444,7 +472,7 @@ export function Hero() {
         ".hero-c-edge",
         {
           strokeDashoffset: 0,
-          opacity: 0.5,
+          opacity: 0.65,
           stagger: { each: 0.07, from: "random" },
           duration: 0.65,
           ease: "power2.inOut",
@@ -496,8 +524,8 @@ export function Hero() {
 
   /* SVG elements */
   const edges = C_EDGES.map(([a, b], i) => {
-    const pa = C_STARS[a],
-      pb = C_STARS[b];
+    const pa = cStars[a],
+      pb = cStars[b];
     const len = Math.hypot(pb.x - pa.x, pb.y - pa.y);
     return (
       <line
@@ -516,7 +544,7 @@ export function Hero() {
     );
   });
 
-  const starNodes = C_STARS.map((s, i) => (
+  const starNodes = cStars.map((s, i) => (
     <g
       key={i}
       className="hero-c-star"
