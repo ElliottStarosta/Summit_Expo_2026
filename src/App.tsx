@@ -27,16 +27,25 @@ function SectionFallback() {
 }
 
 export default function App() {
+
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    if (!loaded) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => { document.body.style.overflow = ''; };
-  }, [loaded]);
+  if (!loaded) {
+    document.body.style.overflow = 'hidden';
+    document.body.style.touchAction = 'none';        
+    document.body.style.overscrollBehavior = 'none';
+  } else {
+    document.body.style.overflow = '';
+    document.body.style.touchAction = '';            
+    document.body.style.overscrollBehavior = '';
+  }
+  return () => {
+    document.body.style.overflow = '';
+    document.body.style.touchAction = '';
+    document.body.style.overscrollBehavior = '';
+  };
+}, [loaded]);
 
   const handleDone = () => {
     window.scrollTo({ top: 0, behavior: 'instant' });
