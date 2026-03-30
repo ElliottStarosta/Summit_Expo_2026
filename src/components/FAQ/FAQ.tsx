@@ -651,7 +651,7 @@ export function FAQ() {
               ease: "power2.out",
               delay: 0.55,
             });
-          ScrollTrigger.refresh();
+          // ScrollTrigger.refresh();
         },
       });
 
