@@ -3,7 +3,7 @@
   background: linear-gradient(to bottom, rgba(4, 1, 11), #020008);
   overflow: hidden;
   padding: 8rem 0 10rem;
-  z-index: 2;
+  z-index: 1;
 }
 
 .reg__canvas {

@@ -4,6 +4,7 @@
   overflow: visible;
   padding: 0 0 9rem;
    margin-bottom: -10rem;
+   z-index: 3;
 }
 .pi__canvas {
   position: absolute;
