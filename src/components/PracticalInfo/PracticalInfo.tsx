@@ -523,8 +523,7 @@ function PortalMountNotifier({
 }
 
 // Countdown
-
-const EVENT_DATE = new Date("2026-05-15T17:30:00");
+const EVENT_DATE = new Date("2026-05-02T17:30:00");
 
 function Countdown() {
   const [time, setTime] = useState({ d: 0, h: 0, m: 0, s: 0, past: false });
@@ -764,7 +763,7 @@ export function PracticalInfo() {
                 {
                   icon: "fa-calendar-days",
                   key: "date",
-                  val: "May XX, 2026",
+                  val: "May 2, 2026",
                   accent: true,
                 },
                 {
@@ -782,7 +781,33 @@ export function PracticalInfo() {
                 {
                   icon: "fa-door-open",
                   key: "entry",
-                  val: "Main front doors → gymnasium",
+                  val: "Main Front Doors",
+                  accent: false,
+                },
+                {
+                  icon: "fa-route",
+                  key: "route",
+                  val: (
+                    <span
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.5rem",
+                      }}
+                    >
+                      Lower Foyer
+                      <i
+                        className="fa-solid fa-chevron-right"
+                        style={{ fontSize: "0.6em", opacity: 0.75 }}
+                      />
+                      Caf
+                      <i
+                        className="fa-solid fa-chevron-right"
+                        style={{ fontSize: "0.6em", opacity: 0.75 }}
+                      />
+                      Auditorium
+                    </span>
+                  ),
                   accent: false,
                 },
               ].map(({ icon, key, val, accent }) => (

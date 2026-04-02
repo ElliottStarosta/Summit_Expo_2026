@@ -7,7 +7,7 @@ import { useVisibleCanvas } from "../../utils/useVisibleCanvas";
 
 // TODO: replace with actual form links once they're live. For now these can be placeholders
 const EXHIBITOR_FORM = "https://forms.gle/vx68poaxMEnezRP69";
-const ATTENDEE_FORM = "https://forms.google.com/...";
+const ATTENDEE_FORM = "https://forms.gle/NrwsWXwXjyctETHA6";
 
 // "What happens next" timeline items
 const TIMELINE = [

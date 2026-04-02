@@ -522,6 +522,23 @@ export function Hero() {
     return () => ctx.revert();
   }, []);
 
+  const handleClick = useCallback((id: string) => {
+    setTimeout(() => {
+      if (id === "hero") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+      // Refresh so lazy-loaded sections have correct positions
+      ScrollTrigger.refresh();
+      requestAnimationFrame(() => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const top = el.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top, behavior: "smooth" });
+      });
+    }, 300);
+  }, []);
+
   /* SVG elements */
   const edges = C_EDGES.map(([a, b], i) => {
     const pa = cStars[a],
@@ -648,7 +665,7 @@ export function Hero() {
                 aria-hidden="true"
               />
               <a
-                href="#trailer"
+                onClick={() => handleClick("trailer")}
                 className="hero-star-cta hero-star-cta--trailer"
                 ref={(el: HTMLAnchorElement | null) => {
                   ctaNodeRefs.current[0] = el;
@@ -668,7 +685,7 @@ export function Hero() {
                 {/* <span className="hscta-play">▶</span> */}
               </a>
               <a
-                href="#register"
+                onClick={() => handleClick("register")}
                 className="hero-star-cta hero-star-cta--attendee"
                 ref={(el: HTMLAnchorElement | null) => {
                   ctaNodeRefs.current[1] = el;
@@ -689,7 +706,7 @@ export function Hero() {
                 </span>
               </a>
               <a
-                href="#register"
+                onClick={() => handleClick("register")}
                 className="hero-star-cta hero-star-cta--exhibitor"
                 ref={(el: HTMLAnchorElement | null) => {
                   ctaNodeRefs.current[2] = el;
