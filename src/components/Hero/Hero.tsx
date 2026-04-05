@@ -416,113 +416,90 @@ export function Hero() {
 
   /* Scroll scrub timeline */
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.set(".hero-c-edge", {
-        strokeDashoffset: (_i: number, el: SVGGeometryElement) =>
-          el.getTotalLength?.() ?? 300,
-        opacity: 0,
-      });
-      gsap.set(".hero-c-star", {
-        scale: 0,
-        opacity: 0,
-        transformBox: "fill-box",
-        transformOrigin: "center",
-      });
-      gsap.set(nebulaRef.current, { scale: 0.15, opacity: 0 });
-      gsap.set(horizonRef.current, { scaleX: 0 });
-      gsap.set(contentRef.current, { opacity: 0, y: 24 });
-      gsap.set(dissolveRef.current, { opacity: 0 });
-      gsap.set(".hero-star-cta", { opacity: 0, y: 18, scale: 0.88 });
-      gsap.set(".hcta-line", { scaleX: 0, transformOrigin: "left center" });
+  const ctx = gsap.context(() => {
+    // initial states — same for both
+    gsap.set(".hero-c-edge", {
+      strokeDashoffset: (_i: number, el: SVGGeometryElement) =>
+        el.getTotalLength?.() ?? 300,
+      opacity: 0,
+    });
+    gsap.set(".hero-c-star", {
+      scale: 0, opacity: 0,
+      transformBox: "fill-box", transformOrigin: "center",
+    });
+    gsap.set(nebulaRef.current,  { scale: 0.15, opacity: 0 });
+    gsap.set(horizonRef.current, { scaleX: 0 });
+    gsap.set(contentRef.current, { opacity: 0, y: 24 });
+    gsap.set(dissolveRef.current, { opacity: 0 });
+    gsap.set(".hero-star-cta",   { opacity: 0, y: 18, scale: 0.88 });
+    gsap.set(".hcta-line",       { scaleX: 0, transformOrigin: "left center" });
 
-      const isMobile = window.innerWidth < 768;
+    const isMobile = window.innerWidth < 768;
+
+    if (isMobile) {
+      // MOBILE: just play the reveal, no scroll scrubbing
+      const tl = gsap.timeline({ delay: 0.2 });
+      tl.to(nebulaRef.current,  { scale: 1, opacity: 1, duration: 0.9, ease: "power2.out" }, 0);
+      tl.to(horizonRef.current, { scaleX: 1, duration: 0.7, ease: "power3.out" }, 0.2);
+      tl.to(".hero-c-star", {
+        scale: 1, opacity: 1,
+        stagger: { each: 0.06, from: "edges" },
+        duration: 0.4, ease: "back.out(2.2)",
+      }, 0.4);
+      tl.to(".hero-c-edge", {
+        strokeDashoffset: 0, opacity: 0.65,
+        stagger: { each: 0.06, from: "random" },
+        duration: 0.55, ease: "power2.inOut",
+      }, 0.7);
+      tl.to(contentRef.current, { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }, 0.8);
+      tl.to(".hero-star-cta", {
+        opacity: 1, y: 0, scale: 1,
+        stagger: { each: 0.15, from: "start" },
+        duration: 0.5, ease: "back.out(2.0)",
+      }, 1.0);
+      tl.to(".hcta-line", { scaleX: 1, stagger: 0.1, duration: 0.45, ease: "power2.inOut" }, 1.1);
+
+    } else {
+      // DESKTOP: original scroll-scrubbed timeline
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: wrapRef.current,
           start: "top top",
-          end: isMobile ? "+=280%" : "+=500%",
-          scrub: isMobile ? 0.2 : 1.4,
+          end: "+=500%",
+          scrub: 1.4,
           pin: pinRef.current,
-          anticipatePin: isMobile ? 0 : 1,
+          anticipatePin: 1,
           invalidateOnRefresh: true,
         },
       });
-
-      tl.to(
-        nebulaRef.current,
-        { scale: 1, opacity: 1, duration: 1.3, ease: "power2.out" },
-        0.2,
-      );
-      tl.to(
-        horizonRef.current,
-        { scaleX: 1, duration: 1.0, ease: "power3.out" },
-        0.6,
-      );
-      tl.to(
-        ".hero-c-star",
-        {
-          scale: 1,
-          opacity: 1,
-          stagger: { each: 0.07, from: "edges" },
-          duration: 0.45,
-          ease: "back.out(2.2)",
-        },
-        1.5,
-      );
-      tl.to(
-        ".hero-c-edge",
-        {
-          strokeDashoffset: 0,
-          opacity: 0.65,
-          stagger: { each: 0.07, from: "random" },
-          duration: 0.65,
-          ease: "power2.inOut",
-        },
-        2.0,
-      );
-      tl.to(
-        ".hero-star-cta",
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          stagger: { each: 0.18, from: "start" },
-          duration: 0.55,
-          ease: "back.out(2.0)",
-        },
-        3.2,
-      );
-      tl.to(
-        ".hcta-line",
-        { scaleX: 1, stagger: 0.12, duration: 0.5, ease: "power2.inOut" },
-        3.35,
-      );
-      tl.to(
-        contentRef.current,
-        { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
-        3.0,
-      );
-      tl.to(
-        [".hero-c-edge", ".hero-c-star"],
-        { opacity: 0.06, duration: 0.7 },
-        5.0,
-      );
-      tl.to(
-        contentRef.current,
-        { opacity: 0, duration: 0.5, ease: "power2.in" },
-        5.8,
-      );
-      tl.to(nebulaRef.current, { opacity: 0, duration: 0.6 }, 5.9);
+      tl.to(nebulaRef.current,  { scale: 1, opacity: 1, duration: 1.3, ease: "power2.out" }, 0.2);
+      tl.to(horizonRef.current, { scaleX: 1, duration: 1.0, ease: "power3.out" }, 0.6);
+      tl.to(".hero-c-star", {
+        scale: 1, opacity: 1,
+        stagger: { each: 0.07, from: "edges" },
+        duration: 0.45, ease: "back.out(2.2)",
+      }, 1.5);
+      tl.to(".hero-c-edge", {
+        strokeDashoffset: 0, opacity: 0.65,
+        stagger: { each: 0.07, from: "random" },
+        duration: 0.65, ease: "power2.inOut",
+      }, 2.0);
+      tl.to(".hero-star-cta", {
+        opacity: 1, y: 0, scale: 1,
+        stagger: { each: 0.18, from: "start" },
+        duration: 0.55, ease: "back.out(2.0)",
+      }, 3.2);
+      tl.to(".hcta-line", { scaleX: 1, stagger: 0.12, duration: 0.5, ease: "power2.inOut" }, 3.35);
+      tl.to(contentRef.current, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 3.0);
+      tl.to([".hero-c-edge", ".hero-c-star"], { opacity: 0.06, duration: 0.7 }, 5.0);
+      tl.to(contentRef.current, { opacity: 0, duration: 0.5, ease: "power2.in" }, 5.8);
+      tl.to(nebulaRef.current,  { opacity: 0, duration: 0.6 }, 5.9);
       tl.to(horizonRef.current, { opacity: 0, duration: 0.4 }, 6.0);
-      tl.to(
-        dissolveRef.current,
-        { opacity: 1, duration: 0.8, ease: "power2.inOut" },
-        6.2,
-      );
-    }, wrapRef);
-    return () => ctx.revert();
-  }, []);
-
+      tl.to(dissolveRef.current, { opacity: 1, duration: 0.8, ease: "power2.inOut" }, 6.2);
+    }
+  }, wrapRef);
+  return () => ctx.revert();
+}, []);
   const handleClick = useCallback((id: string) => {
     setTimeout(() => {
       if (id === "hero") {

@@ -887,7 +887,7 @@
 
 @media (max-width: 768px) {
   .hero-wrap {
-    height: 380vh;
+    height: 100vh;
   }
   .ht-s {
     font-size: clamp(2.8rem, 13vw, 5rem);
