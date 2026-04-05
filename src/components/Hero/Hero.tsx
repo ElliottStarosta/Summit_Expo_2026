@@ -435,14 +435,15 @@ export function Hero() {
       gsap.set(".hero-star-cta", { opacity: 0, y: 18, scale: 0.88 });
       gsap.set(".hcta-line", { scaleX: 0, transformOrigin: "left center" });
 
+      const isMobile = window.innerWidth < 768;
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: wrapRef.current,
           start: "top top",
           end: "+=500%",
-          scrub: 1.4,
+          scrub: isMobile ? 0.2 : 1.4,
           pin: pinRef.current,
-          anticipatePin: 1,
+          anticipatePin: isMobile ? 0 : 1,
           invalidateOnRefresh: true,
         },
       });
