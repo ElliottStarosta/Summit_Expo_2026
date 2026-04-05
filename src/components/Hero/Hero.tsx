@@ -440,7 +440,7 @@ export function Hero() {
         scrollTrigger: {
           trigger: wrapRef.current,
           start: "top top",
-          end: "+=500%",
+          end: isMobile ? "+=280%" : "+=500%",
           scrub: isMobile ? 0.2 : 1.4,
           pin: pinRef.current,
           anticipatePin: isMobile ? 0 : 1,
