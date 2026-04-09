@@ -627,13 +627,15 @@ export function Hero() {
             A youth exhibition of <em>All That Can Be</em>
           </p>
           <p className="hero-subline">
-            <span className="hero-subline-dot" aria-hidden="true">
+            <i className="fa-solid fa-star hero-subline-dot"></i>
+            {/* <span className="hero-subline-dot" aria-hidden="true">
               ✦
-            </span>
-            Coming Soon
-            <span className="hero-subline-dot" aria-hidden="true">
+            </span> */}
+            June 2, 2026
+             <i className="fa-solid fa-star hero-subline-dot"></i>
+            {/* <span className="hero-subline-dot" aria-hidden="true">
               ✦
-            </span>
+            </span> */}
           </p>
           <div className="hero-ctas" ref={ctasRef}>
             <div className="hero-star-ctas">

@@ -523,7 +523,7 @@ function PortalMountNotifier({
 }
 
 // Countdown
-const EVENT_DATE = new Date("2026-05-02T17:30:00");
+const EVENT_DATE = new Date("2026-06-02T17:30:00");
 
 function Countdown() {
   const [time, setTime] = useState({ d: 0, h: 0, m: 0, s: 0, past: false });
@@ -763,13 +763,13 @@ export function PracticalInfo() {
                 {
                   icon: "fa-calendar-days",
                   key: "date",
-                  val: "May 2, 2026",
+                  val: "June 2, 2026",
                   accent: true,
                 },
                 {
                   icon: "fa-clock",
                   key: "time",
-                  val: "5:30 PM – 8:00 PM",
+                  val: "5:30 PM – 9:00 PM",
                   accent: true,
                 },
                 {

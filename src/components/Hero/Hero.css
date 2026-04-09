@@ -293,15 +293,15 @@
   align-items: center;
   gap: 0.75rem;
   font-family: var(--font-ui);
-  font-size: 0.62rem;
+  font-size: 0.85rem;
   font-weight: 500;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgba(150, 138, 168, 0.75);
+  color: rgb(150, 138, 168);
   margin: -0.1rem 0;
 }
 .hero-subline-dot {
-  font-size: 0.48rem;
+  font-size: 0.75rem;
   color: var(--c-bright-magenta);
 }
 
