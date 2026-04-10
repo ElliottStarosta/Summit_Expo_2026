@@ -24,7 +24,9 @@ export function useVisibleCanvas(
   setup: SetupFn,
   options: CanvasOptions = {},
 ) {
-  const { fps = 24, margin = MARGIN, highDpr = false } = options;
+  const isMobile = window.innerWidth < 768;
+    const { fps = isMobile ? 20 : 24, margin = MARGIN, highDpr = false } = options;
+
 
   useEffect(() => {
     const canvas = ref.current;

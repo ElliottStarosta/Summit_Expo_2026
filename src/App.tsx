@@ -18,12 +18,13 @@ const Register = lazy(() => import("./components/Register/Register").then(m => (
 const Footer = lazy(() => import("./components/Footer/Footer").then(m => ({ default: m.Footer })));
 
 function SectionFallback() {
-  return (
-    <div style={{
-      minHeight: '100vh',
-      background: '#020010',
-    }} aria-hidden="true" />
-  );
+  useEffect(() => {
+    return () => {
+      // When fallback unmounts (real component loaded), refresh triggers
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+    };
+  }, []);
+  return <div style={{ minHeight: '100vh', background: '#020010' }} />;
 }
 
 export default function App() {
@@ -36,6 +37,7 @@ export default function App() {
     document.body.style.touchAction = 'none';        
     document.body.style.overscrollBehavior = 'none';
   } else {
+    setTimeout(() => ScrollTrigger.refresh(), 500);
     document.body.style.overflow = '';
     document.body.style.touchAction = '';            
     document.body.style.overscrollBehavior = '';

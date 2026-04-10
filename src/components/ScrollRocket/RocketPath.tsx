@@ -252,6 +252,7 @@ function useVisibleFire(
   isScrollingRef: React.MutableRefObject<boolean>,
 ) {
   useEffect(() => {
+    if (window.innerWidth <= 500) return;
     const canvas = fireRef.current;
     const wrap = wrapRef.current;
     if (!canvas || !wrap) return;

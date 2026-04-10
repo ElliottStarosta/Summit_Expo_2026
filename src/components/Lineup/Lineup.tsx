@@ -280,6 +280,7 @@ function useSpaceCanvas(ref: React.RefObject<HTMLCanvasElement | null>) {
       seed();
 
       const spawnShooter = () => {
+        if (window.innerWidth < 768) return;
         const W = canvas.offsetWidth,
           fromRight = Math.random() < 0.5;
         const angle =
@@ -718,7 +719,7 @@ export function Lineup({
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: bridgeRef.current,
-        start: "top 90%",
+        start: `top ${window.innerWidth < 768 ? '95%' : '82%'}`,
         onEnter() {
           gsap.fromTo(
             ".lu__bridge-line",
@@ -758,7 +759,7 @@ export function Lineup({
 
       ScrollTrigger.create({
         trigger: headerRef.current,
-        start: "top 80%",
+        start: `top ${window.innerWidth < 768 ? '95%' : '80%'}`,
         onEnter() {
           const header = headerRef.current;
           if (!header) return;
@@ -798,7 +799,7 @@ export function Lineup({
 
       ScrollTrigger.create({
         trigger: mapRef.current,
-        start: "top 85%",
+        start: `top ${window.innerWidth < 768 ? '95%' : '85%'}`,
         onEnter() {
           gsap.fromTo(
             mapRef.current,
@@ -816,7 +817,7 @@ export function Lineup({
 
       ScrollTrigger.create({
         trigger: mapRef.current,
-        start: "top 65%",
+        start: `top ${window.innerWidth < 768 ? '95%' : '65%'}`,
         onEnter() {
           const lines = svgLineRefs.current.filter(Boolean);
           lines.forEach((l) => {
@@ -863,7 +864,7 @@ export function Lineup({
 
       ScrollTrigger.create({
         trigger: ".lu__hint",
-        start: "top 95%",
+        start: `top ${window.innerWidth < 768 ? '95%' : '90%'}`,
         onEnter() {
           gsap.fromTo(
             ".lu__hint",
@@ -972,7 +973,7 @@ export function Lineup({
             {
               scale: 1,
               opacity: 1,
-              stagger: 0.12,
+              stagger: window.innerWidth < 768 ? 0.04 : 0.12,
               duration: 0.4,
               ease: "power2.out",
             },
@@ -1002,7 +1003,7 @@ export function Lineup({
             {
               scale: 1,
               opacity: 1,
-              stagger: 0.07,
+              stagger: window.innerWidth < 768 ? 0.04 : 0.07,
               duration: 0.25,
               ease: "back.out(3)",
             },

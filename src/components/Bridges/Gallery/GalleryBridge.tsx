@@ -108,9 +108,10 @@ export function GalleryBridge() {
 
       ScrollTrigger.create({
         trigger: sectionRef.current,
-        start: "top 82%",
+        start: `top ${window.innerWidth < 768 ? '95%' : '82%'}`,
         end: "top 20%",
         toggleActions: "play none none reverse",
+        once: window.innerWidth < 768,
         animation: gsap
           .timeline()
           .to(s.querySelector(".gb-eyebrow"), {
@@ -133,7 +134,7 @@ export function GalleryBridge() {
 
       ScrollTrigger.create({
         trigger: s.querySelector(".gb-grid"),
-        start: "top 80%",
+        start: `top ${window.innerWidth < 768 ? '95%' : '80%'}`,
         once: true,
         onEnter() {
           gsap.to(s.querySelectorAll(".gb-photo-wrap"), {

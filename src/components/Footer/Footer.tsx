@@ -248,7 +248,7 @@ export function Footer() {
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: footerRef.current,
-        start: "top 90%",
+        start: `top ${window.innerWidth < 768 ? '95%' : '82%'}`,
         onEnter() {
           gsap.fromTo(
             ".footer-top-line",

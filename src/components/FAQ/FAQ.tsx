@@ -237,6 +237,7 @@ function useFaqCanvas(ref: React.RefObject<HTMLCanvasElement | null>) {
       seed();
 
       const spawnShooter = () => {
+        if (window.innerWidth < 768) return;
         const W = canvas.offsetWidth,
           fromRight = Math.random() < 0.5;
         const angle =
@@ -615,7 +616,8 @@ export function FAQ() {
 
       ScrollTrigger.create({
         trigger: sectionRef.current,
-        start: "top 75%",
+        start: `top ${window.innerWidth < 768 ? '95%' : '75%'}`,
+
         onEnter() {
           hasEnteredRef.current = true;
 

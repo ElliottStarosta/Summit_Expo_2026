@@ -170,6 +170,7 @@ function useSpaceCanvas(canvasRef: React.RefObject<HTMLCanvasElement | null>) {
       seed();
 
       const spawnShooter = () => {
+        if (window.innerWidth < 768) return;
         const W = canvas.offsetWidth,
           fromRight = Math.random() < 0.5;
         const angle =
@@ -314,7 +315,7 @@ function useSpaceCanvas(canvasRef: React.RefObject<HTMLCanvasElement | null>) {
         }
       };
     },
-    { fps: 40 },
+    { fps: window.innerWidth < 768 ? 20 : 40 },
   );
 }
 
@@ -346,7 +347,10 @@ function useConstellations(
         const W = canvas.offsetWidth,
           H = canvas.offsetHeight;
         const marginW = Math.max(60, (W - 1280) / 2);
-        const total = Math.floor((W * H) / 20000) + 16;
+        const total = Math.min(
+          Math.floor((W * H) / 20000) + 16,
+          window.innerWidth < 768 ? 20 : 60,
+        );
         for (let i = 0; i < total; i++) {
           let x: number;
           const inMargin = Math.random() < 0.65 && marginW > 40;
@@ -525,7 +529,7 @@ function AboutTrailer({ youtubeId = "CqKa5i9keSc" }: { youtubeId?: string }) {
 
       ScrollTrigger.create({
         trigger: el,
-        start: "top 82%",
+        start: `top ${window.innerWidth < 768 ? "95%" : "82%"}`,
         onEnter() {
           // Intro headline swings in
           gsap.fromTo(
@@ -927,9 +931,15 @@ function AboutTrailer({ youtubeId = "CqKa5i9keSc" }: { youtubeId?: string }) {
 
       <p className="about-trailer__hint">
         Summit EXPO 2026
-        <i className="fa-solid fa-circle" style={{fontSize: "0.6em", opacity: "0.5"}} />
+        <i
+          className="fa-solid fa-circle"
+          style={{ fontSize: "0.6em", opacity: "0.5" }}
+        />
         Earl of March Secondary School
-        <i className="fa-solid fa-circle" style={{fontSize: "0.6em", opacity: "0.5"}} />
+        <i
+          className="fa-solid fa-circle"
+          style={{ fontSize: "0.6em", opacity: "0.5" }}
+        />
         Kanata, ON
       </p>
     </div>
@@ -1072,8 +1082,9 @@ function AboutToLineupTransition() {
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: el,
-        start: "top 95%",
+        start: `top ${window.innerWidth < 768 ? "95%" : "82%"}`,
         toggleActions: "play none none reverse",
+        once: window.innerWidth < 768,
 
         onEnter() {
           gsap.to(el, { opacity: 1, duration: 0.3, ease: "power2.out" });
@@ -1217,8 +1228,9 @@ export function About() {
           ease: "power3.out",
           scrollTrigger: {
             trigger: headRef.current,
-            start: "top 85%",
+            start: `top ${window.innerWidth < 768 ? "95%" : "85%"}`,
             toggleActions: "play none none reverse",
+            once: window.innerWidth < 768,
           },
         },
       );
@@ -1232,8 +1244,9 @@ export function About() {
           ease: "power2.out",
           scrollTrigger: {
             trigger: leftRef.current,
-            start: "top 83%",
+            start: `top ${window.innerWidth < 768 ? "95%" : "83%"}`,
             toggleActions: "play none none reverse",
+            once: window.innerWidth < 768,
           },
         },
       );
@@ -1248,8 +1261,9 @@ export function About() {
           delay: 0.1,
           scrollTrigger: {
             trigger: rightRef.current,
-            start: "top 83%",
+            start: `top ${window.innerWidth < 768 ? "95%" : "82%"}`,
             toggleActions: "play none none reverse",
+            once: window.innerWidth < 768,
           },
         },
       );
@@ -1267,8 +1281,9 @@ export function About() {
           ease: "back.out(1.7)",
           scrollTrigger: {
             trigger: gridRef.current,
-            start: "top 82%",
+            start: `top ${window.innerWidth < 768 ? "95%" : "82%"}`,
             toggleActions: "play none none reverse",
+            once: window.innerWidth < 768,
           },
         },
       );
@@ -1283,8 +1298,9 @@ export function About() {
           ease: "power2.out",
           scrollTrigger: {
             trigger: statsRef.current,
-            start: "top 83%",
+            start: `top ${window.innerWidth < 768 ? "95%" : "83%"}`,
             toggleActions: "play none none reverse",
+            once: window.innerWidth < 768,
           },
         },
       );
@@ -1298,8 +1314,9 @@ export function About() {
           ease: "power2.out",
           scrollTrigger: {
             trigger: closingRef.current,
-            start: "top 88%",
+            start: `top ${window.innerWidth < 768 ? "95%" : "88%"}`,
             toggleActions: "play none none reverse",
+            once: window.innerWidth < 768,
           },
         },
       );
@@ -1317,8 +1334,9 @@ export function About() {
             ease: "back.out(1.4)",
             scrollTrigger: {
               trigger: sectionRef.current,
-              start: "top 80%",
+              start: `top ${window.innerWidth < 768 ? "95%" : "80%"}`,
               toggleActions: "play none none reverse",
+              once: window.innerWidth < 768,
             },
             delay: i * 0.08,
           },
@@ -1344,8 +1362,9 @@ export function About() {
             ease: "back.out(1.6)",
             scrollTrigger: {
               trigger: portalEntryRef.current,
-              start: "top 90%",
+              start: `top ${window.innerWidth < 768 ? "95%" : "90%"}`,
               toggleActions: "play none none reverse",
+              once: window.innerWidth < 768,
             },
           },
         );
@@ -1361,8 +1380,9 @@ export function About() {
             ease: "back.out(1.6)",
             scrollTrigger: {
               trigger: portalExitRef.current,
-              start: "top 90%",
+              start: `top ${window.innerWidth < 768 ? "95%" : "90%"}`,
               toggleActions: "play none none reverse",
+              once: window.innerWidth < 768,
             },
           },
         );

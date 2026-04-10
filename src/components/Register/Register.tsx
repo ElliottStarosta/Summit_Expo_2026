@@ -98,7 +98,7 @@ export function Register() {
        gsap.set(".reg-footer", { opacity: 0, y: 16 });
       ScrollTrigger.create({
         trigger: sectionRef.current,
-        start: "top 78%",
+        start: `top ${window.innerWidth < 768 ? '95%' : '78%'}`,
         onEnter() {
           gsap.fromTo(
             ".reg-eyebrow",
@@ -135,7 +135,7 @@ export function Register() {
               opacity: 1,
               y: 0,
               scale: 1,
-              stagger: 0.14,
+              stagger: window.innerWidth < 768 ? 0.04 : 0.12,
               duration: 0.7,
               ease: "power3.out",
               delay: 0.35,
@@ -146,7 +146,7 @@ export function Register() {
 
       ScrollTrigger.create({
         trigger: ".reg-timeline",
-        start: "top 82%",
+       start: `top ${window.innerWidth < 768 ? '95%' : '82%'}`,
         onEnter() {
           gsap.fromTo(
             ".reg-timeline__title",
@@ -181,7 +181,7 @@ export function Register() {
 
       ScrollTrigger.create({
         trigger: ".reg-footer",
-        start: "top 90%",
+        start: `top ${window.innerWidth < 768 ? '95%' : '82%'}`,
         onEnter() {
           gsap.fromTo(
             ".reg-footer",
