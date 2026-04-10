@@ -1217,131 +1217,135 @@ export function About() {
   useConstellations(constRef);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        headRef.current,
-        { opacity: 0, y: 60 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.0,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: headRef.current,
-            start: `top ${window.innerWidth < 768 ? "95%" : "85%"}`,
-            toggleActions: "play none none reverse",
-            once: window.innerWidth < 768,
-          },
-        },
-      );
-      gsap.fromTo(
-        leftRef.current,
-        { opacity: 0, x: -50 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.9,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: leftRef.current,
-            start: `top ${window.innerWidth < 768 ? "95%" : "83%"}`,
-            toggleActions: "play none none reverse",
-            once: window.innerWidth < 768,
-          },
-        },
-      );
-      gsap.fromTo(
-        rightRef.current,
-        { opacity: 0, x: 50 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.9,
-          ease: "power2.out",
-          delay: 0.1,
-          scrollTrigger: {
-            trigger: rightRef.current,
-            start: `top ${window.innerWidth < 768 ? "95%" : "82%"}`,
-            toggleActions: "play none none reverse",
-            once: window.innerWidth < 768,
-          },
-        },
-      );
-      const cards =
-        gridRef.current?.querySelectorAll<HTMLDivElement>(".about-card") ?? [];
-      gsap.fromTo(
-        Array.from(cards),
-        { opacity: 0, y: 32, scale: 0.9 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          stagger: { each: 0.055, from: "start" },
-          duration: 0.55,
-          ease: "back.out(1.7)",
-          scrollTrigger: {
-            trigger: gridRef.current,
-            start: `top ${window.innerWidth < 768 ? "95%" : "82%"}`,
-            toggleActions: "play none none reverse",
-            once: window.innerWidth < 768,
-          },
-        },
-      );
-      gsap.fromTo(
-        statsRef.current?.querySelectorAll<HTMLDivElement>(".about-stat") ?? [],
-        { opacity: 0, y: 28 },
-        {
-          opacity: 1,
-          y: 0,
-          stagger: 0.12,
-          duration: 0.7,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: statsRef.current,
-            start: `top ${window.innerWidth < 768 ? "95%" : "83%"}`,
-            toggleActions: "play none none reverse",
-            once: window.innerWidth < 768,
-          },
-        },
-      );
-      gsap.fromTo(
-        closingRef.current,
-        { opacity: 0, y: 18 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: closingRef.current,
-            start: `top ${window.innerWidth < 768 ? "95%" : "88%"}`,
-            toggleActions: "play none none reverse",
-            once: window.innerWidth < 768,
-          },
-        },
-      );
+  const ctx = gsap.context(() => {
+    // Reduce motion complexity on mobile
+    const isMobile = window.innerWidth < 768;
+    const startPct = isMobile ? "98%" : "85%";
 
-      // Animate margin glyphs on scroll
-      gsap.utils.toArray<HTMLElement>(".about-glyph").forEach((el, i) => {
-        gsap.fromTo(
-          el,
-          { opacity: 0, scale: 0.5, rotate: (el.dataset.rot ?? "0") + "deg" },
-          {
-            opacity: 1,
-            scale: 1,
-            rotate: el.dataset.rot + "deg",
-            duration: 1.2,
-            ease: "back.out(1.4)",
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: `top ${window.innerWidth < 768 ? "95%" : "80%"}`,
-              toggleActions: "play none none reverse",
-              once: window.innerWidth < 768,
-            },
-            delay: i * 0.08,
+    gsap.fromTo(
+      headRef.current,
+      { opacity: 0, y: isMobile ? 30 : 60 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: isMobile ? 0.6 : 1.0,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: headRef.current,
+          start: `top ${startPct}`,
+          toggleActions: "play none none none", // never reverse on mobile
+          once: true, // always once — no reverse lag
+        },
+      },
+    );
+    gsap.fromTo(
+      leftRef.current,
+      { opacity: 0, x: isMobile ? 0 : -50, y: isMobile ? 20 : 0 },
+      {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        duration: isMobile ? 0.55 : 0.9,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: leftRef.current,
+          start: `top ${startPct}`,
+          once: true,
+        },
+      },
+    );
+    gsap.fromTo(
+      rightRef.current,
+      { opacity: 0, x: isMobile ? 0 : 50, y: isMobile ? 20 : 0 },
+      {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        duration: isMobile ? 0.55 : 0.9,
+        ease: "power2.out",
+        delay: 0.08,
+        scrollTrigger: {
+          trigger: rightRef.current,
+          start: `top ${startPct}`,
+          once: true,
+        },
+      },
+    );
+
+    const cards =
+      gridRef.current?.querySelectorAll<HTMLDivElement>(".about-card") ?? [];
+    gsap.fromTo(
+      Array.from(cards),
+      { opacity: 0, y: isMobile ? 16 : 32, scale: isMobile ? 1 : 0.9 },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        // Reduce stagger and skip scale on mobile to avoid jank
+        stagger: isMobile ? 0.03 : 0.055,
+        duration: isMobile ? 0.35 : 0.55,
+        ease: isMobile ? "power2.out" : "back.out(1.7)",
+        scrollTrigger: {
+          trigger: gridRef.current,
+          start: `top ${startPct}`,
+          once: true,
+        },
+      },
+    );
+
+    gsap.fromTo(
+      statsRef.current?.querySelectorAll<HTMLDivElement>(".about-stat") ?? [],
+      { opacity: 0, y: isMobile ? 14 : 28 },
+      {
+        opacity: 1,
+        y: 0,
+        stagger: isMobile ? 0.06 : 0.12,
+        duration: isMobile ? 0.45 : 0.7,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: statsRef.current,
+          start: `top ${startPct}`,
+          once: true,
+        },
+      },
+    );
+
+    gsap.fromTo(
+      closingRef.current,
+      { opacity: 0, y: 14 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: closingRef.current,
+          start: `top ${startPct}`,
+          once: true,
+        },
+      },
+    );
+
+    // Glyphs — skip float animation entirely on mobile (saves RAF budget)
+    gsap.utils.toArray<HTMLElement>(".about-glyph").forEach((el, i) => {
+      gsap.fromTo(
+        el,
+        { opacity: 0, scale: 0.5, rotate: (el.dataset.rot ?? "0") + "deg" },
+        {
+          opacity: 1,
+          scale: 1,
+          rotate: el.dataset.rot + "deg",
+          duration: 1.2,
+          ease: "back.out(1.4)",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: `top ${startPct}`,
+            once: true,
           },
-        );
-        // Slow float animation
+          delay: i * 0.08,
+        },
+      );
+      if (!isMobile) {
         gsap.to(el, {
           y: `${Math.sin(i) * 18 + 12}px`,
           duration: 3 + i * 0.4,
@@ -1350,86 +1354,81 @@ export function About() {
           yoyo: true,
           delay: i * 0.3,
         });
+      }
 
-        gsap.fromTo(
-          portalEntryRef.current,
-          { opacity: 0, scale: 0.3, rotate: -15 },
-          {
-            opacity: 1,
-            scale: 1,
-            rotate: 0,
-            duration: 1.2,
-            ease: "back.out(1.6)",
-            scrollTrigger: {
-              trigger: portalEntryRef.current,
-              start: `top ${window.innerWidth < 768 ? "95%" : "90%"}`,
-              toggleActions: "play none none reverse",
-              once: window.innerWidth < 768,
-            },
+      gsap.fromTo(
+        portalEntryRef.current,
+        { opacity: 0, scale: 0.3, rotate: -15 },
+        {
+          opacity: 1,
+          scale: 1,
+          rotate: 0,
+          duration: 1.2,
+          ease: "back.out(1.6)",
+          scrollTrigger: {
+            trigger: portalEntryRef.current,
+            start: `top ${startPct}`,
+            once: true,
           },
-        );
+        },
+      );
 
-        gsap.fromTo(
-          portalExitRef.current,
-          { opacity: 0, scale: 0.3, rotate: 15 },
-          {
-            opacity: 1,
-            scale: 1,
-            rotate: 0,
-            duration: 1.2,
-            ease: "back.out(1.6)",
-            scrollTrigger: {
-              trigger: portalExitRef.current,
-              start: `top ${window.innerWidth < 768 ? "95%" : "90%"}`,
-              toggleActions: "play none none reverse",
-              once: window.innerWidth < 768,
-            },
+      gsap.fromTo(
+        portalExitRef.current,
+        { opacity: 0, scale: 0.3, rotate: 15 },
+        {
+          opacity: 1,
+          scale: 1,
+          rotate: 0,
+          duration: 1.2,
+          ease: "back.out(1.6)",
+          scrollTrigger: {
+            trigger: portalExitRef.current,
+            start: `top ${startPct}`,
+            once: true,
           },
-        );
-      });
+        },
+      );
+    });
 
-      gsap.to(portalEntryRef.current, {
-        y: -12,
-        duration: 3.5,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true,
-      });
+    gsap.to(portalEntryRef.current, {
+      y: -12,
+      duration: 3.5,
+      ease: "sine.inOut",
+      repeat: -1,
+      yoyo: true,
+    });
 
-      gsap.to(portalExitRef.current, {
-        y: 12,
-        duration: 4.2,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true,
-        delay: 1,
-      });
+    gsap.to(portalExitRef.current, {
+      y: 12,
+      duration: 4.2,
+      ease: "sine.inOut",
+      repeat: -1,
+      yoyo: true,
+      delay: 1,
+    });
 
-      // gsap.set(".about-transition__node", { scale: 0, opacity: 0 });
-      // gsap.set(".about-transition__line", { scaleX: 0, opacity: 0 });
-      // gsap.set(".about-transition__label", { opacity: 0 });
+    gsap.to(".about-portal__glow--blue", {
+      opacity: 0.5,
+      scale: 1.6,
+      duration: 2,
+      ease: "sine.inOut",
+      repeat: -1,
+      yoyo: true,
+    });
 
-      gsap.to(".about-portal__glow--blue", {
-        opacity: 0.5,
-        scale: 1.6,
-        duration: 2,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true,
-      });
-
-      gsap.to(".about-portal__glow--pink", {
-        opacity: 0.6,
-        scale: 1.4,
-        duration: 1.6,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true,
-        delay: 0.4,
-      });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+    gsap.to(".about-portal__glow--pink", {
+      opacity: 0.6,
+      scale: 1.4,
+      duration: 1.6,
+      ease: "sine.inOut",
+      repeat: -1,
+      yoyo: true,
+      delay: 0.4,
+    });
+  }, sectionRef);
+  return () => ctx.revert();
+}, []);
 
   return (
     <section ref={sectionRef} className="about" id="about">

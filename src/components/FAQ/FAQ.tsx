@@ -604,63 +604,75 @@ export function FAQ() {
 
   // Scroll entrance
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Use refs, not global class selectors, for reliability
-      const header = sectionRef.current?.querySelector(".faq-header");
-      const filters = sectionRef.current?.querySelector(".faq-filters");
-      const search = sectionRef.current?.querySelector(".faq-search");
+  const ctx = gsap.context(() => {
+    const isMobile = window.innerWidth < 768;
+    const startPct = isMobile ? "98%" : "75%";
 
-      gsap.set([header, filters, search], { opacity: 0, y: 30 });
-      const rows = listRef.current?.querySelectorAll(".faq-row");
-      if (rows) gsap.set(rows, { opacity: 0, y: 20 });
+    const header = sectionRef.current?.querySelector(".faq-header");
+    const filters = sectionRef.current?.querySelector(".faq-filters");
+    const searchEl = sectionRef.current?.querySelector(".faq-search");
+    const rows = listRef.current?.querySelectorAll(".faq-row");
 
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: `top ${window.innerWidth < 768 ? '95%' : '75%'}`,
+    // Set initial hidden state immediately so nothing flashes
+    gsap.set([header, filters, searchEl], { opacity: 0, y: 20 });
+    if (rows?.length) gsap.set(rows, { opacity: 0, y: 12 });
 
-        onEnter() {
-          hasEnteredRef.current = true;
+    ScrollTrigger.create({
+      trigger: sectionRef.current,
+      start: `top ${startPct}`,
+      once: true, // fire once — prevents the "already past trigger" miss on mobile
+      onEnter() {
+        hasEnteredRef.current = true;
 
-          if (header)
-            gsap.to(header, {
-              opacity: 1,
-              y: 0,
-              duration: 0.8,
-              ease: "power3.out",
-            });
-          if (filters)
-            gsap.to(filters, {
-              opacity: 1,
-              y: 0,
-              duration: 0.6,
-              ease: "power2.out",
-              delay: 0.25,
-            });
-          if (search)
-            gsap.to(search, {
-              opacity: 1,
-              y: 0,
-              duration: 0.5,
-              ease: "power2.out",
-              delay: 0.35,
-            });
-          if (rows)
-            gsap.to(rows, {
-              opacity: 1,
-              y: 0,
-              stagger: 0.07,
-              duration: 0.75,
-              ease: "power2.out",
-              delay: 0.55,
-            });
-          // ScrollTrigger.refresh();
-        },
-      });
+        if (header) {
+          gsap.to(header, {
+            opacity: 1,
+            y: 0,
+            duration: 0.65,
+            ease: "power2.out",
+          });
+        }
+        if (filters) {
+          gsap.to(filters, {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            ease: "power2.out",
+            delay: 0.15,
+          });
+        }
+        if (searchEl) {
+          gsap.to(searchEl, {
+            opacity: 1,
+            y: 0,
+            duration: 0.45,
+            ease: "power2.out",
+            delay: 0.22,
+          });
+        }
+        if (rows?.length) {
+          gsap.to(rows, {
+            opacity: 1,
+            y: 0,
+            stagger: isMobile ? 0.04 : 0.07,
+            duration: isMobile ? 0.4 : 0.65,
+            ease: "power2.out",
+            delay: 0.35,
+            // Ensure rows are definitely visible after animation
+            onComplete: () => {
+              gsap.set(rows, { clearProps: "opacity,y,transform" });
+              hasEnteredRef.current = true;
+              ScrollTrigger.refresh();
+            },
+          });
+        }
+      },
+    });
 
-      ScrollTrigger.refresh();
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+    ScrollTrigger.refresh();
+  }, sectionRef);
+  return () => ctx.revert();
+}, []);
 
   return (
     <section ref={sectionRef} id="faq" className="faq">
