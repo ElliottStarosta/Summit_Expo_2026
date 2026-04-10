@@ -438,8 +438,7 @@ export function Hero({ loaded }: { loaded: boolean }) {
 
     if (isMobile && loaded) {
       // MOBILE: just play the reveal, no scroll scrubbing
-      console.log("DOING THE ANIMATION")
-      const tl = gsap.timeline({ delay: 2 });
+      const tl = gsap.timeline({ delay: 0.5 });
       tl.to(nebulaRef.current,  { scale: 1, opacity: 1, duration: 0.9, ease: "power2.out" }, 0);
       tl.to(horizonRef.current, { scaleX: 1, duration: 0.7, ease: "power3.out" }, 0.2);
       tl.to(".hero-c-star", {
