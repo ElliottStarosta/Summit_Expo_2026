@@ -2,7 +2,7 @@
   position: relative;
   background: linear-gradient(to bottom, rgba(4, 1, 11), #020008);
   overflow: hidden;
-  padding: 8rem 0 10rem;
+  padding: 8rem 0 5rem;
   z-index: 1;
 }
 
@@ -537,10 +537,14 @@
   .reg__inner {
     padding: 0 1.8rem;
   }
+
+  .reg {
+    padding: 5rem 0 3rem;
+  }
 }
 @media (max-width: 600px) {
   .reg {
-    padding: 5rem 0 4rem;
+    padding: 5rem 0 2rem;
   }
   .reg__inner {
     padding: 5rem 1.1rem;
