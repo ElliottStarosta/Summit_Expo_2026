@@ -455,7 +455,7 @@ function useConstellations(
 // Embedded trailer — lives inside About
 // Hologram-style transmission frame. States: idle → loading → live
 // HUD: top bar (tag + signal bars + REC), bottom bar (subtitle + coords + ping)
-function AboutTrailer({ youtubeId = "T-mKLJtoGRc" }: { youtubeId?: string }) {
+function AboutTrailer({ youtubeId = "CqKa5i9keSc" }: { youtubeId?: string }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const noiseRef = useRef<HTMLCanvasElement>(null);
