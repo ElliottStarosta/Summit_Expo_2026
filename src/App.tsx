@@ -62,7 +62,7 @@ export default function App() {
         {/* <WaypointEditor /> */}
         <main>
           {/* Above-fold: eager */}
-          <Hero />
+          <Hero loaded={loaded} />
           <About />
 
           {/* Below-fold: lazy — won't block FCP/LCP/TBT */}

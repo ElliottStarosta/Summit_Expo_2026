@@ -81,7 +81,7 @@ const C_EDGES: readonly [number, number][] = [
   [8, 9],
 ] as const;
 
-export function Hero() {
+export function Hero({ loaded }: { loaded: boolean }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -436,9 +436,10 @@ export function Hero() {
 
     const isMobile = window.innerWidth < 768;
 
-    if (isMobile) {
+    if (isMobile && loaded) {
       // MOBILE: just play the reveal, no scroll scrubbing
-      const tl = gsap.timeline({ delay: 0.2 });
+      console.log("DOING THE ANIMATION")
+      const tl = gsap.timeline({ delay: 2 });
       tl.to(nebulaRef.current,  { scale: 1, opacity: 1, duration: 0.9, ease: "power2.out" }, 0);
       tl.to(horizonRef.current, { scaleX: 1, duration: 0.7, ease: "power3.out" }, 0.2);
       tl.to(".hero-c-star", {
@@ -499,7 +500,7 @@ export function Hero() {
     }
   }, wrapRef);
   return () => ctx.revert();
-}, []);
+}, [loaded]);
   const handleClick = useCallback((id: string) => {
     setTimeout(() => {
       if (id === "hero") {
