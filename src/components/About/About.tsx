@@ -926,7 +926,11 @@ function AboutTrailer({ youtubeId = "CqKa5i9keSc" }: { youtubeId?: string }) {
       </div>
 
       <p className="about-trailer__hint">
-        Summit EXPO 2026 · Earl of March Secondary School · Kanata, ON
+        Summit EXPO 2026
+        <i className="fa-solid fa-circle" style={{fontSize: "0.6em", opacity: "0.5"}} />
+        Earl of March Secondary School
+        <i className="fa-solid fa-circle" style={{fontSize: "0.6em", opacity: "0.5"}} />
+        Kanata, ON
       </p>
     </div>
   );

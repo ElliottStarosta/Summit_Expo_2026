@@ -932,7 +932,7 @@
   flex-shrink: 0;
 }
 .at-hud__tag--sub {
-  color: rgba(160, 140, 210, 0.55);
+  color: rgb(160, 140, 210);
   font-style: italic;
   flex: 1;
 }
@@ -1398,12 +1398,15 @@
 /* Hint */
 .about-trailer__hint {
   font-family: var(--font-ui, "Chakra Petch", monospace);
-  font-size: 0.4rem;
+  font-size: 0.5rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--c-light-blue);
   margin: 0;
   text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 @media (max-width: 600px) {

@@ -79,14 +79,14 @@
 }
 
 /* Dot separator — same as nav divider feel */
-.footer-meta-sep {
+/* .footer-meta-sep {
   display: block;
   width: 3px;
   height: 3px;
   border-radius: 50%;
   background: rgba(103, 137, 163, 0.4);
   flex-shrink: 0;
-}
+} */
 
 /* Made by text */
 .footer-made-by {
@@ -115,10 +115,14 @@
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(140, 160, 200, 0.55);
+  color: rgb(140, 160, 200);
   text-decoration: none;
   white-space: nowrap;
   transition: color 0.2s ease;
+}
+
+.footer-contact-link:nth-of-type(2) {
+  color: #E1306C;
 }
 .footer-contact-link svg {
   opacity: 0.6;

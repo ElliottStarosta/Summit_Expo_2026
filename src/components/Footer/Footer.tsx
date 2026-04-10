@@ -360,66 +360,68 @@ export function Footer() {
             </span>
           </div>
 
-          <span className="footer-meta-sep" aria-hidden="true" />
+          {/* <span className="footer-meta-sep" aria-hidden="true" /> */}
+           {/* <i className="fa-solid fa-circle" style={{fontSize: "0.2em", opacity: "0.5"}} /> */}
 
-          <span className="footer-made-by">Made by the Summit Team</span>
+          {/* <span className="footer-made-by">Made by the Summit Team</span> */}
 
-          <span className="footer-meta-sep" aria-hidden="true" />
+           <i className="fa-solid fa-circle" style={{fontSize: "0.2em", opacity: "0.5"}} />
 
-          <div className="footer-contacts">
+          {/* <span className="footer-meta-sep" aria-hidden="true" /> */}
+
+            <a href="https://instagram.com/earl.summit" target="_blank" rel="noopener noreferrer" className="footer-contacts">
             <a
               href="mailto:summitexpo2026@gmail.com"
               className="footer-contact-link"
               aria-label="Email"
             >
               <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-                <rect
-                  x="1"
-                  y="3"
-                  width="14"
-                  height="10"
-                  rx="2"
-                  stroke="currentColor"
-                  strokeWidth="1.3"
-                />
-                <path
-                  d="M1.5 4.5L8 9.5L14.5 4.5"
-                  stroke="currentColor"
-                  strokeWidth="1.3"
-                  strokeLinecap="round"
-                />
+              <rect
+                x="1"
+                y="3"
+                width="14"
+                height="10"
+                rx="2"
+                stroke="currentColor"
+                strokeWidth="1.3"
+              />
+              <path
+                d="M1.5 4.5L8 9.5L14.5 4.5"
+                stroke="currentColor"
+                strokeWidth="1.3"
+                strokeLinecap="round"
+              />
               </svg>
               <span>summitexpo2026@gmail.com</span>
             </a>
-            <a
-              href="https://instagram.com/summitexpo2026"
-              target="_blank"
-              rel="noopener noreferrer"
+            <i className="fa-solid fa-circle" style={{fontSize: "0.2em", opacity: "0.5"}} />
+
+            <span
               className="footer-contact-link"
               aria-label="Instagram"
             >
               <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-                <rect
-                  x="1.5"
-                  y="1.5"
-                  width="13"
-                  height="13"
-                  rx="3.5"
-                  stroke="currentColor"
-                  strokeWidth="1.3"
-                />
-                <circle
-                  cx="8"
-                  cy="8"
-                  r="3"
-                  stroke="currentColor"
-                  strokeWidth="1.3"
-                />
-                <circle cx="11.8" cy="4.2" r="0.8" fill="currentColor" />
+              <rect
+                x="1.5"
+                y="1.5"
+                width="13"
+                height="13"
+                rx="3.5"
+                stroke="currentColor"
+                strokeWidth="1.3"
+              />
+              <circle
+                cx="8"
+                cy="8"
+                r="3"
+                stroke="currentColor"
+                strokeWidth="1.3"
+              />
+              <circle cx="11.8" cy="4.2" r="0.8" fill="currentColor" />
               </svg>
-              <span>@summitexpo2026</span>
+              <span>@earl.summit</span>
+            </span>
             </a>
-          </div>
         </div>
 
         {/* Constellation nav strip */}
