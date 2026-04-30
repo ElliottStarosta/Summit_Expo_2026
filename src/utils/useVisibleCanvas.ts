@@ -6,75 +6,64 @@ type DrawFn = (
   deltaTime: number,
 ) => void;
 
-type SetupFn = (
-  canvas: HTMLCanvasElement,
-  ctx: CanvasRenderingContext2D,
-) => DrawFn | void;
+type SetupFn = (canvas: HTMLCanvasElement) => DrawFn | void;
 
-const MARGIN = 300;
-const MAX_DPR = 1; 
 export interface CanvasOptions {
   fps?: number;
   margin?: number;
-  highDpr?: boolean;
 }
+
+const isMobile = () => window.innerWidth < 768;
 
 export function useVisibleCanvas(
   ref: React.RefObject<HTMLCanvasElement | null>,
   setup: SetupFn,
   options: CanvasOptions = {},
 ) {
-  const isMobile = window.innerWidth < 768;
-    const { fps = isMobile ? 20 : 24, margin = MARGIN, highDpr = false } = options;
-
-
   useEffect(() => {
     const canvas = ref.current;
     if (!canvas) return;
 
-    const prefersReduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    if (prefersReduced) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const { fps = isMobile() ? 20 : 30, margin = 200 } = options;
+    const interval = 1000 / fps;
 
     const ctx = canvas.getContext("2d", { alpha: true, desynchronized: true });
     if (!ctx) return;
 
+    // Cap DPR at 1 for performance; canvas pixels 1:1 with CSS pixels
+    const DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+    let drawFn: DrawFn | void;
     let raf = 0;
     let running = false;
     let lastT = 0;
-    let drawFn: DrawFn | void;
-    const interval = 1000 / fps;
-    const dprCap = highDpr
-      ? Math.min(window.devicePixelRatio || 1, 2)
-      : MAX_DPR;
 
     const applySize = () => {
-      const dpr = dprCap;
       const w = canvas.offsetWidth;
       const h = canvas.offsetHeight;
-      if (w === 0 || h === 0) return;
-      const targetW = Math.round(w * dpr);
-      const targetH = Math.round(h * dpr);
-      if (canvas.width === targetW && canvas.height === targetH) return;
-      canvas.width = targetW;
-      canvas.height = targetH;
+      if (!w || !h) return;
+      const tw = Math.round(w * DPR);
+      const th = Math.round(h * DPR);
+      if (canvas.width === tw && canvas.height === th) return;
+      canvas.width = tw;
+      canvas.height = th;
       canvas.style.width = `${w}px`;
       canvas.style.height = `${h}px`;
-      ctx.scale(dpr, dpr);
+      ctx.resetTransform();
+      ctx.scale(DPR, DPR);
     };
 
     applySize();
-    drawFn = setup(canvas, ctx);
+    drawFn = setup(canvas);
 
     const loop = (now: number) => {
       raf = requestAnimationFrame(loop);
-      if (document.hidden) return; 
+      if (document.hidden) return;
       const dt = now - lastT;
       if (dt < interval) return;
-      const clampedDt = Math.min(dt, interval * 2);
       lastT = now - (dt % interval);
-      if (drawFn) drawFn(canvas, ctx, clampedDt);
+      if (drawFn) drawFn(canvas, ctx, Math.min(dt, interval * 3));
     };
 
     const start = () => {
@@ -90,38 +79,24 @@ export function useVisibleCanvas(
       cancelAnimationFrame(raf);
     };
 
-    const visObs = new IntersectionObserver(
-      ([entry]) => (entry.isIntersecting ? start() : stop()),
+    // Only render when visible in viewport
+    const io = new IntersectionObserver(
+      ([e]) => (e.isIntersecting ? start() : stop()),
       { rootMargin: `${margin}px 0px ${margin}px 0px`, threshold: 0 },
     );
-    visObs.observe(canvas);
+    io.observe(canvas);
 
-    const resizeObs = new ResizeObserver(() => {
-      applySize();
-      if (drawFn === undefined) {
-        drawFn = setup(canvas, ctx);
-      }
-    });
-    resizeObs.observe(canvas);
+    const ro = new ResizeObserver(() => { applySize(); });
+    ro.observe(canvas);
 
-    const onVisChange = () => {
-      if (document.hidden) {
-        stop();
-      } else {
-        // Re-check intersection before restarting
-        const rect = canvas.getBoundingClientRect();
-        const inView =
-          rect.top < window.innerHeight + margin && rect.bottom > -margin;
-        if (inView) start();
-      }
-    };
-    document.addEventListener("visibilitychange", onVisChange);
+    const onVis = () => document.hidden ? stop() : start();
+    document.addEventListener("visibilitychange", onVis);
 
     return () => {
       stop();
-      visObs.disconnect();
-      resizeObs.disconnect();
-      document.removeEventListener("visibilitychange", onVisChange);
+      io.disconnect();
+      ro.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref]);
