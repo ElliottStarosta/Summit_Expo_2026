@@ -1217,156 +1217,76 @@ export function About() {
   useConstellations(constRef);
 
   useEffect(() => {
-  const ctx = gsap.context(() => {
-    // Reduce motion complexity on mobile
-    const isMobile = window.innerWidth < 768;
-    const startPct = isMobile ? "98%" : "85%";
+    const ctx = gsap.context(() => {
+      // Reduce motion complexity on mobile
+      const isMobile = window.innerWidth < 768;
+      const startPct = isMobile ? "98%" : "85%";
 
-    gsap.fromTo(
-      headRef.current,
-      { opacity: 0, y: isMobile ? 30 : 60 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: isMobile ? 0.6 : 1.0,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: headRef.current,
-          start: `top ${startPct}`,
-          toggleActions: "play none none none", // never reverse on mobile
-          once: true, // always once — no reverse lag
-        },
-      },
-    );
-    gsap.fromTo(
-      leftRef.current,
-      { opacity: 0, x: isMobile ? 0 : -50, y: isMobile ? 20 : 0 },
-      {
-        opacity: 1,
-        x: 0,
-        y: 0,
-        duration: isMobile ? 0.55 : 0.9,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: leftRef.current,
-          start: `top ${startPct}`,
-          once: true,
-        },
-      },
-    );
-    gsap.fromTo(
-      rightRef.current,
-      { opacity: 0, x: isMobile ? 0 : 50, y: isMobile ? 20 : 0 },
-      {
-        opacity: 1,
-        x: 0,
-        y: 0,
-        duration: isMobile ? 0.55 : 0.9,
-        ease: "power2.out",
-        delay: 0.08,
-        scrollTrigger: {
-          trigger: rightRef.current,
-          start: `top ${startPct}`,
-          once: true,
-        },
-      },
-    );
-
-    const cards =
-      gridRef.current?.querySelectorAll<HTMLDivElement>(".about-card") ?? [];
-    gsap.fromTo(
-      Array.from(cards),
-      { opacity: 0, y: isMobile ? 16 : 32, scale: isMobile ? 1 : 0.9 },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        // Reduce stagger and skip scale on mobile to avoid jank
-        stagger: isMobile ? 0.03 : 0.055,
-        duration: isMobile ? 0.35 : 0.55,
-        ease: isMobile ? "power2.out" : "back.out(1.7)",
-        scrollTrigger: {
-          trigger: gridRef.current,
-          start: `top ${startPct}`,
-          once: true,
-        },
-      },
-    );
-
-    gsap.fromTo(
-      statsRef.current?.querySelectorAll<HTMLDivElement>(".about-stat") ?? [],
-      { opacity: 0, y: isMobile ? 14 : 28 },
-      {
-        opacity: 1,
-        y: 0,
-        stagger: isMobile ? 0.06 : 0.12,
-        duration: isMobile ? 0.45 : 0.7,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: statsRef.current,
-          start: `top ${startPct}`,
-          once: true,
-        },
-      },
-    );
-
-    gsap.fromTo(
-      closingRef.current,
-      { opacity: 0, y: 14 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: closingRef.current,
-          start: `top ${startPct}`,
-          once: true,
-        },
-      },
-    );
-
-    // Glyphs — skip float animation entirely on mobile (saves RAF budget)
-    gsap.utils.toArray<HTMLElement>(".about-glyph").forEach((el, i) => {
       gsap.fromTo(
-        el,
-        { opacity: 0, scale: 0.5, rotate: (el.dataset.rot ?? "0") + "deg" },
+        headRef.current,
+        { opacity: 0, y: isMobile ? 30 : 60 },
         {
           opacity: 1,
-          scale: 1,
-          rotate: el.dataset.rot + "deg",
-          duration: 1.2,
-          ease: "back.out(1.4)",
+          y: 0,
+          duration: isMobile ? 0.6 : 1.0,
+          ease: "power2.out",
           scrollTrigger: {
-            trigger: sectionRef.current,
+            trigger: headRef.current,
+            start: `top ${startPct}`,
+            toggleActions: "play none none none", // never reverse on mobile
+            once: true, // always once — no reverse lag
+          },
+        },
+      );
+      gsap.fromTo(
+        leftRef.current,
+        { opacity: 0, x: isMobile ? 0 : -50, y: isMobile ? 20 : 0 },
+        {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          duration: isMobile ? 0.55 : 0.9,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: leftRef.current,
             start: `top ${startPct}`,
             once: true,
           },
-          delay: i * 0.08,
         },
       );
-      if (!isMobile) {
-        gsap.to(el, {
-          y: `${Math.sin(i) * 18 + 12}px`,
-          duration: 3 + i * 0.4,
-          ease: "sine.inOut",
-          repeat: -1,
-          yoyo: true,
-          delay: i * 0.3,
-        });
-      }
-
       gsap.fromTo(
-        portalEntryRef.current,
-        { opacity: 0, scale: 0.3, rotate: -15 },
+        rightRef.current,
+        { opacity: 0, x: isMobile ? 0 : 50, y: isMobile ? 20 : 0 },
         {
           opacity: 1,
-          scale: 1,
-          rotate: 0,
-          duration: 1.2,
-          ease: "back.out(1.6)",
+          x: 0,
+          y: 0,
+          duration: isMobile ? 0.55 : 0.9,
+          ease: "power2.out",
+          delay: 0.08,
           scrollTrigger: {
-            trigger: portalEntryRef.current,
+            trigger: rightRef.current,
+            start: `top ${startPct}`,
+            once: true,
+          },
+        },
+      );
+
+      const cards =
+        gridRef.current?.querySelectorAll<HTMLDivElement>(".about-card") ?? [];
+      gsap.fromTo(
+        Array.from(cards),
+        { opacity: 0, y: isMobile ? 16 : 32, scale: isMobile ? 1 : 0.9 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          // Reduce stagger and skip scale on mobile to avoid jank
+          stagger: isMobile ? 0.03 : 0.055,
+          duration: isMobile ? 0.35 : 0.55,
+          ease: isMobile ? "power2.out" : "back.out(1.7)",
+          scrollTrigger: {
+            trigger: gridRef.current,
             start: `top ${startPct}`,
             once: true,
           },
@@ -1374,61 +1294,141 @@ export function About() {
       );
 
       gsap.fromTo(
-        portalExitRef.current,
-        { opacity: 0, scale: 0.3, rotate: 15 },
+        statsRef.current?.querySelectorAll<HTMLDivElement>(".about-stat") ?? [],
+        { opacity: 0, y: isMobile ? 14 : 28 },
         {
           opacity: 1,
-          scale: 1,
-          rotate: 0,
-          duration: 1.2,
-          ease: "back.out(1.6)",
+          y: 0,
+          stagger: isMobile ? 0.06 : 0.12,
+          duration: isMobile ? 0.45 : 0.7,
+          ease: "power2.out",
           scrollTrigger: {
-            trigger: portalExitRef.current,
+            trigger: statsRef.current,
             start: `top ${startPct}`,
             once: true,
           },
         },
       );
-    });
 
-    gsap.to(portalEntryRef.current, {
-      y: -12,
-      duration: 3.5,
-      ease: "sine.inOut",
-      repeat: -1,
-      yoyo: true,
-    });
+      gsap.fromTo(
+        closingRef.current,
+        { opacity: 0, y: 14 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: closingRef.current,
+            start: `top ${startPct}`,
+            once: true,
+          },
+        },
+      );
 
-    gsap.to(portalExitRef.current, {
-      y: 12,
-      duration: 4.2,
-      ease: "sine.inOut",
-      repeat: -1,
-      yoyo: true,
-      delay: 1,
-    });
+      // Glyphs — skip float animation entirely on mobile (saves RAF budget)
+      gsap.utils.toArray<HTMLElement>(".about-glyph").forEach((el, i) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, scale: 0.5, rotate: (el.dataset.rot ?? "0") + "deg" },
+          {
+            opacity: 1,
+            scale: 1,
+            rotate: el.dataset.rot + "deg",
+            duration: 1.2,
+            ease: "back.out(1.4)",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: `top ${startPct}`,
+              once: true,
+            },
+            delay: i * 0.08,
+          },
+        );
+        if (!isMobile) {
+          gsap.to(el, {
+            y: `${Math.sin(i) * 18 + 12}px`,
+            duration: 3 + i * 0.4,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true,
+            delay: i * 0.3,
+          });
+        }
 
-    gsap.to(".about-portal__glow--blue", {
-      opacity: 0.5,
-      scale: 1.6,
-      duration: 2,
-      ease: "sine.inOut",
-      repeat: -1,
-      yoyo: true,
-    });
+        gsap.fromTo(
+          portalEntryRef.current,
+          { opacity: 0, scale: 0.3, rotate: -15 },
+          {
+            opacity: 1,
+            scale: 1,
+            rotate: 0,
+            duration: 1.2,
+            ease: "back.out(1.6)",
+            scrollTrigger: {
+              trigger: portalEntryRef.current,
+              start: `top ${startPct}`,
+              once: true,
+            },
+          },
+        );
 
-    gsap.to(".about-portal__glow--pink", {
-      opacity: 0.6,
-      scale: 1.4,
-      duration: 1.6,
-      ease: "sine.inOut",
-      repeat: -1,
-      yoyo: true,
-      delay: 0.4,
-    });
-  }, sectionRef);
-  return () => ctx.revert();
-}, []);
+        gsap.fromTo(
+          portalExitRef.current,
+          { opacity: 0, scale: 0.3, rotate: 15 },
+          {
+            opacity: 1,
+            scale: 1,
+            rotate: 0,
+            duration: 1.2,
+            ease: "back.out(1.6)",
+            scrollTrigger: {
+              trigger: portalExitRef.current,
+              start: `top ${startPct}`,
+              once: true,
+            },
+          },
+        );
+      });
+
+      gsap.to(portalEntryRef.current, {
+        y: -12,
+        duration: 3.5,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+      });
+
+      gsap.to(portalExitRef.current, {
+        y: 12,
+        duration: 4.2,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+        delay: 1,
+      });
+
+      gsap.to(".about-portal__glow--blue", {
+        opacity: 0.5,
+        scale: 1.6,
+        duration: 2,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+      });
+
+      gsap.to(".about-portal__glow--pink", {
+        opacity: 0.6,
+        scale: 1.4,
+        duration: 1.6,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+        delay: 0.4,
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section ref={sectionRef} className="about" id="about">

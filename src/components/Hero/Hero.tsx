@@ -48,16 +48,16 @@ const C_STARS_WIDE = [
 ] as const;
 
 const C_STARS_NARROW = [
-  { x: 500, y: -50, r: 7.0 }, // 0 — apex, centred
-  { x: 60, y: 75, r: 5.0 }, // 1 — upper-left, near edge
-  { x: 945, y: 88, r: 5.0 }, // 2 — upper-right, near edge
-  { x: 22, y: 215, r: 4.2 }, // 3 — far-left, very edge
-  { x: 972, y: 195, r: 4.2 }, // 4 — far-right, very edge
-  { x: 155, y: 375, r: 4.0 }, // 5 — mid-left, pulled in slightly
-  { x: 845, y: 375, r: 4.0 }, // 6 — mid-right, offset vertically from 5
-  { x: 35, y: 500, r: 4.5 }, // 7 — low-left, back to edge
-  { x: 962, y: 480, r: 4.5 }, // 8 — low-right, back to edge
-  { x: 500, y: 658, r: 5.5 }, // 9 — bottom apex, centred (lower)
+  { x: 500, y: -50,  r: 7.0 },  // 0 — apex, centred
+  { x: 60,  y: 75,   r: 5.0 },  // 1 — upper-left
+  { x: 940, y: 75,   r: 5.0 },  // 2 — mirror of 1 (was 880, y mismatched)
+  { x: 20,  y: 215,  r: 4.2 },  // 3 — far-left
+  { x: 980, y: 215,  r: 4.2 },  // 4 — mirror of 3 (was y:195, x:900)
+  { x: 155, y: 375,  r: 4.0 },  // 5 — mid-left
+  { x: 845, y: 375,  r: 4.0 },  // 6 — mirror of 5 (1000-155)
+  { x: 20,  y: 500,  r: 4.5 },  // 7 — low-left
+  { x: 980, y: 500,  r: 4.5 },  // 8 — mirror of 7
+  { x: 500, y: 758,  r: 5.5 },  // 9 — bottom apex, centred
 ] as const;
 
 type StarSet = typeof C_STARS_WIDE;
