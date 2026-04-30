@@ -37,7 +37,7 @@ const TIMELINE = [
     color: "#5080C8",
     step: "04",
     title: "Show up & launch",
-    body: "Arrive at Earl of March SS on event night. Doors open at 5:30 PM — we'll handle the rest.",
+    body: "Arrive at Earl of March S.S. on event night. Doors open at 5:30 PM — we'll handle the rest.",
   },
 ];
 
