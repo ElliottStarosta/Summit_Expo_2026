@@ -351,7 +351,7 @@ function useVisibleFire(
         ctx.beginPath();
         ctx.arc(f.x, f.y, r, 0, Math.PI * 2);
 
-        // Cartoon 3-stop color: white core → yellow → orange, based on tier
+        // Cartoon 3-stop color: white core -> yellow -> orange, based on tier
         if (f.tier === 2) {
           ctx.fillStyle = "#ffffff";
         } else if (f.tier === 1) {

@@ -174,7 +174,7 @@
   z-index: 4;
 }
 
-/* Scan line — sweeps left→right on entrance */
+/* Scan line — sweeps left->right on entrance */
 .gb-scan {
   position: absolute;
   top: 0;

@@ -1281,7 +1281,7 @@ export function Lineup({
                   ? hovEx.bio.slice(0, 88) + "…"
                   : hovEx.bio}
               </p>
-              <p className="lu-tooltip__cta">Click to explore →</p>
+              <p className="lu-tooltip__cta">Click to explore!</p>
               <span
                 className="lu-tooltip__corner lu-tooltip__corner--tl"
                 style={{ "--tc": hovEx.color } as React.CSSProperties}

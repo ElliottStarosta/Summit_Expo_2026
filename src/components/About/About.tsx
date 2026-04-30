@@ -465,7 +465,7 @@ function useConstellations(
 }
 
 // Embedded trailer — lives inside About
-// Hologram-style transmission frame. States: idle → loading → live
+// Hologram-style transmission frame. States: idle -> loading -> live
 // HUD: top bar (tag + signal bars + REC), bottom bar (subtitle + coords + ping)
 function AboutTrailer({ youtubeId = "CqKa5i9keSc" }: { youtubeId?: string }) {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -954,7 +954,7 @@ function AboutTrailer({ youtubeId = "CqKa5i9keSc" }: { youtubeId?: string }) {
   );
 }
 
-// About → Lineup transition component
+// About -> Lineup transition component
 // Scatter of constellation nodes + connecting lines that visually
 // carry the eye from About's magenta-purple stars into Lineup's blue.
 // Lives at the bottom of the About section with a negative margin
@@ -1605,7 +1605,7 @@ export function About() {
         <AboutTrailer />
       </div>
 
-      {/* About → Lineup transition */}
+      {/* About -> Lineup transition */}
       <AboutToLineupTransition />
     </section>
   );

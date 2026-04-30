@@ -15,7 +15,7 @@ const LINKS = [
 
 // Mobile constellation layout
 // Stars are laid out in a VERTICAL chain that mirrors the page order:
-// top → Home, then down → About → Lineup → Info → FAQ → Register at bottom.
+// top -> Home, then down -> About -> Lineup -> Info -> FAQ -> Register at bottom.
 // This creates a natural "path through the website" constellation.
 //
 // Each zone is [leftMin%, leftMax%, topMin%, topMax%]
@@ -29,7 +29,7 @@ const SITE_ZONES: [number, number, number, number][] = [
   [40, 60, 72, 80], // 5 Register — bottom centre
 ];
 
-// Edges connect in website order: 0→1→2→3→4→5
+// Edges connect in website order: 0->1->2->3->4->5
 // Plus a few cross-braces for constellation feel
 const MOBILE_EDGES: [number, number][] = [
   [0, 1],
@@ -549,7 +549,7 @@ export function Nav() {
       });
     });
 
-    // Burger → X
+    // Burger -> X
     gsap.to(".burger-bar-1", {
       rotation: 45,
       y: 7,
@@ -599,7 +599,7 @@ export function Nav() {
       },
     });
 
-    // X → Burger
+    // X -> Burger
     gsap.to(".burger-bar-1", {
       rotation: 0,
       y: 0,
