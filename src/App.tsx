@@ -1,12 +1,14 @@
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, lazy, Suspense } from 'react';
+import { ScrollTrigger } from './utils/gsap';
 import { Nav } from "./components/Navbar/Nav";
 import { Hero } from "./components/Hero/Hero";
 import { Cursor } from "./components/Cursor/Cursor";
 import { PageLoader } from "./components/PageLoader/PageLoader";
 
 import { About } from "./components/About/About";
-import { WaypointEditor } from "./components/Waypoint/WaypointEditor";
-import { useSmoothScroll } from "./utils/useSmoothScroll";
+// import { WaypointEditor } from "./components/Waypoint/WaypointEditor";
+// import { useSmoothScroll } from "./utils/useSmoothScroll";
+
 
 // Lazy load everything below the fold
 // These components' JS won't parse until they're needed
