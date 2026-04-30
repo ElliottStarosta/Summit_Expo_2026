@@ -1,56 +1,55 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense } from "react";
 import { Nav } from "./components/Navbar/Nav";
 import { Hero } from "./components/Hero/Hero";
 import { Cursor } from "./components/Cursor/Cursor";
 import { PageLoader } from "./components/PageLoader/PageLoader";
 
 import { About } from "./components/About/About";
-import { WaypointEditor } from './components/Waypoint/WaypointEditor';
-import { useSmoothScroll } from './utils/useSmoothScroll';
+import { WaypointEditor } from "./components/Waypoint/WaypointEditor";
+import { useSmoothScroll } from "./utils/useSmoothScroll";
 
 // Lazy load everything below the fold
 // These components' JS won't parse until they're needed
-const Lineup = lazy(() => import("./components/Lineup/Lineup").then(m => ({ default: m.Lineup })));
-const GalleryBridge = lazy(() => import("./components/Bridges/Gallery/GalleryBridge").then(m => ({ default: m.GalleryBridge })));
-const PracticalInfo = lazy(() => import("./components/PracticalInfo/PracticalInfo").then(m => ({ default: m.PracticalInfo })));
-const FAQ = lazy(() => import("./components/FAQ/FAQ").then(m => ({ default: m.FAQ })));
-const Register = lazy(() => import("./components/Register/Register").then(m => ({ default: m.Register })));
-const Footer = lazy(() => import("./components/Footer/Footer").then(m => ({ default: m.Footer })));
+const Lineup = lazy(() =>
+  import("./components/Lineup/Lineup").then((m) => ({ default: m.Lineup })),
+);
+const GalleryBridge = lazy(() =>
+  import("./components/Bridges/Gallery/GalleryBridge").then((m) => ({
+    default: m.GalleryBridge,
+  })),
+);
+const PracticalInfo = lazy(() =>
+  import("./components/PracticalInfo/PracticalInfo").then((m) => ({
+    default: m.PracticalInfo,
+  })),
+);
+const FAQ = lazy(() =>
+  import("./components/FAQ/FAQ").then((m) => ({ default: m.FAQ })),
+);
+const Register = lazy(() =>
+  import("./components/Register/Register").then((m) => ({
+    default: m.Register,
+  })),
+);
+const Footer = lazy(() =>
+  import("./components/Footer/Footer").then((m) => ({ default: m.Footer })),
+);
 
 function SectionFallback() {
-  useEffect(() => {
-    return () => {
-      // When fallback unmounts (real component loaded), refresh triggers
-      requestAnimationFrame(() => ScrollTrigger.refresh());
-    };
-  }, []);
-  return <div style={{ minHeight: '100vh', background: '#020010' }} />;
+  return <div style={{ minHeight: "100vh", background: "var(--bg)" }} />;
 }
 
 export default function App() {
-
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-  if (!loaded) {
-    document.body.style.overflow = 'hidden';
-    document.body.style.touchAction = 'none';        
-    document.body.style.overscrollBehavior = 'none';
-  } else {
-    setTimeout(() => ScrollTrigger.refresh(), 500);
-    document.body.style.overflow = '';
-    document.body.style.touchAction = '';            
-    document.body.style.overscrollBehavior = '';
-  }
-  return () => {
-    document.body.style.overflow = '';
-    document.body.style.touchAction = '';
-    document.body.style.overscrollBehavior = '';
-  };
-}, [loaded]);
+    if (!loaded) return;
+    const t = setTimeout(() => ScrollTrigger.refresh(), 600);
+    return () => clearTimeout(t);
+  }, [loaded]);
 
   const handleDone = () => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    window.scrollTo({ top: 0, behavior: "instant" });
     setLoaded(true);
   };
 
@@ -58,7 +57,7 @@ export default function App() {
     <>
       {!loaded && <PageLoader onDone={handleDone} />}
 
-      <div style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.4s ease' }}>
+      <div style={{ opacity: loaded ? 1 : 0, transition: "opacity 0.4s ease" }}>
         <Cursor />
         <Nav />
         {/* <WaypointEditor /> */}
@@ -83,7 +82,13 @@ export default function App() {
           <Suspense fallback={<SectionFallback />}>
             <Register />
           </Suspense>
-          <Suspense fallback={<div style={{ minHeight: '80px', background: 'rgba(4,2,12,0.82)' }} />}>
+          <Suspense
+            fallback={
+              <div
+                style={{ minHeight: "80px", background: "rgba(4,2,12,0.82)" }}
+              />
+            }
+          >
             <Footer />
           </Suspense>
         </main>

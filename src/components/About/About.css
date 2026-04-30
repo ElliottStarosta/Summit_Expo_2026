@@ -587,7 +587,7 @@
 /* 
    ABOUT → LINEUP TRANSITION
    Sits at the bottom of the About section, overlaps into Lineup
-   */
+  */
 
 .about-transition {
   position: relative;
@@ -786,7 +786,7 @@
 
 /* 
    ABOUT — Embedded Trailer (Hologram Transmission Frame)
-   */
+  */
 
 .about-portal {
   position: absolute;
