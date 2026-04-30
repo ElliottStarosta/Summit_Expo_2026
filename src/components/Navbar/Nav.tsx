@@ -308,11 +308,20 @@ export function Nav() {
     };
     document.addEventListener("visibilitychange", onVisibility);
 
+    let navVisible = true;
+    const navIO = new IntersectionObserver(
+      ([e]) => {
+        navVisible = e.isIntersecting;
+      },
+      { threshold: 0 },
+    );
+    navIO.observe(nav);
+
     const draw = () => {
       rafRef.current = requestAnimationFrame(draw);
-
+     
       // Skip entirely when tab is hidden
-      if (!isVisible) return;
+      if (!isVisible || !navVisible) return;
 
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
@@ -377,10 +386,12 @@ export function Nav() {
 
     return () => {
       cancelAnimationFrame(rafRef.current);
+      navIO.disconnect();
       window.removeEventListener("resize", resize);
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("visibilitychange", onVisibility);
     };
+    
   }, []);
 
   // Mobile overlay canvas
@@ -610,52 +621,54 @@ export function Nav() {
   }, [openMenu, closeMenu]);
 
   useEffect(() => {
-  if (!logoImgRef.current) return;
-  logoIdleTween.current = gsap.to(logoImgRef.current, {
-    y: -2,
-    rotate: 3,
-    scale: 1.04,
-    duration: 2.5,
-    ease: "sine.inOut",
-    yoyo: true,
-    repeat: -1,
-  });
-  return () => { logoIdleTween.current?.kill(); };
-}, []);
+    if (!logoImgRef.current) return;
+    logoIdleTween.current = gsap.to(logoImgRef.current, {
+      y: -2,
+      rotate: 3,
+      scale: 1.04,
+      duration: 2.5,
+      ease: "sine.inOut",
+      yoyo: true,
+      repeat: -1,
+    });
+    return () => {
+      logoIdleTween.current?.kill();
+    };
+  }, []);
 
-const handleLogoEnter = useCallback(() => {
-  logoIdleTween.current?.pause();
-  gsap.killTweensOf(logoImgRef.current);
-  gsap.to(logoImgRef.current, {
-    y: 0,
-    rotate: 18,
-    scale: 1.2,
-    duration: 0.55,
-    ease: "back.out(2.2)",
-  });
-}, []);
+  const handleLogoEnter = useCallback(() => {
+    logoIdleTween.current?.pause();
+    gsap.killTweensOf(logoImgRef.current);
+    gsap.to(logoImgRef.current, {
+      y: 0,
+      rotate: 18,
+      scale: 1.2,
+      duration: 0.55,
+      ease: "back.out(2.2)",
+    });
+  }, []);
 
-const handleLogoLeave = useCallback(() => {
-  gsap.killTweensOf(logoImgRef.current);
-  gsap.to(logoImgRef.current, {
-    y: 0,
-    rotate: 0,
-    scale: 1,
-    duration: 0.8,
-    ease: "elastic.out(1, 0.55)",
-    onComplete: () => {
-      logoIdleTween.current = gsap.to(logoImgRef.current, {
-        y: -2,
-        rotate: 3,
-        scale: 1.04,
-        duration: 2.5,
-        ease: "sine.inOut",
-        yoyo: true,
-        repeat: -1,
-      });
-    },
-  });
-}, []);
+  const handleLogoLeave = useCallback(() => {
+    gsap.killTweensOf(logoImgRef.current);
+    gsap.to(logoImgRef.current, {
+      y: 0,
+      rotate: 0,
+      scale: 1,
+      duration: 0.8,
+      ease: "elastic.out(1, 0.55)",
+      onComplete: () => {
+        logoIdleTween.current = gsap.to(logoImgRef.current, {
+          y: -2,
+          rotate: 3,
+          scale: 1.04,
+          duration: 2.5,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1,
+        });
+      },
+    });
+  }, []);
 
   const handleClick = useCallback(
     (id: string) => {
