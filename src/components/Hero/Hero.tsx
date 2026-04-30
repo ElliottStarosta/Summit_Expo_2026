@@ -631,7 +631,7 @@ export function Hero({ loaded }: { loaded: boolean }) {
             {/* <span className="hero-subline-dot" aria-hidden="true">
               ✦
             </span> */}
-            June 2, 2026
+            June 1, 2026
              <i className="fa-solid fa-star hero-subline-dot"></i>
             {/* <span className="hero-subline-dot" aria-hidden="true">
               ✦
