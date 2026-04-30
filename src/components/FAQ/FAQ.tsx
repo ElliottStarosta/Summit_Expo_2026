@@ -26,7 +26,7 @@ export const FAQ_DATA: FaqItem[] = [
     id: "g1",
     category: "General",
     color: "#CE3072",
-    q: "I'm not a student from Earl of March SS. Can I still attend, or be an exhibitor?",
+    q: "I'm not a student from Earl of March S.S. Can I still attend, or be an exhibitor?",
     a: "Yes! Summit EXPO is a community event open to everyone, including younger students, students from other schools, alumni, and parents. Exhibitors can also come from other schools, but must not exceed the age of nineteen (19).",
   },
   {
@@ -197,11 +197,18 @@ function useFaqCanvas(ref: React.RefObject<HTMLCanvasElement | null>) {
         len: number;
       }
 
-      const LAYERS = [
-        { count: 60, speed: 0.006, rMax: 0.5, opMax: 0.38 },
-        { count: 35, speed: 0.018, rMax: 0.9, opMax: 0.58 },
-        { count: 14, speed: 0.042, rMax: 1.4, opMax: 0.82 },
-      ];
+      const mobile = window.innerWidth < 768;
+      const LAYERS = mobile
+        ? [
+            { count: 25, speed: 0.007, rMax: 0.55, opMax: 0.4 },
+            { count: 15, speed: 0.02, rMax: 0.95, opMax: 0.6 },
+            { count: 6, speed: 0.045, rMax: 1.45, opMax: 0.85 },
+          ]
+        : [
+            { count: 80, speed: 0.007, rMax: 0.55, opMax: 0.4 },
+            { count: 45, speed: 0.02, rMax: 0.95, opMax: 0.6 },
+            { count: 18, speed: 0.045, rMax: 1.45, opMax: 0.85 },
+          ];
 
       let stars: Star[] = [],
         shooters: Shooter[] = [];
@@ -565,15 +572,21 @@ export function FAQ() {
 
   // Animate list items in/out when filter changes
   useLayoutEffect(() => {
-    if (!hasEnteredRef.current) return;
-    if (!listRef.current) return;
+    if (!hasEnteredRef.current || !listRef.current) return;
+
     const rows = listRef.current.querySelectorAll<HTMLDivElement>(".faq-row");
     gsap.set(rows, { opacity: 0, y: 12 });
+
+    // Kill old batch ScrollTriggers so new ones can be created
+    ScrollTrigger.getAll()
+      .filter((st) => st.vars?.id === "faq-row-batch")
+      .forEach((st) => st.kill());
+
     gsap.to(rows, {
       opacity: 1,
       y: 0,
-      stagger: 0.08,
-      duration: 0.7,
+      stagger: 0.06,
+      duration: 0.55,
       ease: "power2.out",
       onComplete: () => ScrollTrigger.refresh(),
     });
@@ -604,75 +617,76 @@ export function FAQ() {
 
   // Scroll entrance
   useEffect(() => {
-  const ctx = gsap.context(() => {
-    const isMobile = window.innerWidth < 768;
-    const startPct = isMobile ? "98%" : "75%";
+    const ctx = gsap.context(() => {
+      const isMobile = window.innerWidth < 768;
+      const startPct = isMobile ? "98%" : "75%";
 
-    const header = sectionRef.current?.querySelector(".faq-header");
-    const filters = sectionRef.current?.querySelector(".faq-filters");
-    const searchEl = sectionRef.current?.querySelector(".faq-search");
-    const rows = listRef.current?.querySelectorAll(".faq-row");
+      const header = sectionRef.current?.querySelector(".faq-header");
+      const filters = sectionRef.current?.querySelector(".faq-filters");
+      const searchEl = sectionRef.current?.querySelector(".faq-search");
 
-    // Set initial hidden state immediately so nothing flashes
-    gsap.set([header, filters, searchEl], { opacity: 0, y: 20 });
-    if (rows?.length) gsap.set(rows, { opacity: 0, y: 12 });
+      gsap.set([header, filters, searchEl], { opacity: 0, y: 20 });
 
-    ScrollTrigger.create({
-      trigger: sectionRef.current,
-      start: `top ${startPct}`,
-      once: true, // fire once — prevents the "already past trigger" miss on mobile
-      onEnter() {
-        hasEnteredRef.current = true;
+      // Header entrance — fires once when header enters
+      ScrollTrigger.create({
+        trigger: header,
+        start: `top ${startPct}`,
+        once: true,
+        onEnter() {
+          if (!header || !filters || !searchEl) return;
 
-        if (header) {
-          gsap.to(header, {
-            opacity: 1,
-            y: 0,
-            duration: 0.65,
-            ease: "power2.out",
-          });
-        }
-        if (filters) {
-          gsap.to(filters, {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            ease: "power2.out",
-            delay: 0.15,
-          });
-        }
-        if (searchEl) {
-          gsap.to(searchEl, {
-            opacity: 1,
-            y: 0,
-            duration: 0.45,
-            ease: "power2.out",
-            delay: 0.22,
-          });
-        }
-        if (rows?.length) {
-          gsap.to(rows, {
-            opacity: 1,
-            y: 0,
-            stagger: isMobile ? 0.04 : 0.07,
-            duration: isMobile ? 0.4 : 0.65,
-            ease: "power2.out",
-            delay: 0.35,
-            // Ensure rows are definitely visible after animation
-            onComplete: () => {
-              gsap.set(rows, { clearProps: "opacity,y,transform" });
-              hasEnteredRef.current = true;
-              ScrollTrigger.refresh();
-            },
-          });
-        }
-      },
-    });
+          hasEnteredRef.current = true;
+          gsap
+            .timeline()
+            .to(header, {
+              opacity: 1,
+              y: 0,
+              duration: 0.65,
+              ease: "power2.out",
+            })
+            .to(
+              filters,
+              { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+              "<0.1",
+            )
+            .to(
+              searchEl,
+              { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" },
+              "<0.1",
+            );
+        },
+      });
 
-    ScrollTrigger.refresh();
-  }, sectionRef);
-  return () => ctx.revert();
-}, []);
+      // Per-row batch — each row animates when IT enters the viewport
+      const batchRows = () => {
+        const rows =
+          listRef.current?.querySelectorAll<HTMLDivElement>(".faq-row");
+        if (!rows?.length) return;
+
+        gsap.set(rows, { opacity: 0, y: 16 });
+
+        ScrollTrigger.batch(rows, {
+          start: "top 92%",
+          once: true,
+          onEnter: (batch) => {
+            gsap.to(batch, {
+              opacity: 1,
+              y: 0,
+              stagger: isMobile ? 0.04 : 0.08,
+              duration: isMobile ? 0.4 : 0.6,
+              ease: "power2.out",
+              overwrite: true,
+            });
+          },
+        });
+      };
+
+      batchRows();
+      ScrollTrigger.refresh();
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section ref={sectionRef} id="faq" className="faq">
