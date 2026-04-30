@@ -68,32 +68,48 @@
 .nav__logo:hover {
   opacity: 0.75;
 }
-.nav__logo-svg {
+
+.nav__logo-img-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.nav__logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   display: block;
-  overflow: visible;
-  animation: logoSpin 16s linear infinite;
-  filter: drop-shadow(0 0 6px rgba(206, 48, 114, 0.9));
+  filter: drop-shadow(0 0 6px rgba(206, 48, 114, 0.7));
+  will-change: transform, filter;
+}
+
+
+
+/* Subtle idle float */
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+  50%       { transform: translateY(-2px) rotate(3deg) scale(1.04); }
+}
+
+.nav__logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 0 6px rgba(206, 48, 114, 0.7));
   will-change: transform;
 }
-.nav__logo:hover .nav__logo-svg {
-  animation-duration: 2.8s;
+
+/* Hover overrides the idle animation */
+.nav__logo:hover .nav__logo-img {
+  animation: none;
 }
-.logo-halo {
-  animation: logoHalo 3.5s ease-in-out infinite alternate;
-}
-@keyframes logoHalo {
-  from {
-    opacity: 0.08;
-  }
-  to {
-    opacity: 0.22;
-  }
-}
-@keyframes logoSpin {
-  to {
-    transform: rotate(360deg);
-  }
-}
+
 .nav__logo-text {
   font-family: var(--font-display, "Orbitron", sans-serif);
   font-size: 0.69rem;

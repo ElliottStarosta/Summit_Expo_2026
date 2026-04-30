@@ -171,6 +171,9 @@ export function Nav() {
   const lineProgress = useRef<number[]>(MOBILE_EDGES.map(() => 0));
   const starPositionsRef = useRef<[number, number][]>(generatePositions());
 
+  const logoImgRef = useRef<HTMLImageElement>(null);
+  const logoIdleTween = useRef<gsap.core.Tween | null>(null);
+
   useEffect(() => {
     starPositionsRef.current = starPositions;
   }, [starPositions]);
@@ -606,27 +609,74 @@ export function Nav() {
     else openMenu();
   }, [openMenu, closeMenu]);
 
-  const handleClick = useCallback(
-  (id: string) => {
-    closeMenu();
-    setTimeout(() => {
-      if (id === "hero") {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        return;
-      }
-      // Refresh so lazy-loaded sections have correct positions
-      ScrollTrigger.refresh();
-      requestAnimationFrame(() => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        const top = el.getBoundingClientRect().top + window.scrollY;
-        window.scrollTo({ top, behavior: "smooth" });
-      });
-    }, 300);
-  },
-  [closeMenu],
-);
+  useEffect(() => {
+  if (!logoImgRef.current) return;
+  logoIdleTween.current = gsap.to(logoImgRef.current, {
+    y: -2,
+    rotate: 3,
+    scale: 1.04,
+    duration: 2.5,
+    ease: "sine.inOut",
+    yoyo: true,
+    repeat: -1,
+  });
+  return () => { logoIdleTween.current?.kill(); };
+}, []);
 
+const handleLogoEnter = useCallback(() => {
+  logoIdleTween.current?.pause();
+  gsap.killTweensOf(logoImgRef.current);
+  gsap.to(logoImgRef.current, {
+    y: 0,
+    rotate: 18,
+    scale: 1.2,
+    duration: 0.55,
+    ease: "back.out(2.2)",
+  });
+}, []);
+
+const handleLogoLeave = useCallback(() => {
+  gsap.killTweensOf(logoImgRef.current);
+  gsap.to(logoImgRef.current, {
+    y: 0,
+    rotate: 0,
+    scale: 1,
+    duration: 0.8,
+    ease: "elastic.out(1, 0.55)",
+    onComplete: () => {
+      logoIdleTween.current = gsap.to(logoImgRef.current, {
+        y: -2,
+        rotate: 3,
+        scale: 1.04,
+        duration: 2.5,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
+    },
+  });
+}, []);
+
+  const handleClick = useCallback(
+    (id: string) => {
+      closeMenu();
+      setTimeout(() => {
+        if (id === "hero") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          return;
+        }
+        // Refresh so lazy-loaded sections have correct positions
+        ScrollTrigger.refresh();
+        requestAnimationFrame(() => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          const top = el.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({ top, behavior: "smooth" });
+        });
+      }, 300);
+    },
+    [closeMenu],
+  );
 
   return (
     <>
@@ -639,62 +689,19 @@ export function Nav() {
         <canvas ref={canvasRef} className="nav__canvas" aria-hidden="true" />
 
         {/* Logo */}
-        <button className="nav__logo" onClick={() => handleClick("about")}>
-          <span className="nav__logo-star" aria-hidden="true">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              className="nav__logo-svg"
-            >
-              <circle
-                cx="10"
-                cy="10"
-                r="8.5"
-                fill="#CE3072"
-                opacity="0.10"
-                className="logo-halo"
-              />
-              <circle cx="10" cy="10" r="4.5" fill="#CE3072" opacity="0.25" />
-              <circle cx="10" cy="10" r="2" fill="#CE3072" />
-              <line
-                x1="10"
-                y1="0.5"
-                x2="10"
-                y2="19.5"
-                stroke="#CE3072"
-                strokeWidth="0.9"
-                opacity="0.5"
-              />
-              <line
-                x1="0.5"
-                y1="10"
-                x2="19.5"
-                y2="10"
-                stroke="#CE3072"
-                strokeWidth="0.9"
-                opacity="0.5"
-              />
-              <line
-                x1="3"
-                y1="3"
-                x2="17"
-                y2="17"
-                stroke="#CE3072"
-                strokeWidth="0.55"
-                opacity="0.28"
-              />
-              <line
-                x1="17"
-                y1="3"
-                x2="3"
-                y2="17"
-                stroke="#CE3072"
-                strokeWidth="0.55"
-                opacity="0.28"
-              />
-            </svg>
+        <button
+          className="nav__logo"
+          onClick={() => handleClick("about")}
+          onMouseEnter={handleLogoEnter}
+          onMouseLeave={handleLogoLeave}
+        >
+          <span className="nav__logo-img-wrap" aria-hidden="true">
+            <img
+              ref={logoImgRef}
+              src="/logo.png"
+              alt=""
+              className="nav__logo-img"
+            />
           </span>
           <span className="nav__logo-text">
             SUMMIT<em>EXPO</em>
