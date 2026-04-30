@@ -106,11 +106,19 @@ function useSpaceCanvas(canvasRef: React.RefObject<HTMLCanvasElement | null>) {
         angle: number;
       }
 
-      const LAYERS = [
-        { count: 50, speedMult: 0.008, rMax: 0.6, opMax: 0.45 },
-        { count: 25, speedMult: 0.022, rMax: 1.0, opMax: 0.65 },
-        { count: 10, speedMult: 0.05, rMax: 1.5, opMax: 0.9 },
-      ];
+      const mobile = window.innerWidth < 768;
+      const LAYERS = mobile
+        ? [
+            { count: 25, speedMult: 0.007, rMax: 0.55, opMax: 0.4 },
+            { count: 15, speedMult: 0.02, rMax: 0.95, opMax: 0.6 },
+            { count: 6, speedMult: 0.045, rMax: 1.45, opMax: 0.85 },
+          ]
+        : [
+            { count: 80, speedMult: 0.007, rMax: 0.55, opMax: 0.4 },
+            { count: 45, speedMult: 0.02, rMax: 0.95, opMax: 0.6 },
+            { count: 18, speedMult: 0.045, rMax: 1.45, opMax: 0.85 },
+          ];
+
       const PARALLAX = [0.03, 0.1, 0.24];
 
       let stars: Star[] = [];
@@ -917,7 +925,7 @@ function AboutTrailer({ youtubeId = "CqKa5i9keSc" }: { youtubeId?: string }) {
               className="fa-solid fa-location-dot"
               style={{ marginRight: "0.3em", opacity: 0.5 }}
             />
-            <span>45.3232° N · 75.8951° W</span>
+           
           </div>
           <span className="at-hud__ping">
             <i

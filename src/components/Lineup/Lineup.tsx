@@ -241,11 +241,18 @@ function useSpaceCanvas(ref: React.RefObject<HTMLCanvasElement | null>) {
         len: number;
       }
 
-      const LAYERS = [
-        { count: 80, speed: 0.007, rMax: 0.55, opMax: 0.4 },
-        { count: 45, speed: 0.02, rMax: 0.95, opMax: 0.6 },
-        { count: 18, speed: 0.045, rMax: 1.45, opMax: 0.85 },
-      ];
+      const mobile = window.innerWidth < 768;
+      const LAYERS = mobile
+        ? [
+            { count: 25, speed: 0.007, rMax: 0.55, opMax: 0.4 },
+            { count: 15, speed: 0.02, rMax: 0.95, opMax: 0.6 },
+            { count: 6, speed: 0.045, rMax: 1.45, opMax: 0.85 },
+          ]
+        : [
+            { count: 80, speed: 0.007, rMax: 0.55, opMax: 0.4 },
+            { count: 45, speed: 0.02, rMax: 0.95, opMax: 0.6 },
+            { count: 18, speed: 0.045, rMax: 1.45, opMax: 0.85 },
+          ];
 
       let stars: Star[] = [],
         shooters: Shooter[] = [];
@@ -577,8 +584,9 @@ function ProjectCarousel({
       {/* Section label */}
       <div className="lu-carousel__header">
         <span className="lu-carousel__label">
-  <i className="fa-solid fa-images" /> Project Photos  {/* was ◈ Project Photos */}
-</span>
+          <i className="fa-solid fa-images" /> Project Photos{" "}
+          {/* was ◈ Project Photos */}
+        </span>
         <span className="lu-carousel__counter">
           {current + 1} / {photos.length}
         </span>
@@ -719,7 +727,7 @@ export function Lineup({
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: bridgeRef.current,
-        start: `top ${window.innerWidth < 768 ? '95%' : '82%'}`,
+        start: `top ${window.innerWidth < 768 ? "95%" : "82%"}`,
         onEnter() {
           gsap.fromTo(
             ".lu__bridge-line",
@@ -759,14 +767,14 @@ export function Lineup({
 
       ScrollTrigger.create({
         trigger: headerRef.current,
-        start: `top ${window.innerWidth < 768 ? '95%' : '80%'}`,
+        start: `top ${window.innerWidth < 768 ? "95%" : "80%"}`,
         onEnter() {
           const header = headerRef.current;
           if (!header) return;
           gsap
             .timeline()
             .fromTo(
-             header.querySelector(".lu-eyebrow"),
+              header.querySelector(".lu-eyebrow"),
               { opacity: 0, y: 30, scale: 0.95 },
               { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" },
             )
@@ -783,7 +791,7 @@ export function Lineup({
               "-=0.3",
             )
             .fromTo(
-             header.querySelector(".lu-sub"),
+              header.querySelector(".lu-sub"),
               { opacity: 0, y: 20 },
               { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
               "-=0.4",
@@ -799,7 +807,7 @@ export function Lineup({
 
       ScrollTrigger.create({
         trigger: mapRef.current,
-        start: `top ${window.innerWidth < 768 ? '95%' : '85%'}`,
+        start: `top ${window.innerWidth < 768 ? "95%" : "85%"}`,
         onEnter() {
           gsap.fromTo(
             mapRef.current,
@@ -817,7 +825,7 @@ export function Lineup({
 
       ScrollTrigger.create({
         trigger: mapRef.current,
-        start: `top ${window.innerWidth < 768 ? '95%' : '65%'}`,
+        start: `top ${window.innerWidth < 768 ? "95%" : "65%"}`,
         onEnter() {
           const lines = svgLineRefs.current.filter(Boolean);
           lines.forEach((l) => {
@@ -864,7 +872,7 @@ export function Lineup({
 
       ScrollTrigger.create({
         trigger: ".lu__hint",
-        start: `top ${window.innerWidth < 768 ? '95%' : '90%'}`,
+        start: `top ${window.innerWidth < 768 ? "95%" : "90%"}`,
         onEnter() {
           gsap.fromTo(
             ".lu__hint",
@@ -1127,17 +1135,13 @@ export function Lineup({
       <div className="lu__nebula" aria-hidden="true" />
 
       <header ref={headerRef} className="lu__header">
-        <p className="lu-eyebrow" >
+        <p className="lu-eyebrow">
           <span className="lu-pip" />
           EXHIBITOR CONSTELLATION · {exhibitors.length} STARS
           <span className="lu-pip" />
         </p>
-        <h2 className="lu-title" >
-          THE LINEUP
-        </h2>
-        <p className="lu-sub" >
-          Hover to preview · click to explore.
-        </p>
+        <h2 className="lu-title">THE LINEUP</h2>
+        <p className="lu-sub">Hover to preview · click to explore.</p>
       </header>
 
       <div
