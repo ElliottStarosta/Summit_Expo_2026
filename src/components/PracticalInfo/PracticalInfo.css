@@ -1213,6 +1213,39 @@
   flex-shrink: 0;
 }
 
+/* Lazy map skeleton — shown while leaflet chunk downloads */
+.pi-map-skeleton {
+  width: 100%;
+  height: 320px;
+  background: linear-gradient(
+    135deg,
+    rgba(6, 3, 18, 0.95) 0%,
+    rgba(12, 8, 32, 0.9) 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated shimmer sweep */
+.pi-map-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    rgba(60, 160, 160, 0.06) 50%,
+    transparent 80%
+  );
+  background-size: 200% 100%;
+  animation: skeletonSweep 1.8s ease-in-out infinite;
+}
+
+@keyframes skeletonSweep {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
 /* Responsive */
 @media (max-width: 1000px) {
   .pi__inner {

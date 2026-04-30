@@ -1,101 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { gsap, ScrollTrigger } from "../../utils/gsap";
 import "./PracticalInfo.css";
 import { useVisibleCanvas } from "../../utils/useVisibleCanvas";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
+import LazySpaceMap from "./LazySpaceMap";
 
-const VENUE_LAT = 45.3232;
-const VENUE_LNG = -75.8947;
-
-// Leaflet Map
-
-function SpaceMap() {
-  const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<L.Map | null>(null);
-
-  useEffect(() => {
-    if (!mapRef.current || mapInstanceRef.current) return;
-
-    // Create map (optimized)
-    const map = L.map(mapRef.current, {
-      center: [VENUE_LAT, VENUE_LNG],
-      zoom: 15,
-      preferCanvas: true,
-      zoomControl: false,
-      attributionControl: false,
-      inertia: false,
-    });
-
-    mapInstanceRef.current = map;
-
-    L.tileLayer(
-      "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-      {
-        maxZoom: 18,
-        updateWhenIdle: true,
-        updateWhenZooming: false,
-        keepBuffer: 2,
-      },
-    ).addTo(map);
-
-    const icon = L.divIcon({
-      html: `<div class="pi-marker">
-          <div class="pi-marker__pulse"></div>
-          <div class="pi-marker__pulse pi-marker__pulse--2"></div>
-          <div class="pi-marker__core"><i class="fa-solid fa-rocket"></i></div>
-        </div>`,
-      className: "",
-      iconSize: [48, 48],
-      iconAnchor: [24, 24],
-    });
-
-    L.marker([VENUE_LAT, VENUE_LNG], { icon })
-      .addTo(map)
-      .bindPopup(
-        `<div class="pi-popup">
-          <p class="pi-popup__title">Earl of March SS</p>
-          <p class="pi-popup__sub">Summit EXPO 2026</p>
-        </div>`,
-        { className: "pi-leaflet-popup" },
-      );
-
-    // Controls
-    L.control.zoom({ position: "bottomright" }).addTo(map);
-    L.control.attribution({ position: "bottomleft", prefix: false }).addTo(map);
-
-    return () => {
-      map.remove();
-      mapInstanceRef.current = null;
-    };
-  }, []);
-
-  return (
-    <div className="pi-map-frame">
-      <div className="pi-map-hud">
-        <span className="pi-map-hud__left">
-          <i className="fa-solid fa-satellite pi-map-hud__icon" />
-          LIVE MAP · KANATA ON
-        </span>
-        <span className="pi-map-hud__right">
-          <i className="fa-solid fa-crosshairs" />
-          45.3232°N · 75.8951°W
-        </span>
-      </div>
-
-      <span className="pi-map-corner pi-map-corner--tl" />
-      <span className="pi-map-corner pi-map-corner--tr" />
-      <span className="pi-map-corner pi-map-corner--bl" />
-      <span className="pi-map-corner pi-map-corner--br" />
-
-      <div ref={mapRef} className="pi-map" />
-    </div>
-  );
-}
 
 // Sponsorship PDF Modal (portal-based)
-
 function SponsorshipPDF({
   pdfUrl = "/sponsorship-package.pdf",
 }: {
@@ -442,7 +353,7 @@ function SponsorshipPDF({
                   className="fa-solid fa-location-dot"
                   style={{ marginRight: "0.3em", opacity: 0.5 }}
                 />
-                <span>45.3232° N · 75.8951° W</span>
+                
               </div>
               <span className="spdf-hud-bottom__ping">
                 <i
@@ -583,7 +494,6 @@ function Countdown() {
 }
 
 // Star canvas
-
 function usePiCanvas(ref: React.RefObject<HTMLCanvasElement | null>) {
   useVisibleCanvas(
     ref,
@@ -837,7 +747,7 @@ export function PracticalInfo() {
           </div>
 
           <div className="pi-animate">
-            <SpaceMap />
+            <LazySpaceMap />
           </div>
         </div>
 
