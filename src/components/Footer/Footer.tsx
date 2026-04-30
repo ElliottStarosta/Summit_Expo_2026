@@ -457,7 +457,7 @@ export function Footer() {
 
         {/* Legal */}
         <p className="footer-legal-line" style={{ opacity: 0 }}>
-          © 2026 Summit EXPO · Earl of March SS · Kanata, ON · All That Can Be
+          © 2026 Summit EXPO · Earl of March S.S. · Kanata, ON · All That Can Be
         </p>
       </div>
     </footer>
