@@ -673,7 +673,7 @@ export function PracticalInfo() {
                 {
                   icon: "fa-calendar-days",
                   key: "date",
-                  val: "June 2, 2026",
+                  val: "June 1, 2026",
                   accent: true,
                 },
                 {
