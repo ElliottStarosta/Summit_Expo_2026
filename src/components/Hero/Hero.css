@@ -930,6 +930,11 @@
   
   .hero-wrap {
     height: 100vh;
+    position: sticky;
+    top: 0;
+  }
+  .hero-hint {
+    bottom: 5.5rem;
   }
   .ht-s {
     font-size: clamp(2.8rem, 13vw, 5rem);

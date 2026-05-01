@@ -48,16 +48,16 @@ const C_STARS_WIDE = [
 ] as const;
 
 const C_STARS_NARROW = [
-  { x: 500, y: -50,  r: 7.0 },  // 0 — apex, centred
-  { x: 60,  y: 75,   r: 5.0 },  // 1 — upper-left
-  { x: 940, y: 75,   r: 5.0 },  // 2 — mirror of 1 (was 880, y mismatched)
-  { x: 20,  y: 215,  r: 4.2 },  // 3 — far-left
-  { x: 980, y: 215,  r: 4.2 },  // 4 — mirror of 3 (was y:195, x:900)
-  { x: 155, y: 375,  r: 4.0 },  // 5 — mid-left
-  { x: 845, y: 375,  r: 4.0 },  // 6 — mirror of 5 (1000-155)
-  { x: 20,  y: 500,  r: 4.5 },  // 7 — low-left
-  { x: 980, y: 500,  r: 4.5 },  // 8 — mirror of 7
-  { x: 500, y: 758,  r: 5.5 },  // 9 — bottom apex, centred
+  { x: 500, y: -50, r: 7.0 }, // 0 — apex, centred
+  { x: 60, y: 75, r: 5.0 }, // 1 — upper-left
+  { x: 940, y: 75, r: 5.0 }, // 2 — mirror of 1 (was 880, y mismatched)
+  { x: 20, y: 215, r: 4.2 }, // 3 — far-left
+  { x: 980, y: 215, r: 4.2 }, // 4 — mirror of 3 (was y:195, x:900)
+  { x: 155, y: 375, r: 4.0 }, // 5 — mid-left
+  { x: 845, y: 375, r: 4.0 }, // 6 — mirror of 5 (1000-155)
+  { x: 20, y: 500, r: 4.5 }, // 7 — low-left
+  { x: 980, y: 500, r: 4.5 }, // 8 — mirror of 7
+  { x: 500, y: 758, r: 5.5 }, // 9 — bottom apex, centred
 ] as const;
 
 type StarSet = typeof C_STARS_WIDE;
@@ -408,6 +408,17 @@ export function Hero({ loaded }: { loaded: boolean }) {
           ease: "power2.out",
           y: 10,
         });
+        
+        gsap.to(pinRef.current, {
+          opacity: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: pinRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -416,90 +427,181 @@ export function Hero({ loaded }: { loaded: boolean }) {
 
   /* Scroll scrub timeline */
   useEffect(() => {
-  const ctx = gsap.context(() => {
-    // initial states — same for both
-    gsap.set(".hero-c-edge", {
-      strokeDashoffset: (_i: number, el: SVGGeometryElement) =>
-        el.getTotalLength?.() ?? 300,
-      opacity: 0,
-    });
-    gsap.set(".hero-c-star", {
-      scale: 0, opacity: 0,
-      transformBox: "fill-box", transformOrigin: "center",
-    });
-    gsap.set(nebulaRef.current,  { scale: 0.15, opacity: 0 });
-    gsap.set(horizonRef.current, { scaleX: 0 });
-    gsap.set(contentRef.current, { opacity: 0, y: 24 });
-    gsap.set(dissolveRef.current, { opacity: 0 });
-    gsap.set(".hero-star-cta",   { opacity: 0, y: 18, scale: 0.88 });
-    gsap.set(".hcta-line",       { scaleX: 0, transformOrigin: "left center" });
-
     const isMobile = window.innerWidth < 768;
 
-    if (isMobile && loaded) {
-      // MOBILE: just play the reveal, no scroll scrubbing
-      const tl = gsap.timeline({ delay: 0.5 });
-      tl.to(nebulaRef.current,  { scale: 1, opacity: 1, duration: 0.9, ease: "power2.out" }, 0);
-      tl.to(horizonRef.current, { scaleX: 1, duration: 0.7, ease: "power3.out" }, 0.2);
-      tl.to(".hero-c-star", {
-        scale: 1, opacity: 1,
-        stagger: { each: 0.06, from: "edges" },
-        duration: 0.4, ease: "back.out(2.2)",
-      }, 0.4);
-      tl.to(".hero-c-edge", {
-        strokeDashoffset: 0, opacity: 0.65,
-        stagger: { each: 0.06, from: "random" },
-        duration: 0.55, ease: "power2.inOut",
-      }, 0.7);
-      tl.to(contentRef.current, { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }, 0.8);
-      tl.to(".hero-star-cta", {
-        opacity: 1, y: 0, scale: 1,
-        stagger: { each: 0.15, from: "start" },
-        duration: 0.5, ease: "back.out(2.0)",
-      }, 1.0);
-      tl.to(".hcta-line", { scaleX: 1, stagger: 0.1, duration: 0.45, ease: "power2.inOut" }, 1.1);
+    // On mobile: don't run at all until loaded — prevents the desktop
+    // ScrollTrigger pin (end: "+=500%") from briefly stretching the page
+    // and corrupting About section trigger positions.
+    if (isMobile && !loaded) return;
 
-    } else {
-      // DESKTOP: original scroll-scrubbed timeline
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: wrapRef.current,
-          start: "top top",
-          end: "+=500%",
-          scrub: 1.4,
-          pin: pinRef.current,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
+    const ctx = gsap.context(() => {
+      gsap.set(".hero-c-edge", {
+        strokeDashoffset: (_i: number, el: SVGGeometryElement) =>
+          el.getTotalLength?.() ?? 300,
+        opacity: 0,
       });
-      tl.to(nebulaRef.current,  { scale: 1, opacity: 1, duration: 1.3, ease: "power2.out" }, 0.2);
-      tl.to(horizonRef.current, { scaleX: 1, duration: 1.0, ease: "power3.out" }, 0.6);
-      tl.to(".hero-c-star", {
-        scale: 1, opacity: 1,
-        stagger: { each: 0.07, from: "edges" },
-        duration: 0.45, ease: "back.out(2.2)",
-      }, 1.5);
-      tl.to(".hero-c-edge", {
-        strokeDashoffset: 0, opacity: 0.65,
-        stagger: { each: 0.07, from: "random" },
-        duration: 0.65, ease: "power2.inOut",
-      }, 2.0);
-      tl.to(".hero-star-cta", {
-        opacity: 1, y: 0, scale: 1,
-        stagger: { each: 0.18, from: "start" },
-        duration: 0.55, ease: "back.out(2.0)",
-      }, 3.2);
-      tl.to(".hcta-line", { scaleX: 1, stagger: 0.12, duration: 0.5, ease: "power2.inOut" }, 3.35);
-      tl.to(contentRef.current, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 3.0);
-      tl.to([".hero-c-edge", ".hero-c-star"], { opacity: 0.06, duration: 0.7 }, 5.0);
-      tl.to(contentRef.current, { opacity: 0, duration: 0.5, ease: "power2.in" }, 5.8);
-      tl.to(nebulaRef.current,  { opacity: 0, duration: 0.6 }, 5.9);
-      tl.to(horizonRef.current, { opacity: 0, duration: 0.4 }, 6.0);
-      tl.to(dissolveRef.current, { opacity: 1, duration: 0.8, ease: "power2.inOut" }, 6.2);
-    }
-  }, wrapRef);
-  return () => ctx.revert();
-}, [loaded]);
+      gsap.set(".hero-c-star", {
+        scale: 0,
+        opacity: 0,
+        transformBox: "fill-box",
+        transformOrigin: "center",
+      });
+      gsap.set(nebulaRef.current, { scale: 0.15, opacity: 0 });
+      gsap.set(horizonRef.current, { scaleX: 0 });
+      gsap.set(contentRef.current, { opacity: 0, y: 24 });
+      gsap.set(dissolveRef.current, { opacity: 0 });
+      gsap.set(".hero-star-cta", { opacity: 0, y: 18, scale: 0.88 });
+      gsap.set(".hcta-line", { scaleX: 0, transformOrigin: "left center" });
+
+      if (isMobile) {
+        // loaded is guaranteed true here due to guard above
+        const tl = gsap.timeline({
+          delay: 0.5,
+          onComplete: () => ScrollTrigger.refresh(),
+        });
+        tl.to(
+          nebulaRef.current,
+          { scale: 1, opacity: 1, duration: 0.9, ease: "power2.out" },
+          0,
+        );
+        tl.to(
+          horizonRef.current,
+          { scaleX: 1, duration: 0.7, ease: "power3.out" },
+          0.2,
+        );
+        tl.to(
+          ".hero-c-star",
+          {
+            scale: 1,
+            opacity: 1,
+            stagger: { each: 0.06, from: "edges" },
+            duration: 0.4,
+            ease: "back.out(2.2)",
+          },
+          0.4,
+        );
+        tl.to(
+          ".hero-c-edge",
+          {
+            strokeDashoffset: 0,
+            opacity: 0.65,
+            stagger: { each: 0.06, from: "random" },
+            duration: 0.55,
+            ease: "power2.inOut",
+          },
+          0.7,
+        );
+        tl.to(
+          contentRef.current,
+          { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" },
+          0.8,
+        );
+        tl.to(
+          ".hero-star-cta",
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            stagger: { each: 0.15, from: "start" },
+            duration: 0.5,
+            ease: "back.out(2.0)",
+          },
+          1.0,
+        );
+        tl.to(
+          ".hcta-line",
+          { scaleX: 1, stagger: 0.1, duration: 0.45, ease: "power2.inOut" },
+          1.1,
+        );
+      } else {
+        // DESKTOP only — scroll-scrubbed pin
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: wrapRef.current,
+            start: "top top",
+            end: "+=500%",
+            scrub: 1.4,
+            pin: pinRef.current,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        });
+        tl.to(
+          nebulaRef.current,
+          { scale: 1, opacity: 1, duration: 1.3, ease: "power2.out" },
+          0.2,
+        );
+        tl.to(
+          horizonRef.current,
+          { scaleX: 1, duration: 1.0, ease: "power3.out" },
+          0.6,
+        );
+        tl.to(
+          ".hero-c-star",
+          {
+            scale: 1,
+            opacity: 1,
+            stagger: { each: 0.07, from: "edges" },
+            duration: 0.45,
+            ease: "back.out(2.2)",
+          },
+          1.5,
+        );
+        tl.to(
+          ".hero-c-edge",
+          {
+            strokeDashoffset: 0,
+            opacity: 0.65,
+            stagger: { each: 0.07, from: "random" },
+            duration: 0.65,
+            ease: "power2.inOut",
+          },
+          2.0,
+        );
+        tl.to(
+          ".hero-star-cta",
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            stagger: { each: 0.18, from: "start" },
+            duration: 0.55,
+            ease: "back.out(2.0)",
+          },
+          3.2,
+        );
+        tl.to(
+          ".hcta-line",
+          { scaleX: 1, stagger: 0.12, duration: 0.5, ease: "power2.inOut" },
+          3.35,
+        );
+        tl.to(
+          contentRef.current,
+          { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
+          3.0,
+        );
+        tl.to(
+          [".hero-c-edge", ".hero-c-star"],
+          { opacity: 0.06, duration: 0.7 },
+          5.0,
+        );
+        tl.to(
+          contentRef.current,
+          { opacity: 0, duration: 0.5, ease: "power2.in" },
+          5.8,
+        );
+        tl.to(nebulaRef.current, { opacity: 0, duration: 0.6 }, 5.9);
+        tl.to(horizonRef.current, { opacity: 0, duration: 0.4 }, 6.0);
+        tl.to(
+          dissolveRef.current,
+          { opacity: 1, duration: 0.8, ease: "power2.inOut" },
+          6.2,
+        );
+      }
+    }, wrapRef);
+    return () => ctx.revert();
+  }, [loaded]);
+
   const handleClick = useCallback((id: string) => {
     setTimeout(() => {
       if (id === "hero") {
@@ -632,7 +734,7 @@ export function Hero({ loaded }: { loaded: boolean }) {
               ✦
             </span> */}
             June 1, 2026
-             <i className="fa-solid fa-star hero-subline-dot"></i>
+            <i className="fa-solid fa-star hero-subline-dot"></i>
             {/* <span className="hero-subline-dot" aria-hidden="true">
               ✦
             </span> */}

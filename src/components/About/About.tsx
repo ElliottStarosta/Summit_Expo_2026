@@ -109,9 +109,9 @@ function useSpaceCanvas(canvasRef: React.RefObject<HTMLCanvasElement | null>) {
       const mobile = window.innerWidth < 768;
       const LAYERS = mobile
         ? [
-            { count: 25, speedMult: 0.007, rMax: 0.55, opMax: 0.4 },
-            { count: 15, speedMult: 0.02, rMax: 0.95, opMax: 0.6 },
-            { count: 6, speedMult: 0.045, rMax: 1.45, opMax: 0.85 },
+            { count: 14, speedMult: 0.007, rMax: 0.55, opMax: 0.4 },
+            { count: 8, speedMult: 0.02, rMax: 0.95, opMax: 0.6 },
+            { count: 3, speedMult: 0.045, rMax: 1.45, opMax: 0.85 },
           ]
         : [
             { count: 80, speedMult: 0.007, rMax: 0.55, opMax: 0.4 },
@@ -153,12 +153,17 @@ function useSpaceCanvas(canvasRef: React.RefObject<HTMLCanvasElement | null>) {
           }
         });
         nebulae = [];
-        const patches = [
-          { x: 0.12, y: 0.15, hue: 320 },
-          { x: 0.88, y: 0.08, hue: 270 },
-          { x: 0.05, y: 0.5, hue: 210 },
-          { x: 0.5, y: 0.35, hue: 300 },
-        ];
+        const patches = mobile
+          ? [
+              { x: 0.12, y: 0.15, hue: 320 },
+              { x: 0.88, y: 0.08, hue: 270 },
+            ]
+          : [
+              { x: 0.12, y: 0.15, hue: 320 },
+              { x: 0.88, y: 0.08, hue: 270 },
+              { x: 0.05, y: 0.5, hue: 210 },
+              { x: 0.5, y: 0.35, hue: 300 },
+            ];
         for (const p of patches) {
           nebulae.push({
             x: p.x * W,
@@ -502,6 +507,7 @@ function AboutTrailer({ youtubeId = "CqKa5i9keSc" }: { youtubeId?: string }) {
     noiseRef,
     () => {
       if (phase !== "idle") return; // skip drawing when not idle
+      if (window.innerWidth < 768) return;
       return (_canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
         const W = _canvas.offsetWidth,
           H = _canvas.offsetHeight;
@@ -925,7 +931,6 @@ function AboutTrailer({ youtubeId = "CqKa5i9keSc" }: { youtubeId?: string }) {
               className="fa-solid fa-location-dot"
               style={{ marginRight: "0.3em", opacity: 0.5 }}
             />
-           
           </div>
           <span className="at-hud__ping">
             <i
@@ -1228,7 +1233,33 @@ export function About() {
     const ctx = gsap.context(() => {
       // Reduce motion complexity on mobile
       const isMobile = window.innerWidth < 768;
-      const startPct = isMobile ? "98%" : "85%";
+      const startPct = isMobile ? "95%" : "85%";
+      const startPct2 = isMobile ? "88%" : "78%"; // left/right
+      const startPct3 = isMobile ? "82%" : "72%"; // grid
+      const startPct4 = isMobile ? "75%" : "65%"; // stats
+      const startPct5 = isMobile ? "68%" : "58%"; // closing
+
+      // if (isMobile) {
+      //   // If already in viewport (hero is only 100vh on mobile), animate immediately
+      //   const rect = headRef.current?.getBoundingClientRect();
+      //   if (rect && rect.top < window.innerHeight) {
+      //     gsap.set(headRef.current, { opacity: 0, y: isMobile ? 30 : 60 });
+      //     gsap.to(headRef.current, {
+      //       opacity: 1,
+      //       y: 0,
+      //       duration: 0.6,
+      //       ease: "power2.out",
+      //       delay: 0.1,
+      //     });
+      //   }
+      // }
+      if (isMobile) {
+        gsap.set([headRef.current, leftRef.current, rightRef.current], {
+          opacity: 1,
+          y: 0,
+          x: 0,
+        });
+      }
 
       gsap.fromTo(
         headRef.current,
@@ -1240,12 +1271,13 @@ export function About() {
           ease: "power2.out",
           scrollTrigger: {
             trigger: headRef.current,
-            start: `top ${startPct}`,
+            start: `top ${startPct2}`,
             toggleActions: "play none none none", // never reverse on mobile
             once: true, // always once — no reverse lag
           },
         },
       );
+
       gsap.fromTo(
         leftRef.current,
         { opacity: 0, x: isMobile ? 0 : -50, y: isMobile ? 20 : 0 },
@@ -1257,7 +1289,7 @@ export function About() {
           ease: "power2.out",
           scrollTrigger: {
             trigger: leftRef.current,
-            start: `top ${startPct}`,
+            start: `top ${startPct2}`,
             once: true,
           },
         },
@@ -1274,7 +1306,7 @@ export function About() {
           delay: 0.08,
           scrollTrigger: {
             trigger: rightRef.current,
-            start: `top ${startPct}`,
+            start: `top ${startPct2}`,
             once: true,
           },
         },
@@ -1295,7 +1327,7 @@ export function About() {
           ease: isMobile ? "power2.out" : "back.out(1.7)",
           scrollTrigger: {
             trigger: gridRef.current,
-            start: `top ${startPct}`,
+            start: `top ${startPct2}`,
             once: true,
           },
         },
@@ -1312,7 +1344,7 @@ export function About() {
           ease: "power2.out",
           scrollTrigger: {
             trigger: statsRef.current,
-            start: `top ${startPct}`,
+            start: `top ${startPct2}`,
             once: true,
           },
         },
@@ -1328,7 +1360,7 @@ export function About() {
           ease: "power2.out",
           scrollTrigger: {
             trigger: closingRef.current,
-            start: `top ${startPct}`,
+            start: `top ${startPct2}`,
             once: true,
           },
         },
@@ -1347,7 +1379,7 @@ export function About() {
             ease: "back.out(1.4)",
             scrollTrigger: {
               trigger: sectionRef.current,
-              start: `top ${startPct}`,
+              start: `top ${startPct2}`,
               once: true,
             },
             delay: i * 0.08,
@@ -1375,7 +1407,7 @@ export function About() {
             ease: "back.out(1.6)",
             scrollTrigger: {
               trigger: portalEntryRef.current,
-              start: `top ${startPct}`,
+              start: `top ${startPct2}`,
               once: true,
             },
           },
@@ -1392,7 +1424,7 @@ export function About() {
             ease: "back.out(1.6)",
             scrollTrigger: {
               trigger: portalExitRef.current,
-              start: `top ${startPct}`,
+              start: `top ${startPct2}`,
               once: true,
             },
           },
@@ -1507,7 +1539,7 @@ export function About() {
         </div>
       ))}
 
-      <RocketPath rocketSrc="/rocketship.webp" />
+      {window.innerWidth >= 768 && <RocketPath rocketSrc="/rocketship.webp" />}
 
       <div className="about-inner">
         <div ref={headRef} className="about-head">

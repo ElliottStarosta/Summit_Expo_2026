@@ -3,6 +3,7 @@
   background: #06040f;
   overflow: hidden;
   padding: 8rem 0 10rem;
+  z-index: 2;
 }
 
 /* Canvas layers */
