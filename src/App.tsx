@@ -1,5 +1,5 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
-import { ScrollTrigger } from './utils/gsap';
+import { useState, useEffect, lazy, Suspense } from "react";
+import { ScrollTrigger } from "./utils/gsap";
 import { Nav } from "./components/Navbar/Nav";
 import { Hero } from "./components/Hero/Hero";
 import { Cursor } from "./components/Cursor/Cursor";
@@ -8,7 +8,6 @@ import { PageLoader } from "./components/PageLoader/PageLoader";
 import { About } from "./components/About/About";
 // import { WaypointEditor } from "./components/Waypoint/WaypointEditor";
 // import { useSmoothScroll } from "./utils/useSmoothScroll";
-
 
 // Lazy load everything below the fold
 // These components' JS won't parse until they're needed
@@ -38,7 +37,7 @@ const Footer = lazy(() =>
 );
 
 function SectionFallback() {
-  return <div style={{ minHeight: "100vh", background: "var(--bg)" }} />;
+  return <div style={{ minHeight: "80px", background: "var(--bg)" }} />;
 }
 
 export default function App() {
@@ -46,7 +45,8 @@ export default function App() {
 
   useEffect(() => {
     if (!loaded) return;
-    const t = setTimeout(() => ScrollTrigger.refresh(), 600);
+    ScrollTrigger.refresh();
+    const t = setTimeout(() => ScrollTrigger.refresh(), 300);
     return () => clearTimeout(t);
   }, [loaded]);
 
