@@ -185,7 +185,8 @@ export function Nav() {
     gsap.set(nav, { xPercent: -50, yPercent: -130, opacity: 0 });
 
     const st = ScrollTrigger.create({
-      start: () => window.innerHeight * 5.5,
+      trigger: "#about",
+      start: "top 20%",
       onEnter() {
         gsap.to(nav, {
           xPercent: -50,

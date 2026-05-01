@@ -417,11 +417,11 @@
   transform-origin: center;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
+/* 
    MOBILE CONSTELLATION OVERLAY
    Stars are placed in website order (top->bottom) forming a natural path
    through the page sections. X button is fixed bottom-right.
-═══════════════════════════════════════════════════════════════════════════ */
+ */
 
 .nav__overlay {
   position: fixed;
