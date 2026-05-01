@@ -5,7 +5,6 @@ import "./PracticalInfo.css";
 import { useVisibleCanvas } from "../../utils/useVisibleCanvas";
 import LazySpaceMap from "./LazySpaceMap";
 
-
 // Sponsorship PDF Modal (portal-based)
 function SponsorshipPDF({
   pdfUrl = "/sponsorship-package.pdf",
@@ -32,8 +31,7 @@ function SponsorshipPDF({
     setMounted(false); // will flip to true after portal mounts
   };
 
-  // After state flip to open=true, React renders the portal.
-  // We detect mount via a layout effect inside the portal child.
+  // After state flip to open=true, React renders the portal. We detect mount via a layout effect inside the portal child.
   const afterMount = () => {
     setMounted(true);
   };
@@ -332,11 +330,41 @@ function SponsorshipPDF({
 
             {/* PDF EMBED */}
             <div className="spdf-embed-wrap">
-              <iframe
-                src={`${pdfUrl}#view=FitH`}
-                className="spdf-embed"
-                title="Sponsorship Package"
-              />
+              {/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ? (
+                <div className="spdf-mobile-fallback">
+                  <div className="spdf-mobile-fallback__icon">
+                    <i className="fa-solid fa-file-pdf" />
+                  </div>
+                  <p className="spdf-mobile-fallback__title">
+                    Sponsorship Package
+                  </p>
+                  <p className="spdf-mobile-fallback__sub">
+                    PDF preview isn't supported on mobile browsers.
+                  </p>
+                  <a
+                    href={pdfUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="spdf-mobile-fallback__btn"
+                  >
+                    <i className="fa-solid fa-arrow-up-right-from-square" />{" "}
+                    Open PDF
+                  </a>
+                  <a
+                    href={pdfUrl}
+                    download
+                    className="spdf-mobile-fallback__btn spdf-mobile-fallback__btn--dl"
+                  >
+                    <i className="fa-solid fa-download" /> Download
+                  </a>
+                </div>
+              ) : (
+                <iframe
+                  src={`${pdfUrl}#toolbar=1&navpanes=1&scrollbar=1&view=FitH`}
+                  className="spdf-embed"
+                  title="Sponsorship Package"
+                />
+              )}
             </div>
 
             {/* BOTTOM HUD */}
@@ -353,7 +381,6 @@ function SponsorshipPDF({
                   className="fa-solid fa-location-dot"
                   style={{ marginRight: "0.3em", opacity: 0.5 }}
                 />
-                
               </div>
               <span className="spdf-hud-bottom__ping">
                 <i
@@ -594,7 +621,7 @@ export function PracticalInfo() {
 
           ScrollTrigger.create({
             trigger: row,
-            start: `top ${window.innerWidth < 768 ? '95%' : '82%'}`,
+            start: `top ${window.innerWidth < 768 ? "95%" : "82%"}`,
             onEnter() {
               gsap.to(row.querySelectorAll(".pi-animate"), {
                 opacity: 1,

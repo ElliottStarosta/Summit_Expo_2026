@@ -659,10 +659,9 @@
   margin-top: auto;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
+/* 
    SPONSORSHIP PDF CARD
-═══════════════════════════════════════════════════════════════════════════════ */
-
+ */
 .spdf-card {
   display: flex;
   align-items: center;
@@ -824,10 +823,10 @@
   color: #fff;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
+/* 
    SPONSORSHIP PDF MODAL — portalled to document.body
    z-index 9500 puts it above everything
-═══════════════════════════════════════════════════════════════════════════════ */
+ */
 
 .spdf-backdrop {
   position: fixed;
@@ -839,6 +838,7 @@
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
+  padding-bottom: env(safe-area-inset-bottom, 1.5rem);
 }
 
 .spdf-modal-wrap {
@@ -880,7 +880,7 @@
 .spdf-viewer {
   position: relative;
   width: 100%;
-  height: min(88vh, 960px);
+  height: min(82vh, 960px);
   background: linear-gradient(
     160deg,
     rgba(10, 5, 28, 0.99) 0%,
@@ -897,6 +897,7 @@
     0 24px 80px rgba(0, 0, 0, 0.9),
     0 0 120px rgba(110, 55, 218, 0.2),
     inset 0 0 40px rgba(0, 0, 0, 0.55);
+  min-height: 0;
 }
 
 /* Scan line */
@@ -962,7 +963,10 @@
   background: rgba(5, 2, 18, 0.98);
   border-bottom: 1px solid rgba(110, 72, 205, 0.25);
   flex-shrink: 0;
+  flex-wrap: wrap;
+  overflow: visible;
 }
+
 .spdf-hud-top__left {
   display: flex;
   align-items: center;
@@ -1165,16 +1169,84 @@
   color: #fff;
 }
 
+
 /* PDF EMBED */
 .spdf-embed-wrap {
   flex: 1;
-  overflow: hidden;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  min-height: 0;
 }
 .spdf-embed {
   width: 100%;
   height: 100%;
+  min-height: 600px;
   border: none;
   display: block;
+}
+
+.spdf-mobile-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  height: 100%;
+  padding: 2.5rem 2rem;
+  text-align: center;
+}
+.spdf-mobile-fallback__icon {
+  font-size: 3.5rem;
+  color: rgba(152, 95, 255, 0.6);
+  filter: drop-shadow(0 0 20px rgba(130, 70, 255, 0.4));
+}
+.spdf-mobile-fallback__title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #fff;
+  margin: 0;
+}
+.spdf-mobile-fallback__sub {
+  font-family: var(--font-ui);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  color: rgba(175, 145, 220, 0.65);
+  margin: 0;
+  text-transform: uppercase;
+}
+.spdf-mobile-fallback__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-ui);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(80, 218, 218, 0.9);
+  text-decoration: none;
+  border: 1px solid rgba(58, 180, 180, 0.35);
+  border-radius: 99px;
+  padding: 0.6rem 1.4rem;
+  background: rgba(35, 162, 162, 0.1);
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  width: fit-content;
+}
+.spdf-mobile-fallback__btn:hover {
+  background: rgba(42, 175, 175, 0.22);
+  border-color: rgba(70, 198, 198, 0.6);
+  color: #fff;
+}
+.spdf-mobile-fallback__btn--dl {
+  color: rgba(152, 95, 255, 0.9);
+  border-color: rgba(130, 82, 218, 0.35);
+  background: rgba(95, 48, 178, 0.1);
+}
+.spdf-mobile-fallback__btn--dl:hover {
+  background: rgba(115, 58, 200, 0.22);
+  border-color: rgba(172, 115, 255, 0.6);
+  color: #fff;
 }
 
 /* BOTTOM HUD */
@@ -1282,8 +1354,42 @@
   .pi-countdown {
     min-width: unset;
   }
-  .spdf-viewer {
-    height: min(92vh, 800px);
+   .spdf-viewer {
+    height: 100dvh;
+    border-radius: 0;
+  }
+  .spdf-backdrop {
+    padding: 0;
+    align-items: stretch;
+  }
+  .spdf-modal-wrap {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    perspective: none;
+  }
+  .spdf-modal-orbit {
+    display: none;
+  }
+  .spdf-hud-top {
+    height: auto;
+    min-height: 44px;
+    padding: 0.4rem 0.75rem;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .spdf-hud__net {
+    display: none;
+  }
+  .spdf-bar__dl {
+    display: none;
+  }
+  .spdf-hud-bottom {
+    height: 36px;
+    padding-bottom: env(safe-area-inset-bottom, 0.5rem);
+  }
+  .spdf-embed {
+    min-height: 800px;
   }
   .spdf-modal-orbit {
     display: none;
@@ -1293,5 +1399,14 @@
   }
   .spdf-hud-bottom__coords {
     display: none;
+  }
+}
+
+@media (max-width: 640px) and (orientation: landscape) {
+  .spdf-viewer {
+    height: 92dvh;
+  }
+  .spdf-embed {
+    min-height: 500px;
   }
 }
