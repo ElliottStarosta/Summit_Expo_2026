@@ -1,56 +1,14 @@
+/*  Section shell  */
 .lu {
   position: relative;
-  background: #020010;
+  background: #06040f;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 0 6rem;
-  padding-bottom: 0;
+  padding: 0 0 5rem;
   overflow: hidden;
-  /* min-height: 100vh; */
 }
 
-.lu__constellation-bridge {
-  position: relative;
-  width: 100%;
-  height: 260px; /* tall enough for the full path + target label */
-  flex-shrink: 0;
-  /* overflow: visible so the SVG lines can bleed past the bottom edge
-     and visually enter PracticalInfo — the SVG uses overflow:visible too */
-  overflow: visible;
-  z-index: 4; /* above the lu__space-canvas (z-index: 0) */
-  pointer-events: none;
-}
-
-/* Gradient wipe — Lineup blue (#020010) fades down to PI teal (#03010c).
-   Two separate divs so each can be position:absolute without fighting. */
-.lu__cb-fade {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    #020010 0%,
-    rgba(2, 0, 16, 0.88) 18%,
-    rgba(2, 0, 14, 0.55) 45%,
-    rgba(3, 1, 12, 0.55) 55%,
-    rgba(3, 1, 12, 0.88) 82%,
-    #03010c 100%
-  );
-  z-index: 1;
-}
-
-/* The SVG — fills the bridge strip, overflow:visible lets lines escape */
-.lu__cb-svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  /* overflow set inline on the element as well */
-}
-
-/* Canvas layers */
 .lu__space-canvas {
   position: absolute;
   inset: 0;
@@ -60,53 +18,30 @@
   z-index: 0;
 }
 
-/* Nebula — animated breathing blobs */
 .lu__nebula {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 1;
   background:
-    radial-gradient(
-      ellipse 55% 40% at 50% 45%,
-      rgba(60, 30, 180, 0.09) 0%,
-      transparent 65%
-    ),
-    radial-gradient(
-      ellipse 40% 55% at 12% 60%,
-      rgba(80, 40, 160, 0.11) 0%,
-      transparent 60%
-    ),
-    radial-gradient(
-      ellipse 35% 50% at 88% 35%,
-      rgba(40, 100, 200, 0.08) 0%,
-      transparent 55%
-    ),
-    radial-gradient(
-      ellipse 50% 30% at 65% 80%,
-      rgba(140, 40, 180, 0.07) 0%,
-      transparent 60%
-    );
+    radial-gradient(ellipse 55% 40% at 50% 45%, rgba(60,30,180,0.08)  0%, transparent 65%),
+    radial-gradient(ellipse 40% 55% at 12% 60%, rgba(80,40,160,0.10)  0%, transparent 60%),
+    radial-gradient(ellipse 35% 50% at 88% 35%, rgba(40,100,200,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 30% at 65% 80%, rgba(140,40,180,0.06) 0%, transparent 60%);
   animation: luNebula 14s ease-in-out infinite alternate;
 }
 @keyframes luNebula {
-  from {
-    opacity: 0.55;
-    /* transform: scale(1); */
-  }
-  to {
-    opacity: 1;
-    /* transform: scale(1.04); */
-  }
+  from { opacity: 0.5; }
+  to   { opacity: 1;   }
 }
 
-/* Header */
+/*  Header  */
 .lu__header {
   position: relative;
   z-index: 2;
   text-align: center;
-  margin-bottom: 2.5rem;
-  padding: 0 2rem;
+  margin-bottom: 2rem;
+  padding: 4rem 2rem 0;
   flex-shrink: 0;
 }
 
@@ -119,63 +54,58 @@
   font-size: 0.58rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: rgba(100, 160, 220, 0.6);
+  color: rgba(100,160,220,0.6);
   margin-bottom: 0.85rem;
+  opacity: 0;
 }
 .lu-pip {
   display: inline-block;
-  width: 5px;
-  height: 5px;
+  width: 5px; height: 5px;
   border-radius: 50%;
-  background: rgba(80, 160, 255, 0.9);
-  box-shadow: 0 0 8px rgba(80, 160, 255, 0.8);
+  background: rgba(80,160,255,0.9);
+  box-shadow: 0 0 8px rgba(80,160,255,0.8);
 }
-.lu-pip--sm {
-  width: 4px;
-  height: 4px;
-}
+.lu-pip--sm { width: 4px; height: 4px; }
 
 .lu-title {
   font-family: var(--font-display, "Orbitron", sans-serif);
-  font-size: clamp(2.6rem, 6vw, 5.5rem);
+  font-size: clamp(2.4rem, 6vw, 5rem);
   font-weight: 900;
   letter-spacing: 0.1em;
   margin: 0 0 0.85rem;
-  background: linear-gradient(
-    148deg,
-    #ffffff 0%,
-    #c8e0ff 20%,
-    #8ab4e8 40%,
-    #5080c8 60%,
-    #3050a8 80%,
-    #1a2880 100%
-  );
+  background: linear-gradient(148deg, #fff 0%, #c8e0ff 20%, #8ab4e8 40%, #5080c8 60%, #3050a8 80%, #1a2880 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  opacity: 0;
 }
 .lu-sub {
-  font-family: var(--font-tagline, "Cormorant Garamond", Georgia, serif);
-  font-size: clamp(0.9rem, 1.5vw, 1.15rem);
+  font-family: var(--font-tagline, "Syne", sans-serif);
+  font-size: clamp(0.85rem, 1.4vw, 1.05rem);
   font-style: italic;
   font-weight: 300;
-  color: rgba(150, 190, 230, 0.7);
-  letter-spacing: 0.06em;
+  color: rgba(200,225,255,0.75);
+  letter-spacing: 0.05em;
+  opacity: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
 }
 
-/* Map — fills the full width */
+/*  Star map  */
 .lu__map {
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 1400px;
-  padding: 0 1.5rem;
-  height: max(340px, calc(200px + var(--n, 6) * 10px));
+  max-width: 1440px;
+  padding: 0 2rem;
+  height: max(380px, calc(220px + var(--n, 6) * 18px));
   flex-shrink: 0;
   will-change: transform, opacity;
 }
 
-/* SVG lines */
 .lu__svg {
   position: absolute;
   inset: 0;
@@ -183,524 +113,351 @@
   height: 100%;
   overflow: visible;
   pointer-events: none;
+  z-index: 1;
 }
 
-.lu-edge {
-  fill: none;
-  stroke-linecap: round;
-}
+.lu-edge { fill: none; stroke-linecap: round; }
 
 .lu-edge--glow {
-  stroke: rgba(60, 100, 200, 0.18);
-  stroke-width: 6;
-  filter: blur(4px);
-  transition:
-    stroke 0.3s,
-    stroke-width 0.3s;
+  stroke: rgba(60,100,200,0.15);
+  stroke-width: 5;
+  filter: blur(3px);
+  transition: stroke 0.3s, stroke-width 0.3s;
 }
 .lu-edge--glow.lu-edge--lit {
-  stroke: rgba(80, 160, 255, 0.4);
-  stroke-width: 12;
+  stroke: rgba(80,160,255,0.35);
+  stroke-width: 10;
 }
 
 .lu-edge--dash {
-  stroke: rgba(120, 180, 255, 0.38);
+  stroke: rgba(120,180,255,0.32);
   stroke-width: 1;
-  stroke-dasharray: 6 10;
-  animation: luDashMarch 18s linear infinite;
-  transition:
-    stroke 0.3s,
-    stroke-width 0.3s;
+  stroke-dasharray: 5 9;
+  animation: luDashMarch 20s linear infinite;
+  transition: stroke 0.3s, stroke-width 0.3s;
 }
 .lu-edge--dash.lu-edge--lit {
-  stroke: rgba(160, 210, 255, 0.9);
-  stroke-width: 1.8;
-  stroke-dasharray: 8 6;
+  stroke: rgba(160,210,255,0.85);
+  stroke-width: 1.6;
+  stroke-dasharray: 7 5;
 }
+@keyframes luDashMarch { to { stroke-dashoffset: -200; } }
 
-@keyframes luDashMarch {
-  to {
-    stroke-dashoffset: -200;
-  }
-}
-
-/* Star node */
+/*  Node (star)  */
 .lu-node {
   position: absolute;
   transform: translate(-50%, -50%);
-  z-index: 3;
+  z-index: 5;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 20px;
+  padding: 22px;
   outline: none;
+  -webkit-tap-highlight-color: transparent;
   will-change: transform;
 }
 
 .lu-node__outer {
   position: absolute;
-  width: 90px;
-  height: 90px;
-  top: 50%;
-  left: 50%;
+  width: 80px; height: 80px;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    color-mix(in srgb, var(--nc, #5080ff) 18%, transparent) 0%,
-    transparent 68%
-  );
+  background: radial-gradient(circle,
+    color-mix(in srgb, var(--nc, #5080ff) 16%, transparent) 0%,
+    transparent 68%);
   animation: luHalo 3.5s ease-in-out infinite alternate;
   pointer-events: none;
   will-change: transform, opacity;
 }
 .lu-node__mid {
   position: absolute;
-  width: 30px;
-  height: 30px;
-  top: 50%;
-  left: 50%;
+  width: 28px; height: 28px;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    color-mix(in srgb, var(--nc, #5080ff) 65%, white) 0%,
-    transparent 72%
-  );
+  background: radial-gradient(circle,
+    color-mix(in srgb, var(--nc, #5080ff) 60%, white) 0%,
+    transparent 72%);
   animation: luMid 2.6s ease-in-out infinite alternate;
   pointer-events: none;
 }
 .lu-node__core {
   display: block;
-  width: 14px;
-  height: 14px;
+  width: 12px; height: 12px;
   position: relative;
   border-radius: 50%;
   background: color-mix(in srgb, var(--nc, #5080ff) 50%, white);
   box-shadow:
-    0 0 10px color-mix(in srgb, var(--nc, #5080ff) 90%, transparent),
-    0 0 26px color-mix(in srgb, var(--nc, #5080ff) 50%, transparent);
+    0 0 8px  color-mix(in srgb, var(--nc, #5080ff) 90%, transparent),
+    0 0 22px color-mix(in srgb, var(--nc, #5080ff) 45%, transparent);
   animation: luCore 2.2s ease-in-out infinite alternate;
-  transition:
-    width 0.2s,
-    height 0.2s,
-    box-shadow 0.2s;
-  will-change: width, height, opacity, box-shadow;
+  transition: width 0.2s, height 0.2s, box-shadow 0.2s;
+  will-change: opacity;
 }
 
 @keyframes luHalo {
-  from {
-    opacity: 0.2;
-    transform: translate(-50%, -50%) scale(0.85);
-  }
-  to {
-    opacity: 0.7;
-    transform: translate(-50%, -50%) scale(1.18);
-  }
+  from { opacity: 0.2; transform: translate(-50%, -50%) scale(0.85); }
+  to   { opacity: 0.65; transform: translate(-50%, -50%) scale(1.15); }
 }
-@keyframes luMid {
-  from {
-    opacity: 0.4;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes luCore {
-  from {
-    opacity: 0.7;
-  }
-  to {
-    opacity: 1;
-  }
-}
+@keyframes luMid  { from { opacity: 0.4; } to { opacity: 1; } }
+@keyframes luCore { from { opacity: 0.7; } to { opacity: 1; } }
 
 /* Staggered twinkle */
-.lu-node:nth-child(5n + 1) .lu-node__core {
-  animation-delay: 0s;
-  animation-duration: 2.7s;
-}
-.lu-node:nth-child(5n + 2) .lu-node__core {
-  animation-delay: 0.6s;
-  animation-duration: 3.4s;
-}
-.lu-node:nth-child(5n + 3) .lu-node__core {
-  animation-delay: 1.1s;
-  animation-duration: 2s;
-}
-.lu-node:nth-child(5n + 4) .lu-node__core {
-  animation-delay: 0.3s;
-  animation-duration: 4.1s;
-}
-.lu-node:nth-child(5n + 5) .lu-node__core {
-  animation-delay: 0.9s;
-  animation-duration: 2.8s;
-}
+.lu-node:nth-child(5n+1) .lu-node__core { animation-delay: 0s;   animation-duration: 2.7s; }
+.lu-node:nth-child(5n+2) .lu-node__core { animation-delay: 0.6s; animation-duration: 3.4s; }
+.lu-node:nth-child(5n+3) .lu-node__core { animation-delay: 1.1s; animation-duration: 2s;   }
+.lu-node:nth-child(5n+4) .lu-node__core { animation-delay: 0.3s; animation-duration: 4.1s; }
+.lu-node:nth-child(5n+5) .lu-node__core { animation-delay: 0.9s; animation-duration: 2.8s; }
 
-/* Hover / active */
+/* Hover / active states */
 .lu-node--hov .lu-node__core,
 .lu-node--active .lu-node__core {
-  width: 22px;
-  height: 22px;
+  width: 20px; height: 20px;
   background: white;
   box-shadow:
-    0 0 18px color-mix(in srgb, var(--nc, #5080ff) 95%, transparent),
-    0 0 45px color-mix(in srgb, var(--nc, #5080ff) 60%, transparent),
-    0 0 80px color-mix(in srgb, var(--nc, #5080ff) 28%, transparent);
+    0 0 16px color-mix(in srgb, var(--nc, #5080ff) 95%, transparent),
+    0 0 40px color-mix(in srgb, var(--nc, #5080ff) 55%, transparent),
+    0 0 72px color-mix(in srgb, var(--nc, #5080ff) 25%, transparent);
 }
 .lu-node--hov .lu-node__outer,
 .lu-node--active .lu-node__outer {
-  width: 120px;
-  height: 120px;
-  opacity: 1;
+  width: 110px; height: 110px; opacity: 1;
 }
 
 /* Diffraction spikes */
 .lu-node__spikes {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity 0.18s;
 }
 .lu-node--hov .lu-node__spikes,
-.lu-node--active .lu-node__spikes {
-  opacity: 1;
-}
+.lu-node--active .lu-node__spikes { opacity: 1; }
 
-.s {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  border-radius: 99px;
-}
-.s--h {
-  width: 90px;
-  height: 1px;
-  margin-top: -0.5px;
-  margin-left: -45px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255, 255, 255, 0.7),
-    transparent
-  );
-  opacity: 0.55;
-}
-.s--v {
-  width: 1px;
-  height: 90px;
-  margin-top: -45px;
-  margin-left: -0.5px;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgba(255, 255, 255, 0.7),
-    transparent
-  );
-  opacity: 0.55;
-}
-.s--d1 {
-  width: 55px;
-  height: 0.7px;
-  margin-top: -0.35px;
-  margin-left: -27px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255, 255, 255, 0.5),
-    transparent
-  );
-  transform: rotate(45deg);
-  opacity: 0.28;
-}
-.s--d2 {
-  width: 55px;
-  height: 0.7px;
-  margin-top: -0.35px;
-  margin-left: -27px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255, 255, 255, 0.5),
-    transparent
-  );
-  transform: rotate(-45deg);
-  opacity: 0.28;
-}
+.s { position: absolute; top: 50%; left: 50%; border-radius: 99px; }
+.s--h  { width: 80px;  height: 1px;   margin-top: -0.5px; margin-left: -40px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.7), transparent); opacity: 0.5; }
+.s--v  { width: 1px;   height: 80px;  margin-top: -40px;  margin-left: -0.5px; background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.7), transparent); opacity: 0.5; }
+.s--d1 { width: 48px;  height: 0.7px; margin-top: -0.35px; margin-left: -24px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.45), transparent); transform: rotate(45deg);  opacity: 0.25; }
+.s--d2 { width: 48px;  height: 0.7px; margin-top: -0.35px; margin-left: -24px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.45), transparent); transform: rotate(-45deg); opacity: 0.25; }
 
-/* Pulse rings on active */
+/* Pulse rings */
 .lu-node__ring {
   position: absolute;
-  width: 60px;
-  height: 60px;
-  top: 50%;
-  left: 50%;
+  width: 54px; height: 54px;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%) scale(0.4);
   border-radius: 50%;
-  border: 1.5px solid color-mix(in srgb, var(--nc, #5080ff) 65%, transparent);
+  border: 1.5px solid color-mix(in srgb, var(--nc, #5080ff) 60%, transparent);
   animation: luRing 2.8s ease-out infinite;
   pointer-events: none;
-  will-change: transform, opacity;
 }
-.lu-node__ring--2 {
-  animation-delay: 1.4s;
-  border-color: rgba(80, 160, 255, 0.35);
-}
+.lu-node__ring--2 { animation-delay: 1.4s; border-color: rgba(80,160,255,0.3); }
 @keyframes luRing {
-  0% {
-    transform: translate(-50%, -50%) scale(0.4);
-    opacity: 0.9;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(3.8);
-    opacity: 0;
-  }
+  0%   { transform: translate(-50%, -50%) scale(0.4); opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) scale(3.6); opacity: 0;   }
 }
 
 /* Name tag */
 .lu-node__tag {
   position: absolute;
-  top: calc(100% + 18px - 30px);
+  top: calc(50% + 14px);
+  z-index: 4;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
+  gap: 2px;
   white-space: nowrap;
   pointer-events: none;
 }
 .lu-node__tag-id {
   font-family: var(--font-ui, "Chakra Petch", monospace);
-  font-size: 0.44rem;
+  font-size: 0.4rem;
   letter-spacing: 0.2em;
-  color: var(--text-1);
+  color: rgba(160,200,255,0.7);
   text-transform: uppercase;
 }
 .lu-node__tag-name {
   font-family: var(--font-display, "Orbitron", sans-serif);
-  font-size: 0.62rem;
+  font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.1em;
-  color: rgba(180, 215, 255, 0.65);
+  color: rgba(230,240,255,0.9);
   transition: color 0.2s;
 }
 .lu-node--hov .lu-node__tag-name,
-.lu-node--active .lu-node__tag-name {
-  color: #fff;
-}
+.lu-node--active .lu-node__tag-name { color: #fff; }
 
-/* Hover tooltip */
+/*  Tooltip  */
 .lu-tooltip {
   position: absolute;
   z-index: 10;
-  width: 230px;
-  padding: 1rem 1.1rem 0.9rem;
-  border-radius: 12px;
-  background: rgba(2, 0, 18, 0.95);
-  border: 1px solid rgba(80, 130, 200, 0.25);
-  backdrop-filter: blur(20px);
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.7),
-    0 0 40px rgba(60, 100, 200, 0.08);
+  width: 210px;
+  padding: 0.85rem 1rem 0.8rem;
+  border-radius: 10px;
+  background: rgba(4,2,18,0.96);
+  border: 1px solid rgba(80,130,200,0.22);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.65), 0 0 36px rgba(60,100,200,0.06);
   pointer-events: none;
 }
-.lu-tooltip__top {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  margin-bottom: 0.65rem;
-}
-.lu-tooltip__photo {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-  border: 1.5px solid rgba(80, 140, 220, 0.55);
-}
-.lu-tooltip__avatar {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  background: rgba(60, 100, 200, 0.2);
-  border: 1.5px solid var(--tc, #5080ff);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display, "Orbitron", sans-serif);
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #fff;
+.lu-tooltip__desig {
+  font-family: var(--font-ui, "Chakra Petch", monospace);
+  font-size: 0.44rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--tc, #5080ff);
+  margin-bottom: 0.3rem;
+  opacity: 0.85;
 }
 .lu-tooltip__name {
   font-family: var(--font-display, "Orbitron", sans-serif);
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   color: #fff;
-  margin: 0 0 0.2rem;
+  margin-bottom: 0.2rem;
+  line-height: 1.3;
 }
 .lu-tooltip__role {
   font-family: var(--font-ui, "Chakra Petch", monospace);
-  font-size: 0.5rem;
+  font-size: 0.58rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(80, 160, 255, 0.75);
-  margin: 0;
+  color: rgba(100,160,220,0.65);
+  margin-bottom: 0.55rem;
 }
-.lu-tooltip__bio {
-  font-family: var(--font-body, sans-serif);
-  font-size: 0.72rem;
-  font-weight: 300;
-  line-height: 1.6;
-  color: rgba(160, 195, 230, 0.7);
-  margin: 0 0 0.6rem;
-}
-.lu-tooltip__cta {
-  font-family: var(--font-ui, "Chakra Petch", monospace);
-  font-size: 0.5rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(130, 180, 255, 0.67);
-  margin: 0;
+.lu-tooltip__project {
+  font-family: var(--font-tagline, "Syne", sans-serif);
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--tc, #5080ff);
+  opacity: 0.9;
+  line-height: 1.4;
 }
 .lu-tooltip__corner {
   position: absolute;
-  width: 8px;
-  height: 8px;
+  width: 7px; height: 7px;
   pointer-events: none;
 }
-.lu-tooltip__corner--tl {
-  top: -1px;
-  left: -1px;
-  border-top: 1.5px solid var(--tc, #5080ff);
-  border-left: 1.5px solid var(--tc, #5080ff);
+.lu-tooltip__corner--tl { top: -1px; left: -1px;  border-top: 1.5px solid var(--tc, #5080ff); border-left: 1.5px solid var(--tc, #5080ff); }
+.lu-tooltip__corner--tr { top: -1px; right: -1px; border-top: 1.5px solid var(--tc, #5080ff); border-right: 1.5px solid var(--tc, #5080ff); }
+
+/*  Hint  */
+.lu__hint {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 1.5rem;
+  font-family: var(--font-ui, "Chakra Petch", monospace);
+  font-size: 0.52rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(120,180,255,0.45);
+  animation: luHintPulse 4s ease-in-out infinite;
 }
-.lu-tooltip__corner--tr {
-  top: -1px;
-  right: -1px;
-  border-top: 1.5px solid var(--tc, #5080ff);
-  border-right: 1.5px solid var(--tc, #5080ff);
+@keyframes luHintPulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 0.85; }
 }
 
-/* Modal */
+/*  Modal  */
 .lu-modal-backdrop {
   position: fixed;
   inset: 0;
   z-index: 900;
-  background: rgba(0, 0, 12, 0.88);
-  backdrop-filter: blur(10px) saturate(1.3);
+  background: rgba(0,0,10,0.85);
+  backdrop-filter: blur(10px) saturate(1.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 1rem;
+  /* Allow scroll on very small screens */
+  overflow-y: auto;
 }
+
 .lu-modal {
   position: relative;
   width: 100%;
-  max-width: 520px;
-  max-height: 92vh;
-  overflow: hidden;
-  padding: 0;
-  border-radius: 20px;
-  background: linear-gradient(
-    160deg,
-    rgba(8, 4, 28, 0.99) 0%,
-    rgba(2, 0, 14, 0.99) 100%
-  );
-  border: 1px solid
-    color-mix(in srgb, var(--mc, #5080ff) 40%, rgba(60, 100, 180, 0.15));
+  max-width: 480px;
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(8,4,28,0.99) 0%, rgba(2,0,14,0.99) 100%);
+  border: 1px solid color-mix(in srgb, var(--mc, #5080ff) 35%, rgba(60,100,180,0.12));
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.03),
-    0 0 0 1px color-mix(in srgb, var(--mc, #5080ff) 20%, transparent),
-    0 24px 80px rgba(0, 0, 0, 0.85),
-    0 0 120px color-mix(in srgb, var(--mc, #5080ff) 12%, transparent);
+    inset 0 0 0 1px rgba(255,255,255,0.025),
+    0 0 0 1px color-mix(in srgb, var(--mc, #5080ff) 18%, transparent),
+    0 20px 70px rgba(0,0,0,0.8),
+    0 0 100px color-mix(in srgb, var(--mc, #5080ff) 10%, transparent);
   transform-origin: center center;
-}
-.lu-modal::-webkit-scrollbar {
-  width: 3px;
-}
-.lu-modal::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--mc, #5080ff) 30%, transparent);
-  border-radius: 2px;
+  /* No overflow:hidden so we can have absolute corners outside */
+  overflow: visible;
 }
 
-/* Scrollable inner — keeps border-radius on the outer shell */
 .lu-modal__inner {
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 92vh;
-  padding: 0 0 2rem;
-  border-radius: 20px;
+  max-height: min(85vh, 650px);
+  padding: 0 0 1.8rem;
+  border-radius: 18px;
 }
-.lu-modal__inner::-webkit-scrollbar {
-  width: 3px;
-}
+.lu-modal__inner::-webkit-scrollbar { width: 3px; }
 .lu-modal__inner::-webkit-scrollbar-thumb {
   background: color-mix(in srgb, var(--mc, #5080ff) 30%, transparent);
   border-radius: 2px;
 }
 
+/* Scan line */
 .lu-modal__scan {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0; left: 0; right: 0;
   height: 2px;
-  background: linear-gradient(
-    90deg,
+  background: linear-gradient(90deg,
     transparent 0%,
-    color-mix(in srgb, var(--mc, #5080ff) 60%, transparent) 30%,
-    rgba(200, 230, 255, 0.6) 50%,
-    color-mix(in srgb, var(--mc, #5080ff) 60%, transparent) 70%,
-    transparent 100%
-  );
-  box-shadow: 0 0 12px color-mix(in srgb, var(--mc, #5080ff) 80%, transparent);
+    color-mix(in srgb, var(--mc, #5080ff) 55%, transparent) 30%,
+    rgba(200,230,255,0.55) 50%,
+    color-mix(in srgb, var(--mc, #5080ff) 55%, transparent) 70%,
+    transparent 100%);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--mc, #5080ff) 75%, transparent);
   transform-origin: left center;
-  border-radius: 0 0 2px 2px;
+  border-radius: 18px 18px 0 0;
   z-index: 2;
 }
+
 .lu-modal__close {
   position: absolute;
-  top: 1rem;
-  right: 1.1rem;
+  top: 0.9rem; right: 1rem;
   z-index: 3;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
   cursor: pointer;
-  color: rgba(100, 150, 200, 0.55);
-  font-size: 0.78rem;
-  transition:
-    background 0.2s,
-    color 0.2s,
-    border-color 0.2s;
+  color: rgba(100,150,200,0.5);
+  font-size: 0.75rem;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 .lu-modal__close:hover {
-  background: rgba(60, 100, 200, 0.14);
-  border-color: rgba(80, 140, 255, 0.45);
+  background: rgba(60,100,200,0.12);
+  border-color: rgba(80,140,255,0.4);
   color: #fff;
 }
 
+/* Designation row */
 .lu-modal__desig-wrap {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 1.4rem 1.8rem 0.8rem;
+  gap: 0.55rem;
+  padding: 1.3rem 1.6rem 0.7rem;
 }
 .lu-modal__desig-dot {
-  width: 5px;
-  height: 5px;
+  width: 5px; height: 5px;
   border-radius: 50%;
   flex-shrink: 0;
   background: var(--mc, #5080ff);
@@ -708,569 +465,138 @@
   animation: modalDotPulse 2s ease-in-out infinite;
 }
 @keyframes modalDotPulse {
-  0%,
-  100% {
-    opacity: 0.7;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.4);
-  }
+  0%, 100% { opacity: 0.7; transform: scale(1);   }
+  50%       { opacity: 1;   transform: scale(1.4); }
 }
 .lu-modal__desig {
   font-family: var(--font-ui, "Chakra Petch", monospace);
-  font-size: 0.52rem;
+  font-size: 0.48rem;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgba(100, 150, 200, 0.55);
+  color: rgba(100,150,200,0.5);
 }
 .lu-modal__desig-line {
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, rgba(80, 130, 200, 0.25), transparent);
+  background: linear-gradient(90deg, rgba(80,130,200,0.22), transparent);
 }
 
-.lu-modal__hero {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 0 1.8rem 1.4rem;
-}
-.lu-modal__photo-wrap {
-  position: relative;
-  flex-shrink: 0;
-  width: 96px;
-  height: 96px;
-}
-.lu-modal__photo {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--mc, #5080ff);
-  filter: drop-shadow(
-      0 0 8px color-mix(in srgb, var(--mc, #5080ff) 60%, transparent)
-    )
-    drop-shadow(
-      0 0 20px color-mix(in srgb, var(--mc, #5080ff) 30%, transparent)
-    );
-}
-.lu-modal__avatar {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--mc, #5080ff) 18%, rgba(4, 2, 18, 0.9));
-  border: 2px solid var(--mc, #5080ff);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display, "Orbitron", sans-serif);
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #fff;
-}
-.lu-modal__orbit {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-}
-.lu-modal__orbit--1 {
-  inset: -10px;
-  border: 1px solid color-mix(in srgb, var(--mc, #5080ff) 25%, transparent);
-  animation: modalOrbit 3.2s ease-out infinite;
-}
-.lu-modal__orbit--2 {
-  inset: -20px;
-  border: 1px solid rgba(80, 140, 200, 0.15);
-  animation: modalOrbit 3.2s ease-out infinite;
-  animation-delay: 1.6s;
-}
-@keyframes modalOrbit {
-  0% {
-    transform: scale(0.85);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scale(1.15);
-    opacity: 0;
-  }
-}
-.lu-modal__crosshair {
-  position: absolute;
-  inset: -18px;
-  pointer-events: none;
-}
-.lu-modal__ch-h,
-.lu-modal__ch-v {
-  position: absolute;
-  border-radius: 99px;
-}
-.lu-modal__ch-h {
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 1px;
-  margin-top: -0.5px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    color-mix(in srgb, var(--mc, #5080ff) 35%, transparent) 30%,
-    color-mix(in srgb, var(--mc, #5080ff) 35%, transparent) 70%,
-    transparent 100%
-  );
-}
-.lu-modal__ch-v {
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  margin-left: -0.5px;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    color-mix(in srgb, var(--mc, #5080ff) 35%, transparent) 30%,
-    color-mix(in srgb, var(--mc, #5080ff) 35%, transparent) 70%,
-    transparent 100%
-  );
-}
-
-.lu-modal__identity {
-  flex: 1;
-  min-width: 0;
-}
+/* Name / role */
 .lu-modal__name {
   font-family: var(--font-display, "Orbitron", sans-serif);
-  font-size: clamp(1rem, 3vw, 1.25rem);
+  font-size: clamp(0.95rem, 2.8vw, 1.2rem);
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   color: #fff;
-  margin: 0 0 0.4rem;
-  line-height: 1.2;
+  margin: 0 1.6rem 0.3rem;
+  line-height: 1.25;
 }
 .lu-modal__role {
   font-family: var(--font-ui, "Chakra Petch", monospace);
-  font-size: 0.6rem;
+  font-size: 0.72rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--mc, #5080ff);
-  margin: 0 0 0.75rem;
+  margin: 0 1.6rem 0;
   opacity: 0.9;
 }
-.lu-modal__mag {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.lu-modal__mag-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(100, 160, 220, 0.4);
-}
-.lu-modal__mag-dot--on {
-  background: var(--mc, #5080ff);
-  box-shadow: 0 0 6px var(--mc, #5080ff);
-}
-.lu-modal__mag-label {
-  font-family: var(--font-ui, "Chakra Petch", monospace);
-  font-size: 0.5rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(80, 130, 180, 0.55);
-  margin-left: 2px;
-}
 
+/* Divider */
 .lu-modal__divider {
   height: 1px;
-  margin: 0 1.8rem 1.4rem;
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--mc, #5080ff) 40%, transparent) 0%,
-    rgba(80, 130, 180, 0.2) 40%,
-    transparent 100%
-  );
+  margin: 1.1rem 1.6rem 1.2rem;
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--mc, #5080ff) 38%, transparent) 0%,
+    rgba(80,130,180,0.18) 40%,
+    transparent 100%);
   transform-origin: left center;
 }
-.lu-modal__bio {
-  font-family: var(--font-tagline, "Cormorant Garamond", Georgia, serif);
-  font-size: clamp(0.9rem, 1.6vw, 1.05rem);
-  font-weight: 300;
-  font-style: italic;
-  line-height: 1.8;
-  color: rgba(170, 200, 230, 0.8);
-  margin: 0 1.8rem 1.6rem;
-  padding-left: 1rem;
-  border-left: 2px solid color-mix(in srgb, var(--mc, #5080ff) 35%, transparent);
+
+/* Content sections */
+.lu-modal__section {
+  margin: 0 1.6rem 1.2rem;
+}
+.lu-modal__section-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-ui, "Chakra Petch", monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--mc, #5080ff) 75%, rgba(160,200,255,0.5));
+  margin-bottom: 0.6rem;
+  opacity: 0.85;
+}
+.lu-modal__section-label i {
+  font-size: 0.9rem;
+  opacity: 0.8;
 }
 
-.lu-modal__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-  padding: 0 1.8rem;
+.lu-modal__bio {
+  font-family: var(--font-body, "Outfit", sans-serif);
+  font-size: clamp(0.82rem, 1.5vw, 0.9rem);
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(180,210,240,0.75);
 }
-.lu-modal__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1.1rem;
-  border-radius: 99px;
-  border: 1px solid
-    color-mix(in srgb, var(--lc, #5080ff) 30%, rgba(80, 130, 180, 0.18));
-  background: color-mix(in srgb, var(--lc, #5080ff) 6%, rgba(4, 2, 18, 0.6));
-  font-family: var(--font-ui, "Chakra Petch", monospace);
-  font-size: 0.58rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(170, 210, 255, 0.75);
-  text-decoration: none;
-  transition:
-    border-color 0.22s,
-    background 0.22s,
-    color 0.22s,
-    transform 0.18s,
-    box-shadow 0.22s;
-  position: relative;
-  overflow: hidden;
+
+.lu-modal__section--project {
+  background: color-mix(in srgb, var(--mc, #5080ff) 5%, rgba(4,2,18,0.5));
+  border: 1px solid color-mix(in srgb, var(--mc, #5080ff) 18%, rgba(60,90,160,0.12));
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  margin: 0 1.6rem 0.8rem;
 }
-.lu-modal__link::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.06) 50%,
-    transparent 70%
-  );
-  transform: translateX(-100%);
-  transition: transform 0.4s;
-}
-.lu-modal__link:hover::before {
-  transform: translateX(100%);
-}
-.lu-modal__link:hover {
-  border-color: var(--lc, #5080ff);
-  background: color-mix(in srgb, var(--lc, #5080ff) 14%, rgba(4, 2, 18, 0.8));
+.lu-modal__project-name {
+  font-family: var(--font-tagline, "Syne", sans-serif);
+  font-size: clamp(0.9rem, 2vw, 1.05rem);
+  font-weight: 700;
   color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px color-mix(in srgb, var(--lc, #5080ff) 25%, transparent);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.02em;
 }
-.lu-modal__link-icon {
-  font-size: 0.82rem;
-  opacity: 0.85;
-  width: 14px;
-  text-align: center;
+.lu-modal__project-desc {
+  font-family: var(--font-body, "Outfit", sans-serif);
+  font-size: clamp(0.8rem, 1.4vw, 0.88rem);
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(170,205,235,0.72);
 }
 
 /* Corner accents */
 .lu-c {
   position: absolute;
-  width: 10px;
-  height: 10px;
+  width: 10px; height: 10px;
   pointer-events: none;
 }
-.lu-c--tl {
-  top: -1px;
-  left: -1px;
-  border-top: 2px solid color-mix(in srgb, var(--mc, #5080ff) 70%, transparent);
-  border-left: 2px solid color-mix(in srgb, var(--mc, #5080ff) 70%, transparent);
-}
-.lu-c--tr {
-  top: -1px;
-  right: -1px;
-  border-top: 2px solid color-mix(in srgb, var(--mc, #5080ff) 70%, transparent);
-  border-right: 2px solid
-    color-mix(in srgb, var(--mc, #5080ff) 70%, transparent);
-}
-.lu-c--bl {
-  bottom: -1px;
-  left: -1px;
-  border-bottom: 2px solid
-    color-mix(in srgb, var(--mc, #5080ff) 70%, transparent);
-  border-left: 2px solid color-mix(in srgb, var(--mc, #5080ff) 70%, transparent);
-}
-.lu-c--br {
-  bottom: -1px;
-  right: -1px;
-  border-bottom: 2px solid
-    color-mix(in srgb, var(--mc, #5080ff) 70%, transparent);
-  border-right: 2px solid
-    color-mix(in srgb, var(--mc, #5080ff) 70%, transparent);
-}
+.lu-c--tl { top: -1px; left: -1px;   border-top: 2px solid color-mix(in srgb, var(--mc, #5080ff) 65%, transparent); border-left:   2px solid color-mix(in srgb, var(--mc, #5080ff) 65%, transparent); border-radius: 2px 0 0 0; }
+.lu-c--tr { top: -1px; right: -1px;  border-top: 2px solid color-mix(in srgb, var(--mc, #5080ff) 65%, transparent); border-right:  2px solid color-mix(in srgb, var(--mc, #5080ff) 65%, transparent); border-radius: 0 2px 0 0; }
+.lu-c--bl { bottom: -1px; left: -1px;  border-bottom: 2px solid color-mix(in srgb, var(--mc, #5080ff) 65%, transparent); border-left:  2px solid color-mix(in srgb, var(--mc, #5080ff) 65%, transparent); border-radius: 0 0 0 2px; }
+.lu-c--br { bottom: -1px; right: -1px; border-bottom: 2px solid color-mix(in srgb, var(--mc, #5080ff) 65%, transparent); border-right: 2px solid color-mix(in srgb, var(--mc, #5080ff) 65%, transparent); border-radius: 0 0 2px 0; }
 
-/* Hint */
-.lu__hint {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  margin-top: 2rem;
-  font-family: var(--font-ui, "Chakra Petch", monospace);
-  font-size: 0.55rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(120, 180, 255, 0.5);
-  animation: luHintPulse 3.5s ease-in-out infinite;
-}
-@keyframes luHintPulse {
-  0%,
-  100% {
-    opacity: 0.55;
-  }
-  50% {
-    opacity: 0.9;
-  }
-}
-
-/* Responsive */
+/*  Responsive  */
 @media (max-width: 600px) {
-  .lu {
-    padding: 0 0 4rem;
-  }
+  .lu__header { padding-top: 3rem; }
   .lu__map {
-    max-width: 100%;
-    padding: 0 0.5rem;
+    padding: 0 0.25rem;
+    height: max(420px, calc(260px + var(--n, 6) * 16px));
   }
-  .lu-tooltip {
-    display: none;
-  }
-  .lu-node__tag-name {
-    font-size: 0.5rem;
-  }
+  .lu-tooltip { display: none; }   /* tooltip hidden on touch — modal replaces it */
+  .lu-node__tag-name { font-size: 0.48rem; }
+  .lu-node { padding: 18px; }      /* bigger tap target */
+  .lu-modal-backdrop { align-items: center; padding: 1rem; }
   .lu-modal {
-    padding: 1.8rem 1.4rem;
+    max-width: calc(100% - 2rem);
+    border-radius: 18px;
+    border-bottom: revert;
   }
-  .lu-modal__hero {
-    flex-direction: column;
-    text-align: center;
-  }
-  .lu-modal__photo-wrap {
-    align-self: center;
-  }
-  .lu-modal__links {
-    justify-content: center;
-  }
+  .lu-modal__inner { max-height: 80vh; }
+  .lu-modal__name  { font-size: 1rem; }
+  .lu-modal__section,
+  .lu-modal__section--project { margin-left: 1.2rem; margin-right: 1.2rem; }
 }
 
-/* 
-   PROJECT PHOTO CAROUSEL
- */
-
-.lu-carousel {
-  margin: 0 1.8rem 1.6rem;
-  outline: none;
-}
-
-/* Section header */
-.lu-carousel__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0.7rem;
-}
-.lu-carousel__label {
-  font-family: var(--font-ui, "Chakra Petch", monospace);
-  font-size: var(--sp-2);
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, var(--cc, #5080ff) 80%, rgba(180, 210, 255, 0.6));
-  opacity: 0.85;
-}
-.lu-carousel__counter {
-  font-family: var(--font-ui, "Chakra Petch", monospace);
-  font-size: 0.48rem;
-  letter-spacing: 0.18em;
-  color: rgba(120, 170, 220, 0.4);
-}
-
-/* Track — clips the slides */
-.lu-carousel__track {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 10px;
-  overflow: hidden;
-  background: rgba(4, 2, 18, 0.7);
-  border: 1px solid
-    color-mix(in srgb, var(--cc, #5080ff) 25%, rgba(60, 90, 160, 0.18));
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.03),
-    0 8px 32px rgba(0, 0, 0, 0.55),
-    inset 0 0 40px rgba(0, 0, 0, 0.4);
-}
-
-/* Individual slide */
-.lu-carousel__slide {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.lu-carousel__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  border-radius: 10px;
-}
-
-/* Placeholder when image fails */
-.lu-carousel__placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--cc, #5080ff) 8%, rgba(4, 2, 18, 0.9)) 0%,
-    rgba(4, 2, 18, 0.95) 100%
-  );
-}
-.lu-carousel__placeholder i {
-  font-size: 1.8rem;
-  color: color-mix(in srgb, var(--cc, #5080ff) 50%, rgba(120, 160, 200, 0.4));
-  opacity: 0.6;
-}
-.lu-carousel__placeholder span {
-  font-family: var(--font-ui, "Chakra Petch", monospace);
-  font-size: 0.55rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(120, 170, 220, 0.45);
-}
-
-/* Corner accents on track */
-.lu-carousel__corner {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  pointer-events: none;
-  z-index: 2;
-}
-.lu-carousel__corner--tl {
-  top: -1px;
-  left: -1px;
-  border-top: 1.5px solid
-    color-mix(in srgb, var(--cc, #5080ff) 60%, transparent);
-  border-left: 1.5px solid
-    color-mix(in srgb, var(--cc, #5080ff) 60%, transparent);
-}
-.lu-carousel__corner--tr {
-  top: -1px;
-  right: -1px;
-  border-top: 1.5px solid
-    color-mix(in srgb, var(--cc, #5080ff) 60%, transparent);
-  border-right: 1.5px solid
-    color-mix(in srgb, var(--cc, #5080ff) 60%, transparent);
-}
-.lu-carousel__corner--bl {
-  bottom: -1px;
-  left: -1px;
-  border-bottom: 1.5px solid
-    color-mix(in srgb, var(--cc, #5080ff) 60%, transparent);
-  border-left: 1.5px solid
-    color-mix(in srgb, var(--cc, #5080ff) 60%, transparent);
-}
-.lu-carousel__corner--br {
-  bottom: -1px;
-  right: -1px;
-  border-bottom: 1.5px solid
-    color-mix(in srgb, var(--cc, #5080ff) 60%, transparent);
-  border-right: 1.5px solid
-    color-mix(in srgb, var(--cc, #5080ff) 60%, transparent);
-}
-
-/* Caption */
-.lu-carousel__caption {
-  font-family: var(--font-tagline, "Cormorant Garamond", Georgia, serif);
-  font-size: 0.78rem;
-  font-style: italic;
-  font-weight: 300;
-  color: rgba(160, 200, 240, 0.65);
-  text-align: center;
-  margin: 0.55rem 0 0;
-  letter-spacing: 0.04em;
-  min-height: 1.2em;
-}
-
-/* Controls row */
-.lu-carousel__controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 0.8rem;
-}
-
-/* Prev / Next buttons */
-.lu-carousel__btn {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 1px solid
-    color-mix(in srgb, var(--cc, #5080ff) 35%, rgba(80, 120, 180, 0.2));
-  background: color-mix(in srgb, var(--cc, #5080ff) 8%, rgba(4, 2, 18, 0.7));
-  color: color-mix(in srgb, var(--cc, #5080ff) 70%, rgba(160, 200, 255, 0.6));
-  font-size: 0.55rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition:
-    background 0.18s,
-    border-color 0.18s,
-    color 0.18s,
-    transform 0.15s;
-  flex-shrink: 0;
-}
-.lu-carousel__btn:hover {
-  background: color-mix(in srgb, var(--cc, #5080ff) 20%, rgba(4, 2, 18, 0.9));
-  border-color: color-mix(in srgb, var(--cc, #5080ff) 65%, transparent);
-  color: #fff;
-  transform: scale(1.12);
-}
-.lu-carousel__btn:active {
-  transform: scale(0.94);
-}
-
-/* Dot indicators */
-.lu-carousel__dots {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.lu-carousel__dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgba(100, 150, 200, 0.28);
-  border: 1px solid rgba(100, 150, 200, 0.2);
-  cursor: pointer;
-  transition:
-    background 0.2s,
-    transform 0.2s,
-    border-color 0.2s;
-  transform-origin: center;
-}
-.lu-carousel__dot:hover {
-  background: color-mix(in srgb, var(--cc, #5080ff) 40%, transparent);
-}
-.lu-carousel__dot--active {
-  background: var(--cc, #5080ff);
-  border-color: var(--cc, #5080ff);
-  box-shadow: 0 0 6px color-mix(in srgb, var(--cc, #5080ff) 70%, transparent);
-}
-
-.lu-eyebrow,
-.lu-title,
-.lu-sub {
-  opacity: 0;
+@media (max-width: 380px) {
+  .lu-node__tag { display: none; } /* very small screens — too crowded */
 }

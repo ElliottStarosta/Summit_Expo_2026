@@ -3,145 +3,117 @@ import { gsap, ScrollTrigger } from "../../utils/gsap";
 import "./Lineup.css";
 import { useVisibleCanvas } from "../../utils/useVisibleCanvas";
 
-export interface ProjectPhoto {
-  src: string;
-  caption?: string;
-}
-
 export interface Exhibitor {
   id: string;
   name: string;
   role: string;
-  photo: string;
-  bio: string;
-  links: { label: string; href: string; faIcon: string }[];
-  designation: string;
+  // designation: string;
   color: string;
-  projectPhotos?: ProjectPhoto[];
+  bio: string;
+  project: string;
+  projectDesc: string;
 }
 
-export const DEMO_EXHIBITORS: Exhibitor[] = [
+export const SUMMIT_EXHIBITORS: Exhibitor[] = [
   {
     id: "01",
-    name: "Aria Chen",
-    role: "Astrophysics · Gr. 12",
-    photo: "/headshots/aria-chen.png",
-    bio: "Built a backyard spectrometer from salvaged camera parts to classify stellar types on a $40 budget. Shortlisted for the Schulich Leader Scholarship.",
-    links: [
-      { label: "GitHub", href: "#", faIcon: "fa-brands fa-github" },
-      { label: "Email", href: "#", faIcon: "fa-solid fa-envelope" },
-      { label: "Paper", href: "#", faIcon: "fa-solid fa-file-lines" },
-    ],
-    designation: "KSE-01",
-    color: "#CE3072",
-    projectPhotos: [
-      { src: "/projects/aria-1.png", caption: "Spectrometer prototype" },
-      {
-        src: "/projects/aria-2.png",
-        caption: "Stellar classification results",
-      },
-      { src: "/projects/aria-3.png", caption: "Lab setup" },
-    ],
+    name: "Algasem Zabarah",
+    role: "Engineering · Gr. 11",
+    color: "#FF2D6B",
+    bio: "Passionate builder and provincial-level soccer player. Part of EOM's robotics team Spongebotics, and a certified Ontario Soccer Referee.",
+    project: "Project Horizon",
+    projectDesc: "A fully custom-built quadcopter FPV drone — from CAD to circuits to firmware. Hand-soldered a custom RC transmitter and receiver from scratch, handling all radio comms between pilot and aircraft.",
   },
   {
     id: "02",
-    name: "Marcus Osei",
-    role: "Robotics · Gr. 11",
-    photo: "/headshots/marcus-osei.png",
-    bio: "Designed an autonomous soil-sampling rover using 3D-printed wheels and a Raspberry Pi brain, inspired by the Perseverance mission.",
-    links: [
-      { label: "GitHub", href: "#", faIcon: "fa-brands fa-github" },
-      { label: "Email", href: "#", faIcon: "fa-solid fa-envelope" },
-      { label: "Demo", href: "#", faIcon: "fa-solid fa-play" },
-    ],
-    designation: "KSE-02",
-    color: "#6789A3",
-    projectPhotos: [
-      { src: "/projects/marcus-1.png", caption: "Rover assembly" },
-      { src: "/projects/marcus-2.png", caption: "Field test" },
-    ],
+    name: "Calin Olsen & Allen Su",
+    role: "Hardware · Physics",
+    color: "#4FA3E0",
+    bio: "Calin stays up late desoldering circuit boards and publishing 3D models on Makerworld. Allen reads plant biology and human health books, plays guitar, and is eyeing biotechnology.",
+    project: "Electromagnetic Accelerator",
+    projectDesc: "A custom-built electromagnetic projectile accelerator demonstrating use cases in transport, aerospace, and experimentation — including impact testing, microsatellite deployment, and testing rapid acceleration on micro-organisms.",
   },
   {
     id: "03",
-    name: "Priya Nair",
-    role: "Biochemistry · Gr. 12",
-    photo: "/headshots/priya-nair.png",
-    bio: "Engineered a CRISPR-inspired lateral-flow biosensor detecting heavy metals in water for under $2 per test.",
-    links: [
-      { label: "GitHub", href: "#", faIcon: "fa-brands fa-github" },
-      { label: "Email", href: "#", faIcon: "fa-solid fa-envelope" },
-      { label: "Paper", href: "#", faIcon: "fa-solid fa-file-lines" },
-    ],
-    designation: "KSE-03",
-    color: "#9B5BBF",
-    projectPhotos: [
-      { src: "/projects/priya-1.png", caption: "Biosensor strips" },
-      { src: "/projects/priya-2.png", caption: "Water sample testing" },
-      { src: "/projects/priya-3.png", caption: "Results dashboard" },
-    ],
+    name: "Michael Tetelbaum",
+    role: "Systems · Gr. 11",
+    color: "#CC44FF",
+    bio: "Fascinated by systems hidden behind everyday tech. FRC veteran (teams 9127 & 7476), incoming intern at Nokia. Feynman quote tattooed on his brain.",
+    project: "Audio in Motion",
+    projectDesc: "A real-time audio equalizer and visualizer in Java. Processes live audio playback, applies adjustable frequency filtering, and generates responsive visuals — DSP, waveform analysis, frequency decomposition, all in real time.",
   },
   {
     id: "04",
-    name: "Liam Bouchard",
-    role: "Computer Sci · Gr. 10",
-    photo: "/headshots/liam-bouchard.png",
-    bio: "Trained a CNN to predict wildfire spread patterns using satellite imagery, outperforming existing heuristics on BC 2023 data.",
-    links: [
-      { label: "GitHub", href: "#", faIcon: "fa-brands fa-github" },
-      { label: "Email", href: "#", faIcon: "fa-solid fa-envelope" },
-      { label: "Demo", href: "#", faIcon: "fa-solid fa-play" },
-    ],
-    designation: "KSE-04",
-    color: "#CE3072",
-    projectPhotos: [
-      { src: "/projects/liam-1.png", caption: "Model architecture" },
-      { src: "/projects/liam-2.png", caption: "Prediction overlay" },
-    ],
+    name: "Adarshpreet Singh",
+    role: "AI · Developer",
+    color: "#FF5C8A",
+    bio: "Sparked by a conversation with Richard Sutton at an AMII conference. APEGA Science Olympics medallist, Edmonton Science Fair rep, and AI advocate across Alberta high schools.",
+    project: "Agami",
+    projectDesc: "An advanced voice-interfaced AI agent that executes tasks autonomously via voice input and hand gesture controls — built on the philosophy that AI should feel natural, intuitive, and effortless.",
   },
   {
     id: "05",
-    name: "Sofia Marchetti",
-    role: "Materials Sci · Gr. 11",
-    photo: "/headshots/sofia-marchetti.png",
-    bio: "Synthesised a graphene-aerogel composite insulator for satellite thermal management at cryogenic temperatures.",
-    links: [
-      { label: "GitHub", href: "#", faIcon: "fa-brands fa-github" },
-      { label: "Email", href: "#", faIcon: "fa-solid fa-envelope" },
-      { label: "Paper", href: "#", faIcon: "fa-solid fa-file-lines" },
-    ],
-    designation: "KSE-05",
-    color: "#6789A3",
-    projectPhotos: [
-      { src: "/projects/sofia-1.png", caption: "Aerogel sample" },
-      { src: "/projects/sofia-2.png", caption: "Thermal test chamber" },
-    ],
+    name: "Alex Liu",
+    role: "Robotics · Electrical",
+    color: "#3EC6FF",
+    bio: "Music, art, and film by day; programming and robotics by night. Aspiring electrical engineer who wants to merge creative interests with mechanical precision.",
+    project: "The Walking Machine",
+    projectDesc: "A showcase of humanoid robotics focused on locomotion, balance systems, servo coordination, and embedded electronics — demonstrating the engineering challenge of recreating stable human movement.",
   },
   {
     id: "06",
-    name: "Jordan Kim",
-    role: "Environmental Sci · Gr. 12",
-    photo: "/headshots/jordan-kim.png",
-    bio: "Deployed IoT sensors across the Rideau River tracking microplastic concentrations in real time via an open public dashboard.",
-    links: [
-      { label: "GitHub", href: "#", faIcon: "fa-brands fa-github" },
-      { label: "Email", href: "#", faIcon: "fa-solid fa-envelope" },
-      { label: "Live", href: "#", faIcon: "fa-solid fa-satellite-dish" },
-    ],
-    designation: "KSE-06",
-    color: "#9B5BBF",
-    projectPhotos: [
-      { src: "/projects/jordan-1.png", caption: "Sensor deployment" },
-      { src: "/projects/jordan-2.png", caption: "Live dashboard" },
-      { src: "/projects/jordan-3.png", caption: "River sampling" },
-    ],
+    name: "Kelvin Hu",
+    role: "Mathematics · Gr. 12",
+    color: "#E84FFF",
+    bio: "President of Math Club and number theory enthusiast. Has been hunting large primes since Grade 7.",
+    project: "Primes: Predict, Preselect, Produce",
+    projectDesc: "A novel method to predict where the next prime could be, and a faster technique to preselect prime candidates. Rooted in studying prime distribution and its critical role in modern cryptography.",
+  },
+  {
+    id: "07",
+    name: "Alyn Te",
+    role: "Design · Gr. 12",
+    color: "#FF3A5C",
+    bio: "Creative visionary behind multiple Storyboard (Hackclub) submissions. Two-year FRC 7476 business member with deep interest in UI/UX, color theory, and graphic storytelling.",
+    project: "Refresh: Reload — Snapshot",
+    projectDesc: "A gesture-controlled photobooth removing the need for physical buttons. Computer vision recognizes hand gestures (peace sign to capture, thumbs-up to download), with voice narration for visual accessibility.",
+  },
+  {
+    id: "08",
+    name: "Borui Zhao",
+    role: "Languages · Developer",
+    color: "#5B8FFF",
+    bio: "Passionate about logic, frameworks, and developer tools. Wants to help developers with niche language requirements while deepening his own understanding of how languages work.",
+    project: "Simpl",
+    projectDesc: "A programming language built from scratch using tree-sitter as the parser, enabling grammar reuse for both parsing and syntax highlighting. Novel approach that significantly improves parsing times.",
+  },
+  {
+    id: "09",
+    name: "Sky Jin",
+    role: "Game Dev · Gr. 12",
+    color: "#BF40FF",
+    bio: "Specializes in C++ and Unreal Engine 5. Loves guitar and video games. Heading into CS or engineering this fall.",
+    project: "Multiplayer Shooter",
+    projectDesc: "A custom-built multiplayer third-person shooter in Unreal Engine 5. Live interactive demo where attendees play networked matches — showcasing real-time server replication, client prediction, and cross-platform networking.",
+  },
+  {
+    id: "10",
+    name: "Zoey Chen",
+    role: "Mathematics · Engineering",
+    color: "#FF1A8C",
+    bio: "Aspiring engineer fascinated by math and its applications. Deep into Rubik's Cube research and the Cosmere universe.",
+    project: "On Cubes and Commutators",
+    projectDesc: "An elegant application of group theory to solve a Rubik's Cube of any size — thousands of lines of cube-solving and visualizing software from scratch, plus a dive into abstract algebra.",
   },
 ];
 
-// Layout engine
+// Layout helpers 
+
 interface StarPos {
   x: number;
   y: number;
 }
+
 function seededRand(seed: number) {
   return ((seed * 1664525 + 1013904223) >>> 0) / 0xffffffff;
 }
@@ -156,8 +128,8 @@ function buildLayout(n: number): StarPos[] {
     const jx = (seededRand(42 + i * 2) - 0.5) * 9;
     const jy = (seededRand(42 + i * 2 + 1) - 0.5) * 9;
     return {
-      x: Math.min(90, Math.max(10, 50 + r * 40 * Math.cos(th) + jx)),
-      y: Math.min(88, Math.max(12, 50 + r * 38 * Math.sin(th) + jy)),
+      x: Math.min(92, Math.max(8, 50 + r * 44 * Math.cos(th) + jx)),
+      y: Math.min(90, Math.max(10, 50 + r * 42 * Math.sin(th) + jy)),
     };
   });
 }
@@ -165,7 +137,9 @@ function buildLayout(n: number): StarPos[] {
 function buildEdges(pos: StarPos[]): [number, number][] {
   const n = pos.length;
   if (n < 2) return [];
-  const d = (a: StarPos, b: StarPos) => Math.hypot(a.x - b.x, a.y - b.y);
+  const dist = (a: StarPos, b: StarPos) => Math.hypot(a.x - b.x, a.y - b.y);
+
+  // Prim's MST
   const inTree = new Set([0]);
   const edges: [number, number][] = [];
   while (inTree.size < n) {
@@ -175,9 +149,9 @@ function buildEdges(pos: StarPos[]): [number, number][] {
     for (const u of inTree) {
       for (let v = 0; v < n; v++) {
         if (inTree.has(v)) continue;
-        const dd = d(pos[u], pos[v]);
-        if (dd < best) {
-          best = dd;
+        const d = dist(pos[u], pos[v]);
+        if (d < best) {
+          best = d;
           bu = u;
           bv = v;
         }
@@ -187,27 +161,36 @@ function buildEdges(pos: StarPos[]): [number, number][] {
     edges.push([bu, bv]);
     inTree.add(bv);
   }
+
+  // Add a few short extra edges (max 2 per node, max dist 40)
+  const edgeSet = new Set(
+    edges.map(([a, b]) => `${Math.min(a, b)}-${Math.max(a, b)}`),
+  );
+  const extraCount = new Array(n).fill(0);
   for (let i = 0; i < n; i++) {
     const sorted = Array.from({ length: n }, (_, j) => j)
       .filter((j) => j !== i)
-      .sort((a, b) => d(pos[i], pos[a]) - d(pos[i], pos[b]));
-    let added = 0;
+      .sort((a, b) => dist(pos[i], pos[a]) - dist(pos[i], pos[b]));
     for (const j of sorted) {
-      if (added >= 2 || d(pos[i], pos[j]) > 45) break;
-      if (
-        !edges.some(([a, b]) => (a === i && b === j) || (a === j && b === i))
-      ) {
+      if (extraCount[i] >= 2) break;
+      if (dist(pos[i], pos[j]) > 40) break;
+      const key = `${Math.min(i, j)}-${Math.max(i, j)}`;
+      if (!edgeSet.has(key)) {
         edges.push([i, j]);
-        added++;
+        edgeSet.add(key);
+        extraCount[i]++;
       }
     }
   }
   return edges;
 }
 
-// Space canvas
+// Star field canvas 
+
 function useSpaceCanvas(ref: React.RefObject<HTMLCanvasElement | null>) {
   const scrollRef = useRef(0);
+  const visibleRef = useRef(true);
+
   useEffect(() => {
     const fn = () => {
       scrollRef.current = window.scrollY;
@@ -215,6 +198,19 @@ function useSpaceCanvas(ref: React.RefObject<HTMLCanvasElement | null>) {
     window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
   }, []);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        visibleRef.current = e.isIntersecting;
+      },
+      { threshold: 0 },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [ref]);
 
   useVisibleCanvas(
     ref,
@@ -242,33 +238,41 @@ function useSpaceCanvas(ref: React.RefObject<HTMLCanvasElement | null>) {
       }
 
       const mobile = window.innerWidth < 768;
+      // Reduced star counts vs original
       const LAYERS = mobile
         ? [
-            { count: 25, speed: 0.007, rMax: 0.55, opMax: 0.4 },
-            { count: 15, speed: 0.02, rMax: 0.95, opMax: 0.6 },
-            { count: 6, speed: 0.045, rMax: 1.45, opMax: 0.85 },
+            { count: 18, speed: 0.007, rMax: 0.55, opMax: 0.4 },
+            { count: 10, speed: 0.02, rMax: 0.95, opMax: 0.6 },
+            { count: 4, speed: 0.045, rMax: 1.45, opMax: 0.85 },
           ]
         : [
-            { count: 80, speed: 0.007, rMax: 0.55, opMax: 0.4 },
-            { count: 45, speed: 0.02, rMax: 0.95, opMax: 0.6 },
-            { count: 18, speed: 0.045, rMax: 1.45, opMax: 0.85 },
+            { count: 55, speed: 0.007, rMax: 0.55, opMax: 0.4 },
+            { count: 30, speed: 0.02, rMax: 0.95, opMax: 0.6 },
+            { count: 12, speed: 0.045, rMax: 1.45, opMax: 0.85 },
           ];
 
-      let stars: Star[] = [],
-        shooters: Shooter[] = [];
+      // Cache dimensions — only update on resize
+      let W = canvas.offsetWidth,
+        H = canvas.offsetHeight;
+      const onResize = () => {
+        W = canvas.offsetWidth;
+        H = canvas.offsetHeight;
+      };
+      window.addEventListener("resize", onResize, { passive: true });
+
+      let stars: Star[] = [];
+      let shooters: Shooter[] = [];
       let t = 0,
         lastScrollY = 0,
         shooterTimer = 0;
-      let SHOOTER_INTERVAL = 200 + Math.random() * 200;
+      let SHOOTER_INTERVAL = 220 + Math.random() * 180;
 
-      const seed = () => {
+      const seedStars = () => {
         stars = [];
-        const W = canvas.offsetWidth,
-          H = canvas.offsetHeight;
         LAYERS.forEach((cfg, li) => {
           for (let i = 0; i < cfg.count; i++) {
-            const angle = Math.random() * Math.PI * 2,
-              speed = cfg.speed * (0.5 + Math.random());
+            const angle = Math.random() * Math.PI * 2;
+            const speed = cfg.speed * (0.5 + Math.random());
             stars.push({
               x: Math.random() * W,
               y: Math.random() * H,
@@ -284,12 +288,11 @@ function useSpaceCanvas(ref: React.RefObject<HTMLCanvasElement | null>) {
           }
         });
       };
-      seed();
+      seedStars();
 
       const spawnShooter = () => {
-        if (window.innerWidth < 768) return;
-        const W = canvas.offsetWidth,
-          fromRight = Math.random() < 0.5;
+        if (mobile) return;
+        const fromRight = Math.random() < 0.5;
         const angle =
           (Math.random() * 20 + 10) * (Math.PI / 180) * (fromRight ? 1 : -1) +
           Math.PI / 2;
@@ -312,11 +315,12 @@ function useSpaceCanvas(ref: React.RefObject<HTMLCanvasElement | null>) {
         ctx: CanvasRenderingContext2D,
         dt: number,
       ) => {
+        if (!visibleRef.current) return;
+
         t += (dt / 1000) * 60 * 0.011;
         const sd = (scrollRef.current - lastScrollY) * 0.5;
         lastScrollY = scrollRef.current;
-        const W = _c.offsetWidth,
-          H = _c.offsetHeight;
+
         ctx.clearRect(0, 0, W, H);
 
         for (const s of stars) {
@@ -324,23 +328,21 @@ function useSpaceCanvas(ref: React.RefObject<HTMLCanvasElement | null>) {
           s.y +=
             s.vy + sd * (s.layer === 0 ? 0.03 : s.layer === 1 ? 0.09 : 0.22);
           if (s.x < -2) s.x = W + 2;
-          if (s.x > W + 2) s.x = -2;
+          else if (s.x > W + 2) s.x = -2;
           if (s.y < -2) s.y = H + 2;
-          if (s.y > H + 2) s.y = -2;
-          const tw = 0.5 + 0.5 * Math.sin(t * s.sp + s.ph),
-            al = s.op * (0.35 + 0.65 * tw);
-          if (s.layer >= 1) {
+          else if (s.y > H + 2) s.y = -2;
+
+          const tw = 0.5 + 0.5 * Math.sin(t * s.sp + s.ph);
+          const al = s.op * (0.35 + 0.65 * tw);
+
+          // Only draw halo for brightest layer
+          if (s.layer === 2) {
             ctx.beginPath();
-            ctx.arc(
-              s.x,
-              s.y,
-              s.r * (s.layer === 2 ? 5.5 : 3.5),
-              0,
-              Math.PI * 2,
-            );
-            ctx.fillStyle = `hsla(${s.hue},65%,75%,${al * (s.layer === 2 ? 0.11 : 0.05)})`;
+            ctx.arc(s.x, s.y, s.r * 5.5, 0, Math.PI * 2);
+            ctx.fillStyle = `hsla(${s.hue},65%,75%,${al * 0.11})`;
             ctx.fill();
           }
+
           ctx.beginPath();
           ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
           ctx.fillStyle =
@@ -348,10 +350,12 @@ function useSpaceCanvas(ref: React.RefObject<HTMLCanvasElement | null>) {
               ? `hsla(${s.hue},55%,92%,${al})`
               : `rgba(200,215,255,${al})`;
           ctx.fill();
-          if (s.layer === 2 && al > 0.5) {
+
+          // Spikes only for prominent bright stars
+          if (s.layer === 2 && al > 0.6) {
             const sp = s.r * 7 * al;
-            ctx.strokeStyle = `hsla(${s.hue},55%,85%,${al * 0.45})`;
-            ctx.lineWidth = 0.55;
+            ctx.strokeStyle = `hsla(${s.hue},55%,85%,${al * 0.4})`;
+            ctx.lineWidth = 0.5;
             ctx.beginPath();
             ctx.moveTo(s.x - sp, s.y);
             ctx.lineTo(s.x + sp, s.y);
@@ -365,12 +369,12 @@ function useSpaceCanvas(ref: React.RefObject<HTMLCanvasElement | null>) {
         if (shooterTimer > SHOOTER_INTERVAL) {
           spawnShooter();
           shooterTimer = 0;
-          SHOOTER_INTERVAL = 180 + Math.random() * 220;
+          SHOOTER_INTERVAL = 200 + Math.random() * 200;
         }
         shooters = shooters.filter((s) => s.life < s.max);
         for (const s of shooters) {
-          const prog = s.life / s.max,
-            alpha = 0.75 * (1 - prog) * Math.min(1, s.life / 4);
+          const prog = s.life / s.max;
+          const alpha = 0.75 * (1 - prog) * Math.min(1, s.life / 4);
           const spd = Math.hypot(s.vx, s.vy);
           const tx = s.x - s.vx * (s.len / spd),
             ty = s.y - s.vy * (s.len / spd);
@@ -392,499 +396,181 @@ function useSpaceCanvas(ref: React.RefObject<HTMLCanvasElement | null>) {
           s.y += s.vy;
           s.life++;
         }
+
+        return () => window.removeEventListener("resize", onResize);
       };
     },
-    { fps: 24 },
+    { fps: 16 },
   );
 }
 
-// Project Photo Carousel
-function ProjectCarousel({
-  photos,
-  color,
-}: {
-  photos: ProjectPhoto[];
-  color: string;
-}) {
-  const [current, setCurrent] = useState(0);
-  const [imgErrors, setImgErrors] = useState<Set<number>>(new Set());
-  const trackRef = useRef<HTMLDivElement>(null);
-  const captionRef = useRef<HTMLParagraphElement>(null);
-  const dotsRef = useRef<HTMLDivElement>(null);
-  const isAnimating = useRef(false);
+// Main component 
 
-  const goTo = useCallback(
-    (next: number, dir: 1 | -1) => {
-      if (isAnimating.current || next === current) return;
-      isAnimating.current = true;
-
-      const track = trackRef.current;
-      const caption = captionRef.current;
-      if (!track) return;
-
-      const slides = track.querySelectorAll<HTMLDivElement>(
-        ".lu-carousel__slide",
-      );
-      const dots =
-        dotsRef.current?.querySelectorAll<HTMLSpanElement>(".lu-carousel__dot");
-
-      // const tl = gsap.timeline({
-      //  onComplete: () => {
-      //    setCurrent(next);
-      //    isAnimating.current = false;
-      //  },
-      // });
-
-      const tl = gsap.timeline({
-        onComplete: () => {
-          isAnimating.current = false;
-        },
-      });
-
-      // Outgoing slide
-      // tl.to(slides[current], {
-      //  x: dir * -60,
-      //  opacity: 0,
-      //  scale: 0.92,
-      //  filter: "blur(4px)",
-      //  duration: 0.32,
-      //  ease: "power2.in",
-      // });
-
-      // Caption fades out
-      // if (caption) tl.to(caption, { opacity: 0, y: -8, duration: 0.2, ease: "power2.in" }, 0);
-
-      tl.to(slides[current], {
-        x: dir * -60,
-        opacity: 0,
-        scale: 0.92,
-        filter: "blur(4px)",
-        duration: 0.32,
-        ease: "power2.in",
-      });
-      if (caption)
-        tl.to(
-          caption,
-          { opacity: 0, y: -8, duration: 0.2, ease: "power2.in" },
-          0,
-        );
-
-      tl.call(
-        () => {
-          setCurrent(next);
-        },
-        [],
-        "+=0",
-      );
-
-      // Incoming slide
-      tl.fromTo(
-        slides[next],
-        { x: dir * 60, opacity: 0, scale: 0.92, filter: "blur(4px)" },
-        {
-          x: 0,
-          opacity: 1,
-          scale: 1,
-          filter: "blur(0px)",
-          duration: 0.4,
-          ease: "power3.out",
-        },
-        "-=0.1",
-      );
-
-      // Caption blurs in
-      if (caption) {
-        tl.fromTo(
-          caption,
-          { opacity: 0, y: 8, filter: "blur(3px)" },
-          {
-            opacity: 1,
-            y: 0,
-            filter: "blur(0px)",
-            duration: 0.35,
-            ease: "power2.out",
-          },
-          "-=0.25",
-        );
-      }
-
-      // Active dot bounces
-      if (dots) {
-        tl.to(
-          dots[current],
-          { scale: 0.6, duration: 0.15, ease: "power2.in" },
-          0,
-        );
-        tl.to(
-          dots[next],
-          { scale: 1.4, duration: 0.2, ease: "back.out(3)" },
-          "-=0.15",
-        );
-        tl.to(dots[next], { scale: 1.0, duration: 0.15, ease: "power2.out" });
-      }
-    },
-    [current],
-  );
-
-  const prev = () => goTo((current - 1 + photos.length) % photos.length, -1);
-  const next = () => goTo((current + 1) % photos.length, 1);
-
-  // Keyboard nav when carousel is focused
-  const onKey = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === "ArrowLeft") prev();
-      if (e.key === "ArrowRight") next();
-    },
-    [current],
-  );
-
-  // Initial entrance animation
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-    const slides = track.querySelectorAll<HTMLDivElement>(
-      ".lu-carousel__slide",
-    );
-
-    // Hide all non-current slides
-    slides.forEach((s, i) => {
-      gsap.set(s, { opacity: i === 0 ? 1 : 0, x: i === 0 ? 0 : 60 });
-    });
-
-    // Entrance: the first slide and the whole carousel
-    gsap.fromTo(
-      track,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.5, ease: "power3.out", delay: 0.1 },
-    );
-    gsap.fromTo(
-      ".lu-carousel__controls",
-      { opacity: 0, y: 10 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.4,
-        ease: "power2.out",
-        delay: 0.3,
-        stagger: 0.05,
-      },
-    );
-  }, []);
-
-  if (!photos.length) return null;
-
-  return (
-    <div
-      className="lu-carousel"
-      onKeyDown={onKey}
-      tabIndex={0}
-      role="region"
-      aria-label="Project photos"
-    >
-      {/* Section label */}
-      <div className="lu-carousel__header">
-        <span className="lu-carousel__label">
-          <i className="fa-solid fa-images" /> Project Photos{" "}
-          {/* was ◈ Project Photos */}
-        </span>
-        <span className="lu-carousel__counter">
-          {current + 1} / {photos.length}
-        </span>
-      </div>
-
-      {/* Track */}
-      <div
-        ref={trackRef}
-        className="lu-carousel__track"
-        style={{ "--cc": color } as React.CSSProperties}
-      >
-        {photos.map((p, i) => (
-          <div
-            key={i}
-            className="lu-carousel__slide"
-            style={{
-              opacity: i === current ? 1 : 0,
-              pointerEvents: i === current ? "auto" : "none",
-            }}
-            aria-hidden={i !== current}
-          >
-            {imgErrors.has(i) ? (
-              <div
-                className="lu-carousel__placeholder"
-                style={{ "--cc": color } as React.CSSProperties}
-              >
-                <i className="fa-solid fa-image" />
-                <span>{p.caption ?? "Project photo"}</span>
-              </div>
-            ) : (
-              <img
-                src={p.src}
-                alt={p.caption ?? `Project photo ${i + 1}`}
-                className="lu-carousel__img"
-                onError={() => setImgErrors((s) => new Set([...s, i]))}
-              />
-            )}
-          </div>
-        ))}
-
-        {/* Corner accents on the image frame */}
-        <span
-          className="lu-carousel__corner lu-carousel__corner--tl"
-          style={{ "--cc": color } as React.CSSProperties}
-        />
-        <span
-          className="lu-carousel__corner lu-carousel__corner--tr"
-          style={{ "--cc": color } as React.CSSProperties}
-        />
-        <span
-          className="lu-carousel__corner lu-carousel__corner--bl"
-          style={{ "--cc": color } as React.CSSProperties}
-        />
-        <span
-          className="lu-carousel__corner lu-carousel__corner--br"
-          style={{ "--cc": color } as React.CSSProperties}
-        />
-      </div>
-
-      {/* Caption */}
-      {photos[current]?.caption && (
-        <p ref={captionRef} className="lu-carousel__caption">
-          {photos[current].caption}
-        </p>
-      )}
-
-      {/* Controls */}
-      {photos.length > 1 && (
-        <div className="lu-carousel__controls">
-          <button
-            className="lu-carousel__btn"
-            onClick={prev}
-            aria-label="Previous photo"
-            style={{ "--cc": color } as React.CSSProperties}
-          >
-            <i className="fa-solid fa-chevron-left" />
-          </button>
-
-          <div ref={dotsRef} className="lu-carousel__dots">
-            {photos.map((_, i) => (
-              <span
-                key={i}
-                className={`lu-carousel__dot${i === current ? " lu-carousel__dot--active" : ""}`}
-                style={{ "--cc": color } as React.CSSProperties}
-                onClick={() => goTo(i, i > current ? 1 : -1)}
-                role="button"
-                aria-label={`Go to photo ${i + 1}`}
-              />
-            ))}
-          </div>
-
-          <button
-            className="lu-carousel__btn"
-            onClick={next}
-            aria-label="Next photo"
-            style={{ "--cc": color } as React.CSSProperties}
-          >
-            <i className="fa-solid fa-chevron-right" />
-          </button>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// Main component
 export function Lineup({
-  exhibitors = DEMO_EXHIBITORS,
+  exhibitors = SUMMIT_EXHIBITORS,
 }: {
   exhibitors?: Exhibitor[];
 }) {
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const bridgeRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
   const mapRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const nodeRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const modalRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
+  const svgLineRefs = useRef<(SVGLineElement | null)[]>([]);
 
   const [modal, setModal] = useState<number | null>(null);
   const [hovered, setHovered] = useState<number | null>(null);
-  const [imgFailed, setImgFailed] = useState<Set<string>>(new Set());
-  const [_, setDrawn] = useState(false);
 
   const positions = useMemo(
     () => buildLayout(exhibitors.length),
     [exhibitors.length],
   );
   const edges = useMemo(() => buildEdges(positions), [positions]);
-  const svgLineRefs = useRef<(SVGLineElement | null)[]>([]);
 
   useSpaceCanvas(canvasRef);
 
-  // Entrance animations
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: bridgeRef.current,
-        start: `top ${window.innerWidth < 768 ? "95%" : "82%"}`,
-        onEnter() {
-          gsap.fromTo(
-            ".lu__bridge-line",
-            { scaleX: 0, opacity: 0 },
-            {
-              scaleX: 1,
-              opacity: 1,
-              duration: 1.2,
-              ease: "power3.inOut",
-              transformOrigin: "left center",
-            },
-          );
-          gsap.fromTo(
-            ".lu__bridge-particle",
-            { opacity: 0, scale: 0 },
-            {
-              opacity: 1,
-              scale: 1,
-              stagger: { each: 0.06, from: "random" },
-              duration: 0.4,
-              ease: "back.out(2)",
-            },
-          );
-          gsap.fromTo(
-            ".lu__bridge-label",
-            { opacity: 0, letterSpacing: "0.8em" },
-            {
-              opacity: 0.6,
-              letterSpacing: "0.4em",
-              duration: 1.0,
-              ease: "power2.out",
-              delay: 0.4,
-            },
-          );
-        },
-      });
+    const eyebrowRef_el = headerRef.current?.querySelector(
+      ".lu-eyebrow",
+    ) as Element | null;
+    const titleRef_el = headerRef.current?.querySelector(
+      ".lu-title",
+    ) as Element | null;
+    const subRef_el = headerRef.current?.querySelector(
+      ".lu-sub",
+    ) as Element | null;
 
+    const ctx = gsap.context(() => {
+      const isMobile = window.innerWidth < 768;
+
+      // Header animation 
       ScrollTrigger.create({
         trigger: headerRef.current,
-        start: `top ${window.innerWidth < 768 ? "95%" : "80%"}`,
+        start: `top ${isMobile ? "95%" : "80%"}`,
         onEnter() {
-          const header = headerRef.current;
-          if (!header) return;
+          if (!eyebrowRef_el || !titleRef_el || !subRef_el) return;
           gsap
             .timeline()
             .fromTo(
-              header.querySelector(".lu-eyebrow"),
-              { opacity: 0, y: 30, scale: 0.95 },
-              { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" },
-            )
-            .fromTo(
-              header.querySelector(".lu-title"),
-              { opacity: 0, y: 40, scale: 0.9 },
+              eyebrowRef_el,
+              { opacity: 0, y: 24, scale: 0.96 },
               {
                 opacity: 1,
                 y: 0,
                 scale: 1,
-                duration: 0.8,
+                duration: 0.55,
                 ease: "power3.out",
               },
+            )
+            .fromTo(
+              titleRef_el,
+              { opacity: 0, y: 36, scale: 0.92 },
+              { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "power3.out" },
               "-=0.3",
             )
             .fromTo(
-              header.querySelector(".lu-sub"),
-              { opacity: 0, y: 20 },
-              { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
-              "-=0.4",
+              subRef_el,
+              { opacity: 0, y: 16 },
+              { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+              "-=0.35",
             );
         },
         onLeaveBack() {
-          gsap.set([".lu-eyebrow", ".lu-title", ".lu-sub"], {
+          if (!eyebrowRef_el || !titleRef_el || !subRef_el) return;
+          gsap.set([eyebrowRef_el, titleRef_el, subRef_el], {
             opacity: 0,
-            y: 30,
+            y: 24,
           });
         },
       });
 
+      // Map fade in 
       ScrollTrigger.create({
         trigger: mapRef.current,
-        start: `top ${window.innerWidth < 768 ? "95%" : "85%"}`,
+        start: `top ${isMobile ? "95%" : "85%"}`,
         onEnter() {
           gsap.fromTo(
             mapRef.current,
-            { opacity: 0, y: 60 },
-            { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" },
+            { opacity: 0, y: 50 },
+            { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
           );
         },
         onLeaveBack() {
-          gsap.set(mapRef.current, { opacity: 0, y: 60 });
+          gsap.set(mapRef.current, { opacity: 0, y: 50 });
         },
       });
 
+      // Stars + lines 
       const nodes = nodeRefs.current.filter(Boolean);
       gsap.set(nodes, { scale: 0, opacity: 0 });
+      gsap.set(svgLineRefs.current.filter(Boolean), { opacity: 0 });
 
       ScrollTrigger.create({
         trigger: mapRef.current,
-        start: `top ${window.innerWidth < 768 ? "95%" : "65%"}`,
+        start: `top ${isMobile ? "92%" : "65%"}`,
         onEnter() {
           const lines = svgLineRefs.current.filter(Boolean);
+
+          // Pre-hide lines
           lines.forEach((l) => {
-            if (!l) return;
-            const len = l.getTotalLength?.() ?? 200;
-            l.style.strokeDasharray = `${len}`;
-            l.style.strokeDashoffset = `${len}`;
+            if (l) gsap.set(l, { opacity: 0 });
           });
+
+          // Stars pop in randomly
           gsap.to(nodes, {
             scale: 1,
             opacity: 1,
-            stagger: { each: 0.05, from: "center" },
-            duration: 0.5,
-            ease: "back.out(1.8)",
+            stagger: { each: 0.08, from: "random" },
+            duration: 0.35,
+            ease: "back.out(2.2)",
             delay: 0.1,
             onComplete() {
+              // Lines draw in after stars
               lines.forEach((l, ei) => {
                 if (!l) return;
-                const _len = parseFloat(l.style.strokeDasharray) || 200;
+                const x1 = parseFloat(l.getAttribute("x1") ?? "0");
+                const y1 = parseFloat(l.getAttribute("y1") ?? "0");
+                const x2 = parseFloat(l.getAttribute("x2") ?? "0");
+                const y2 = parseFloat(l.getAttribute("y2") ?? "0");
+                const W = mapRef.current?.offsetWidth ?? 800;
+                const H = mapRef.current?.offsetHeight ?? 400;
+                const len = Math.hypot(
+                  ((x2 - x1) / 100) * W,
+                  ((y2 - y1) / 100) * H,
+                );
+                l.style.strokeDasharray = `${len}`;
+                l.style.strokeDashoffset = `${len}`;
                 gsap.to(l, {
+                  opacity: 1,
                   strokeDashoffset: 0,
                   duration: 0.7,
-                  delay: ei * 0.09,
+                  delay: ei * 0.06,
                   ease: "power2.inOut",
-                  onComplete: () => {
-                    if (ei === lines.length - 1) setDrawn(true);
-                  },
                 });
               });
             },
           });
         },
         onLeaveBack() {
-          setDrawn(false);
-          gsap.to(nodes, { scale: 0, opacity: 0, duration: 0.35 });
+          gsap.to(nodes, { scale: 0, opacity: 0, duration: 0.3 });
           svgLineRefs.current.forEach((l) => {
             if (!l) return;
             gsap.set(l, {
-              strokeDashoffset: parseFloat(l.style.strokeDasharray) || 200,
+              opacity: 0,
+              strokeDashoffset: parseFloat(l.style.strokeDasharray) || 150,
             });
           });
         },
       });
-
-      ScrollTrigger.create({
-        trigger: ".lu__hint",
-        start: `top ${window.innerWidth < 768 ? "95%" : "90%"}`,
-        onEnter() {
-          gsap.fromTo(
-            ".lu__hint",
-            { opacity: 0, y: 16 },
-            { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
-          );
-        },
-      });
     }, sectionRef);
+
     return () => ctx.revert();
   }, []);
 
+  // Tooltip 
   const handleMouseEnter = useCallback((idx: number) => {
     setHovered(idx);
     const tip = tooltipRef.current;
@@ -892,8 +578,8 @@ export function Lineup({
     gsap.killTweensOf(tip);
     gsap.fromTo(
       tip,
-      { opacity: 0, y: 8, scale: 0.92 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.22, ease: "power2.out" },
+      { opacity: 0, y: 8, scale: 0.93 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.2, ease: "power2.out" },
     );
   }, []);
 
@@ -904,234 +590,158 @@ export function Lineup({
     gsap.killTweensOf(tip);
     gsap.to(tip, {
       opacity: 0,
-      y: 6,
+      y: 5,
       scale: 0.93,
-      duration: 0.18,
+      duration: 0.15,
       ease: "power2.in",
     });
   }, []);
 
+  // Modal open 
   const openModal = useCallback((idx: number) => {
     setModal(idx);
     document.body.style.overflow = "hidden";
-    const nav = document.querySelector<HTMLElement>(".nav");
-    if (nav)
-      gsap.to(nav, {
-        yPercent: -130,
-        opacity: 0,
-        duration: 0.3,
-        ease: "power2.in",
-      });
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => {
-        const m = modalRef.current;
-        if (!m) return;
-        const bd = m.closest(".lu-modal-backdrop") as HTMLElement | null;
-        if (bd)
-          gsap.fromTo(
-            bd,
-            { opacity: 0 },
-            { opacity: 1, duration: 0.35, ease: "power2.out" },
-          );
-        gsap.fromTo(
-          m,
-          { opacity: 0, scale: 0.85, y: 50, rotateX: -8 },
-          {
-            opacity: 1,
-            scale: 1,
-            y: 0,
-            rotateX: 0,
-            duration: 0.55,
-            ease: "power3.out",
-          },
-        );
 
-        const tl = gsap.timeline({ delay: 0.12 });
-        tl.fromTo(
-          ".lu-modal__scan",
+    requestAnimationFrame(() => {
+      const m = modalRef.current;
+      if (!m) return;
+      const q = gsap.utils.selector(m);
+      const bd = m.closest(".lu-modal-backdrop") as HTMLElement | null;
+
+      if (bd)
+        gsap.fromTo(
+          bd,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.3, ease: "power2.out" },
+        );
+      gsap.fromTo(
+        m,
+        { opacity: 0, scale: 0.88, y: 40 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: "power3.out" },
+      );
+
+      gsap
+        .timeline({ delay: 0.08 })
+        .fromTo(
+          q(".lu-modal__scan"),
           { scaleX: 0 },
           {
             scaleX: 1,
-            duration: 0.6,
+            duration: 0.5,
             ease: "power3.out",
             transformOrigin: "left center",
           },
         )
-          .fromTo(
-            ".lu-modal__desig-wrap",
-            { opacity: 0, x: -24 },
-            { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" },
-            "-=0.35",
-          )
-          .fromTo(
-            ".lu-modal__photo-wrap",
-            { scale: 0.5, opacity: 0, rotation: -12 },
-            {
-              scale: 1,
-              opacity: 1,
-              rotation: 0,
-              duration: 0.55,
-              ease: "back.out(2)",
-            },
-            "-=0.2",
-          )
-          .fromTo(
-            ".lu-modal__orbit",
-            { scale: 0.3, opacity: 0 },
-            {
-              scale: 1,
-              opacity: 1,
-              stagger: window.innerWidth < 768 ? 0.04 : 0.12,
-              duration: 0.4,
-              ease: "power2.out",
-            },
-            "-=0.25",
-          )
-          .fromTo(
-            ".lu-modal__name",
-            { opacity: 0, x: 28, filter: "blur(4px)" },
-            {
-              opacity: 1,
-              x: 0,
-              filter: "blur(0px)",
-              duration: 0.45,
-              ease: "power3.out",
-            },
-            "-=0.3",
-          )
-          .fromTo(
-            ".lu-modal__role",
-            { opacity: 0, x: 20 },
-            { opacity: 1, x: 0, duration: 0.35, ease: "power3.out" },
-            "-=0.25",
-          )
-          .fromTo(
-            ".lu-modal__mag-dot",
-            { scale: 0, opacity: 0 },
-            {
-              scale: 1,
-              opacity: 1,
-              stagger: window.innerWidth < 768 ? 0.04 : 0.07,
-              duration: 0.25,
-              ease: "back.out(3)",
-            },
-            "-=0.15",
-          )
-          .fromTo(
-            ".lu-modal__divider",
-            { scaleX: 0 },
-            {
-              scaleX: 1,
-              duration: 0.45,
-              ease: "power2.inOut",
-              transformOrigin: "left center",
-            },
-            "-=0.05",
-          )
-          .fromTo(
-            ".lu-modal__bio",
-            { opacity: 0, y: 14, filter: "blur(5px)" },
-            {
-              opacity: 1,
-              y: 0,
-              filter: "blur(0px)",
-              duration: 0.5,
-              ease: "power2.out",
-            },
-            "-=0.1",
-          )
-          // Carousel section slides up
-          .fromTo(
-            ".lu-carousel",
-            { opacity: 0, y: 24 },
-            { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
-            "-=0.1",
-          )
-          .fromTo(
-            ".lu-modal__link",
-            { opacity: 0, y: 16, scale: 0.88 },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              stagger: 0.075,
-              duration: 0.38,
-              ease: "back.out(1.6)",
-            },
-            "-=0.2",
-          )
-          .fromTo(
-            [".lu-c--tl", ".lu-c--tr", ".lu-c--bl", ".lu-c--br"],
-            { opacity: 0, scale: 0 },
-            {
-              opacity: 1,
-              scale: 1,
-              stagger: 0.05,
-              duration: 0.22,
-              ease: "back.out(2.5)",
-            },
-            "-=0.2",
-          );
-      }),
-    );
+        .fromTo(
+          q(".lu-modal__desig-wrap"),
+          { opacity: 0, x: -20 },
+          { opacity: 1, x: 0, duration: 0.35, ease: "power3.out" },
+          "-=0.3",
+        )
+        .fromTo(
+          q(".lu-modal__name"),
+          { opacity: 0, x: 24, filter: "blur(4px)" },
+          {
+            opacity: 1,
+            x: 0,
+            filter: "blur(0px)",
+            duration: 0.4,
+            ease: "power3.out",
+          },
+          "-=0.25",
+        )
+        .fromTo(
+          q(".lu-modal__role"),
+          { opacity: 0, x: 16 },
+          { opacity: 1, x: 0, duration: 0.3, ease: "power3.out" },
+          "-=0.2",
+        )
+        .fromTo(
+          q(".lu-modal__divider"),
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            duration: 0.4,
+            ease: "power2.inOut",
+            transformOrigin: "left center",
+          },
+          "-=0.05",
+        )
+        .fromTo(
+          q(".lu-modal__section"),
+          { opacity: 0, y: 12, filter: "blur(3px)" },
+          {
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            duration: 0.4,
+            ease: "power2.out",
+            stagger: 0.1,
+          },
+          "-=0.1",
+        )
+        .fromTo(
+          q(".lu-c"),
+          { opacity: 0, scale: 0 },
+          {
+            opacity: 1,
+            scale: 1,
+            stagger: 0.04,
+            duration: 0.2,
+            ease: "back.out(2.5)",
+          },
+          "-=0.2",
+        );
+    });
   }, []);
 
+  // Modal close 
   const closeModal = useCallback(() => {
     const m = modalRef.current;
     if (!m) return;
     const bd = m.closest(".lu-modal-backdrop") as HTMLElement | null;
-    const tl = gsap.timeline({
-      onComplete: () => {
-        setModal(null);
-        document.body.style.overflow = "";
-        const nav = document.querySelector<HTMLElement>(".nav");
-        if (nav)
-          gsap.to(nav, {
-            yPercent: 0,
-            opacity: 1,
-            duration: 0.4,
-            ease: "power3.out",
-          });
-      },
-    });
-    tl.to(m, {
-      opacity: 0,
-      scale: 0.9,
-      y: 24,
-      duration: 0.3,
-      ease: "power2.in",
-    });
-    if (bd)
-      tl.to(bd, { opacity: 0, duration: 0.22, ease: "power2.in" }, "-=0.12");
+    gsap
+      .timeline({
+        onComplete: () => {
+          setModal(null);
+          document.body.style.overflow = "";
+        },
+      })
+      .to(m, {
+        opacity: 0,
+        scale: 0.92,
+        y: 20,
+        duration: 0.25,
+        ease: "power2.in",
+      })
+      .to(bd, { opacity: 0, duration: 0.2, ease: "power2.in" }, "-=0.1");
   }, []);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
+    const fn = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeModal();
     };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    window.addEventListener("keydown", fn);
+    return () => window.removeEventListener("keydown", fn);
   }, [closeModal]);
 
   const hovEx = hovered !== null ? exhibitors[hovered] : null;
   const modalEx = modal !== null ? exhibitors[modal] : null;
 
   const tooltipStyle = useMemo(() => {
-    if (hovered === null) return {};
+    if (hovered === null || !positions[hovered]) return {};
     const pos = positions[hovered];
-    if (!pos) return {};
     const leftSide = pos.x < 55;
     return {
-      left: leftSide ? `calc(${pos.x}% + 32px)` : "auto",
-      right: leftSide ? "auto" : `calc(${100 - pos.x}% + 32px)`,
-      top: `calc(${pos.y}% - 20px)`,
+      left: leftSide ? `calc(${pos.x}% + 30px)` : "auto",
+      right: leftSide ? "auto" : `calc(${100 - pos.x}% + 30px)`,
+      top: `calc(${pos.y}% - 18px)`,
     };
   }, [hovered, positions]);
 
   return (
     <section ref={sectionRef} id="lineup" className="lu">
       <canvas ref={canvasRef} className="lu__space-canvas" aria-hidden="true" />
-
       <div className="lu__nebula" aria-hidden="true" />
 
       <header ref={headerRef} className="lu__header">
@@ -1141,7 +751,7 @@ export function Lineup({
           <span className="lu-pip" />
         </p>
         <h2 className="lu-title">THE LINEUP</h2>
-        <p className="lu-sub">Hover to preview · click to explore.</p>
+        <p className="lu-sub">Hover to preview · Click to explore</p>
       </header>
 
       <div
@@ -1149,16 +759,8 @@ export function Lineup({
         className="lu__map"
         style={{ "--n": exhibitors.length, opacity: 0 } as React.CSSProperties}
       >
+        {/* Constellation edges */}
         <svg ref={svgRef} className="lu__svg" aria-hidden="true">
-          <defs>
-            <filter id="lu-glow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="3" result="b" />
-              <feMerge>
-                <feMergeNode in="b" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
           {edges.map(([ai, bi], ei) => {
             const a = positions[ai],
               b = positions[bi];
@@ -1189,6 +791,7 @@ export function Lineup({
           })}
         </svg>
 
+        {/* Star nodes */}
         {exhibitors.map((e, i) => {
           const pos = positions[i] ?? { x: 50, y: 50 };
           const isHov = hovered === i,
@@ -1228,13 +831,16 @@ export function Lineup({
                 </>
               )}
               <span className="lu-node__tag" aria-hidden="true">
-                <span className="lu-node__tag-id">{e.designation}</span>
-                <span className="lu-node__tag-name">{e.name}</span>
+                {/* <span className="lu-node__tag-id">{e.designation}</span> */}
+                <span className="lu-node__tag-name">
+                  {e.name.split(" ")[0]}
+                </span>
               </span>
             </button>
           );
         })}
 
+        {/* Hover tooltip */}
         <div
           ref={tooltipRef}
           className="lu-tooltip"
@@ -1249,39 +855,20 @@ export function Lineup({
         >
           {hovEx && (
             <>
-              <div className="lu-tooltip__top">
-                {imgFailed.has(hovEx.id) ? (
-                  <div
-                    className="lu-tooltip__avatar"
-                    style={{ "--tc": hovEx.color } as React.CSSProperties}
-                  >
-                    {hovEx.name
-                      .split(" ")
-                      .map((w) => w[0])
-                      .join("")
-                      .slice(0, 2)}
-                  </div>
-                ) : (
-                  <img
-                    src={hovEx.photo}
-                    alt={hovEx.name}
-                    className="lu-tooltip__photo"
-                    onError={() =>
-                      setImgFailed((s) => new Set([...s, hovEx.id]))
-                    }
-                  />
-                )}
-                <div>
-                  <p className="lu-tooltip__name">{hovEx.name}</p>
-                  <p className="lu-tooltip__role">{hovEx.role}</p>
-                </div>
-              </div>
-              <p className="lu-tooltip__bio">
-                {hovEx.bio.length > 90
-                  ? hovEx.bio.slice(0, 88) + "…"
-                  : hovEx.bio}
+              <p
+                className="lu-tooltip__desig"
+                style={{ "--tc": hovEx.color } as React.CSSProperties}
+              >
+                {/* {hovEx.designation} */}
               </p>
-              <p className="lu-tooltip__cta">Click to explore!</p>
+              <p className="lu-tooltip__name">{hovEx.name}</p>
+              <p className="lu-tooltip__role">{hovEx.role}</p>
+              <p
+                className="lu-tooltip__project"
+                style={{ "--tc": hovEx.color } as React.CSSProperties}
+              >
+                {hovEx.project}
+              </p>
               <span
                 className="lu-tooltip__corner lu-tooltip__corner--tl"
                 style={{ "--tc": hovEx.color } as React.CSSProperties}
@@ -1295,16 +882,21 @@ export function Lineup({
         </div>
       </div>
 
+      {/* Modal */}
       {modal !== null && modalEx && (
         <div className="lu-modal-backdrop" onClick={closeModal}>
           <div
             ref={modalRef}
             className="lu-modal"
-            style={{ "--mc": modalEx.color } as React.CSSProperties}
+            style={{ "--mc": modalEx.color, opacity: 0 } as React.CSSProperties}
             onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-label={modalEx.name}
           >
             <div className="lu-modal__inner">
               <div className="lu-modal__scan" />
+
               <button
                 className="lu-modal__close"
                 onClick={closeModal}
@@ -1312,87 +904,35 @@ export function Lineup({
               >
                 <i className="fa-solid fa-xmark" />
               </button>
+
               <div className="lu-modal__desig-wrap">
                 <span className="lu-modal__desig-dot" />
-                <span className="lu-modal__desig">{modalEx.designation}</span>
+                {/* <span className="lu-modal__desig">{modalEx.designation}</span> */}
                 <span className="lu-modal__desig-line" />
               </div>
-              <div className="lu-modal__hero">
-                <div className="lu-modal__photo-wrap">
-                  {imgFailed.has(modalEx.id) ? (
-                    <div
-                      className="lu-modal__avatar"
-                      style={{ "--mc": modalEx.color } as React.CSSProperties}
-                    >
-                      {modalEx.name
-                        .split(" ")
-                        .map((w: string) => w[0])
-                        .join("")
-                        .slice(0, 2)}
-                    </div>
-                  ) : (
-                    <img
-                      src={modalEx.photo}
-                      alt={modalEx.name}
-                      className="lu-modal__photo"
-                      onError={() =>
-                        setImgFailed((s) => new Set([...s, modalEx.id]))
-                      }
-                    />
-                  )}
-                  <div className="lu-modal__orbit lu-modal__orbit--1" />
-                  <div className="lu-modal__orbit lu-modal__orbit--2" />
-                  <div className="lu-modal__crosshair" aria-hidden="true">
-                    <span className="lu-modal__ch-h" />
-                    <span className="lu-modal__ch-v" />
-                  </div>
-                </div>
-                <div className="lu-modal__identity">
-                  <h3 className="lu-modal__name">{modalEx.name}</h3>
-                  <p className="lu-modal__role">{modalEx.role}</p>
-                  {/* <div className="lu-modal__mag" aria-hidden="true">
-                    {Array.from({ length: 5 }, (_, mi) => (
-                      <span
-                        key={mi}
-                        className={`lu-modal__mag-dot${mi < 4 ? " lu-modal__mag-dot--on" : ""}`}
-                      />
-                    ))}
-                    <span className="lu-modal__mag-label">
-                      Stellar Magnitude
-                    </span>
-                  </div> */}
-                </div>
-              </div>
+
+              <h3 className="lu-modal__name">{modalEx.name}</h3>
+              <p className="lu-modal__role">{modalEx.role}</p>
+
               <div className="lu-modal__divider" />
-              <p className="lu-modal__bio">{modalEx.bio}</p>
 
-              {/* Project photos carousel */}
-              {modalEx.projectPhotos && modalEx.projectPhotos.length > 0 && (
-                <ProjectCarousel
-                  key={modalEx.id}
-                  photos={modalEx.projectPhotos}
-                  color={modalEx.color}
-                />
-              )}
+              <div className="lu-modal__section">
+                <span className="lu-modal__section-label">
+                  <i className="fa-solid fa-user" /> About
+                </span>
+                <p className="lu-modal__bio">{modalEx.bio}</p>
+              </div>
 
-              <div className="lu-modal__links">
-                {modalEx.links.map(
-                  (lk: { label: string; href: string; faIcon: string }) => (
-                    <a
-                      key={lk.label}
-                      href={lk.href}
-                      className="lu-modal__link"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ "--lc": modalEx.color } as React.CSSProperties}
-                    >
-                      <i className={`${lk.faIcon} lu-modal__link-icon`} />
-                      <span>{lk.label}</span>
-                    </a>
-                  ),
-                )}
+              <div className="lu-modal__section lu-modal__section--project">
+                <span className="lu-modal__section-label">
+                  <i className="fa-solid fa-flask" /> Project
+                </span>
+                <p className="lu-modal__project-name">{modalEx.project}</p>
+                <p className="lu-modal__project-desc">{modalEx.projectDesc}</p>
               </div>
             </div>
+
+            {/* Corner accents */}
             <span className="lu-c lu-c--tl" />
             <span className="lu-c lu-c--tr" />
             <span className="lu-c lu-c--bl" />
