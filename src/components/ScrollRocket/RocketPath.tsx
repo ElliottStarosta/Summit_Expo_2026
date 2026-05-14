@@ -24,34 +24,34 @@ interface ResolvedPt {
 // ADDING A NEW BREAKPOINT — only two steps:
 // 1. Define a new path constant (copy PATH_NARROW as a template).
 // 2. Insert { maxWidth: <px>, path: YOUR_PATH } in the right
-//    ascending position inside BREAKPOINT_PATHS.
+//   ascending position inside BREAKPOINT_PATHS.
 // Nothing else needs to change.
 //
 // EXAMPLE TABLE (three paths):
-//   { maxWidth: 600,      path: PATH_MOBILE  }   ← ≤ 600 px
-//   { maxWidth: 900,      path: PATH_NARROW  }   ← 601 – 900 px
-//   { maxWidth: Infinity, path: PATH_WIDE    }   ← > 900 px  (default)
+//  { maxWidth: 600,      path: PATH_MOBILE  }   ≤ 600 px
+//  { maxWidth: 900,      path: PATH_NARROW  }   601 – 900 px
+//  { maxWidth: Infinity, path: PATH_WIDE    }   > 900 px  (default)
 
 // Narrow Path Ex:
 // Tighter horizontal range so the rocket stays inside the single-column
 // layout and never clips the viewport edges.
 
 // const PATH_NARROW: AnchoredWaypoint[] = [
-//   { selector: "#about", xPct: 0.8, yPct: 0.05 },
-//   { selector: "#about", xPct: 0.55, yPct: 0.1 },
-//   { selector: "#about", xPct: 0.5, yPct: 0.17 },
-//   { selector: "#about", xPct: 0.52, yPct: 0.25 },
-//   { selector: "#about", xPct: 0.78, yPct: 0.27 },
-//   { selector: "#about", xPct: 0.7, yPct: 0.36 },
-//   { selector: "#about", xPct: 0.36, yPct: 0.38 },
-//   { selector: "#about", xPct: 0.22, yPct: 0.4 },
-//   { selector: "#about", xPct: 0.25, yPct: 0.47 },
-//   { selector: "#about", xPct: 0.62, yPct: 0.49 },
-//   { selector: "#about", xPct: 0.72, yPct: 0.55 },
-//   { selector: "#about", xPct: 0.82, yPct: 0.57 },
-//   { selector: "#about", xPct: 0.8, yPct: 0.64 },
-//   { selector: "#about", xPct: 0.5, yPct: 0.61 },
-//   { selector: "#about", xPct: 0.18, yPct: 0.66 },
+//  { selector: "#about", xPct: 0.8, yPct: 0.05 },
+//  { selector: "#about", xPct: 0.55, yPct: 0.1 },
+//  { selector: "#about", xPct: 0.5, yPct: 0.17 },
+//  { selector: "#about", xPct: 0.52, yPct: 0.25 },
+//  { selector: "#about", xPct: 0.78, yPct: 0.27 },
+//  { selector: "#about", xPct: 0.7, yPct: 0.36 },
+//  { selector: "#about", xPct: 0.36, yPct: 0.38 },
+//  { selector: "#about", xPct: 0.22, yPct: 0.4 },
+//  { selector: "#about", xPct: 0.25, yPct: 0.47 },
+//  { selector: "#about", xPct: 0.62, yPct: 0.49 },
+//  { selector: "#about", xPct: 0.72, yPct: 0.55 },
+//  { selector: "#about", xPct: 0.82, yPct: 0.57 },
+//  { selector: "#about", xPct: 0.8, yPct: 0.64 },
+//  { selector: "#about", xPct: 0.5, yPct: 0.61 },
+//  { selector: "#about", xPct: 0.18, yPct: 0.66 },
 // ];
 
 const PATH_NARROW: AnchoredWaypoint[] = [
@@ -253,14 +253,15 @@ function useVisibleFire(
 ) {
   useEffect(() => {
     if (window.innerWidth <= 500) return;
-    
+
     const canvas = fireRef.current;
     const wrap = wrapRef.current;
     if (!canvas || !wrap) return;
     const ctx = canvas.getContext("2d")!;
     canvas.width = 80;
     canvas.height = 120;
-    const CX = 40, NOZZLE_Y = 56;
+    const CX = 40,
+      NOZZLE_Y = 56;
 
     const FADE_GRAD = ctx.createLinearGradient(
       0,
@@ -420,6 +421,10 @@ export function RocketPath({ rocketSrc = "/rocketship.webp" }: Props) {
   useVisibleFire(fireRef, wrapRef, isScrollingRef);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const check = () => setShow(window.innerWidth > 500);
     check();
     window.addEventListener("resize", check);
@@ -446,6 +451,9 @@ export function RocketPath({ rocketSrc = "/rocketship.webp" }: Props) {
         lut = buildLUT(built.el, built.len, vh);
         baked = bakePath(built.el, built.len);
         ready = true;
+
+        wrap.style.transform = "";
+
         // Re-run scroll logic now that we're ready
         const sy = window.scrollY;
         if (sy >= lut[0]?.scrollY - 50) {
@@ -577,7 +585,7 @@ export function RocketPath({ rocketSrc = "/rocketship.webp" }: Props) {
 
     wrap.style.opacity = "0";
     wrap.style.visibility = "hidden";
-    onScroll();
+    wrap.style.transform = "translate(-9999px, -9999px)";
     window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {

@@ -213,8 +213,7 @@ export function WaypointEditor() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // Add-mode: click on page places a waypoint anchored to whatever element
-  //   is directly under the cursor
+  // Add-mode: click on page places a waypoint anchored to whatever element is directly under the cursor
   useEffect(() => {
     if (!addMode) return;
 
