@@ -345,7 +345,12 @@ export function Register() {
         <div className="reg-footer" style={{ opacity: 0 }}>
           <p className="reg-footer__text">
             Questions?{" "}
-            <a href="mailto:XXXXXX" className="reg-footer__link">
+            <a
+              href="https://mail.google.com/mail/?view=cm&to=summitexpo2026@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="reg-footer__link"
+            >
               Shoot us an email
             </a>{" "}
             — we're happy to help.
