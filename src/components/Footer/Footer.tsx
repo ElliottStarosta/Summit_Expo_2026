@@ -246,9 +246,12 @@ export function Footer() {
   useEffect(() => {
     if (!footerRef.current) return;
     const ctx = gsap.context(() => {
+      setTimeout(() => ScrollTrigger.refresh(), 300);
+
       ScrollTrigger.create({
         trigger: footerRef.current,
-        start: `top ${window.innerWidth < 768 ? "95%" : "82%"}`,
+        start: "top bottom",
+        once: true,
         onEnter() {
           gsap.fromTo(
             ".footer-top-line",
@@ -289,11 +292,6 @@ export function Footer() {
             ease: "power2.inOut",
             delay: 0.6,
           });
-          gsap.fromTo(
-            ".footer-legal-line",
-            { opacity: 0 },
-            { opacity: 1, duration: 0.5, delay: 1.2 },
-          );
         },
       });
     }, footerRef.current);
@@ -374,7 +372,9 @@ export function Footer() {
 
           <div className="footer-contacts">
             <a
-              href="mailto:summitexpo2026@gmail.com"
+              href="https://mail.google.com/mail/?view=cm&to=summitexpo2026@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="footer-contact-link"
               aria-label="Email"
             >
@@ -464,9 +464,9 @@ export function Footer() {
         </div>
 
         {/* Legal */}
-        <p className="footer-legal-line" style={{ opacity: 0 }}>
+        {/* <p className="footer-legal-line" style={{ opacity: 0 }}>
           © 2026 Summit EXPO · Earl of March S.S. · Kanata, ON · All That Can Be
-        </p>
+        </p> */}
       </div>
     </footer>
   );

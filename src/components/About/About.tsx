@@ -1086,6 +1086,7 @@ function AboutToLineupTransition() {
     const edges = el.querySelectorAll<SVGLineElement>(
       ".about-transition__edge",
     );
+
     gsap.set(el, { opacity: 0 });
     gsap.set(nodes, { scale: 0, opacity: 0 });
     gsap.set(lines, { scaleX: 0, opacity: 0 });
@@ -1096,49 +1097,80 @@ function AboutToLineupTransition() {
       ScrollTrigger.create({
         trigger: el,
         start: `top ${window.innerWidth < 768 ? "95%" : "82%"}`,
-        toggleActions: "play none none reverse",
-        once: window.innerWidth < 768,
-
         onEnter() {
-          gsap.to(el, { opacity: 1, duration: 0.3, ease: "power2.out" });
-          gsap.to(nodes, {
-            scale: 1,
-            opacity: 1,
-            stagger: { each: 0.06, from: "center" },
-            duration: 0.6,
-            ease: "back.out(2.5)",
-          });
+          const tl = gsap.timeline();
 
-          gsap.to(lines, {
-            scaleX: 1,
-            opacity: 1,
-            stagger: 0.15,
-            duration: 0.9,
-            ease: "power3.out",
-            transformOrigin: "center center",
-            delay: 0.2,
-          });
+          tl.to(el, { opacity: 1, duration: 0.4, ease: "power2.out" })
 
-          gsap.fromTo(
-            label,
-            { opacity: 0, letterSpacing: "0.8em" },
-            {
-              opacity: 0.45,
-              letterSpacing: "0.55em",
-              duration: 1.0,
-              ease: "power2.out",
-              delay: 0.8,
-            },
-          );
+            .to(
+              nodes,
+              {
+                scale: 1,
+                opacity: 1,
+                stagger: { each: 0.07, from: "random" },
+                duration: 0.5,
+                ease: "back.out(2.8)",
+              },
+              "-=0.1",
+            )
+
+            .to(
+              lines,
+              {
+                scaleX: 1,
+                opacity: 1,
+                stagger: 0.12,
+                duration: 0.8,
+                ease: "power3.out",
+                transformOrigin: "center center",
+              },
+              "-=0.3",
+            )
+
+            .fromTo(
+              label,
+              { opacity: 0, letterSpacing: "0.8em", y: 8 },
+              {
+                opacity: 0.45,
+                letterSpacing: "0.55em",
+                y: 0,
+                duration: 0.9,
+                ease: "power2.out",
+              },
+              "-=0.4",
+            );
 
           edges.forEach((edge, i) => {
             gsap.to(edge, {
               opacity: 1,
               strokeDashoffset: 0,
               strokeDasharray: "3 4",
-              duration: 0.6,
-              delay: 0.4 + i * 0.06,
+              duration: 0.65,
+              delay: 0.3 + i * 0.06,
               ease: "power2.inOut",
+            });
+          });
+        },
+        onLeaveBack() {
+          gsap.to(el, { opacity: 0, duration: 0.3 });
+          gsap.to(nodes, {
+            scale: 0,
+            opacity: 0,
+            duration: 0.25,
+            stagger: { each: 0.04, from: "random" },
+          });
+          gsap.to(lines, {
+            scaleX: 0,
+            opacity: 0,
+            duration: 0.25,
+            stagger: 0.08,
+          });
+          gsap.set(label, { opacity: 0 });
+          edges.forEach((edge) => {
+            gsap.set(edge, {
+              opacity: 0,
+              strokeDashoffset: 60,
+              strokeDasharray: 60,
             });
           });
         },
@@ -1240,18 +1272,18 @@ export function About() {
       const startPct5 = isMobile ? "68%" : "58%"; // closing
 
       // if (isMobile) {
-      //   // If already in viewport (hero is only 100vh on mobile), animate immediately
-      //   const rect = headRef.current?.getBoundingClientRect();
-      //   if (rect && rect.top < window.innerHeight) {
-      //     gsap.set(headRef.current, { opacity: 0, y: isMobile ? 30 : 60 });
-      //     gsap.to(headRef.current, {
-      //       opacity: 1,
-      //       y: 0,
-      //       duration: 0.6,
-      //       ease: "power2.out",
-      //       delay: 0.1,
-      //     });
-      //   }
+      //  // If already in viewport (hero is only 100vh on mobile), animate immediately
+      //  const rect = headRef.current?.getBoundingClientRect();
+      //  if (rect && rect.top < window.innerHeight) {
+      //    gsap.set(headRef.current, { opacity: 0, y: isMobile ? 30 : 60 });
+      //    gsap.to(headRef.current, {
+      //      opacity: 1,
+      //      y: 0,
+      //      duration: 0.6,
+      //      ease: "power2.out",
+      //      delay: 0.1,
+      //    });
+      //  }
       // }
       if (isMobile) {
         gsap.set([headRef.current, leftRef.current, rightRef.current], {
