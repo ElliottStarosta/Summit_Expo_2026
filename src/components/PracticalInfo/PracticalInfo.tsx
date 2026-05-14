@@ -759,7 +759,7 @@ export function PracticalInfo() {
                   </span>
                 </div>
               ))}
-              <div className="pi-terminal__divider" />
+              {/* <div className="pi-terminal__divider" /> */}
               {/* <div className="pi-terminal__note">
                 <i className="fa-solid fa-triangle-exclamation" />
                 <span>
