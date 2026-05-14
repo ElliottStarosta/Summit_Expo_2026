@@ -634,7 +634,7 @@ export function PracticalInfo() {
           });
         });
 
-      ScrollTrigger.refresh(); // ← recalculate positions after mount
+      ScrollTrigger.refresh(); // recalculate positions after mount
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -760,16 +760,16 @@ export function PracticalInfo() {
                 </div>
               ))}
               <div className="pi-terminal__divider" />
-              <div className="pi-terminal__note">
+              {/* <div className="pi-terminal__note">
                 <i className="fa-solid fa-triangle-exclamation" />
                 <span>
                   Follow signage. Washrooms inside main entrance, right.
                 </span>
-              </div>
-              <div className="pi-terminal__note">
+              </div> */}
+              {/* <div className="pi-terminal__note">
                 <i className="fa-solid fa-circle-info" />
                 <span>Lorem ipsum — additional housekeeping note here.</span>
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -820,7 +820,12 @@ export function PracticalInfo() {
               across STEM fields. Want to be — or refer — a judge at Summit
               EXPO?
             </p>
-            <a href="mailto:XXXXXX" className="pi-card__btn">
+            <a
+              href="https://mail.google.com/mail/?view=cm&to=summit.earl@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="pi-card__btn"
+            >
               <i className="fa-solid fa-envelope" /> Contact Us
               <i className="fa-solid fa-arrow-right" />
             </a>
@@ -838,7 +843,12 @@ export function PracticalInfo() {
               you.
             </p>
             <div className="pi-card__sponsors-row">
-              <a href="mailto:XXXXXX" className="pi-card__btn">
+              <a
+                href="https://mail.google.com/mail/?view=cm&to=summit.earl@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="pi-card__btn"
+              >
                 <i className="fa-solid fa-envelope" /> Get in Touch
                 <i className="fa-solid fa-arrow-right" />
               </a>

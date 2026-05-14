@@ -41,7 +41,7 @@ export const FAQ_DATA: FaqItem[] = [
     category: "General",
     color: "#CE3072",
     q: "Questions, concerns, suggestions — how do I contact the organizing team?",
-    a: "Shoot us an email at XXXXXX — we'd love to hear from you!",
+    a: "Shoot us an email at summit.earl@gmail.com — we'd love to hear from you!",
   },
 
   // ATTENDEES
@@ -150,7 +150,7 @@ export const FAQ_DATA: FaqItem[] = [
     category: "Exhibitors",
     color: "#9B5BBF",
     q: "What will I need to bring? How does the pitch night work? What about logistics?",
-    a: "If you become an exhibitor, we are here every step of the way. Through continuous communication, we will let you know every detail you need to make your exhibit a stratospheric success. Focus on wowing the crowd — we'll handle the logistics. Shoot us an email at XXXXXX if you have any questions, concerns, or suggestions.",
+    a: "If you become an exhibitor, we are here every step of the way. Through continuous communication, we will let you know every detail you need to make your exhibit a stratospheric success. Focus on wowing the crowd — we'll handle the logistics. Shoot us an email at summit.earl@gmail.com if you have any questions, concerns, or suggestions.",
   },
 ];
 

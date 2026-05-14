@@ -254,7 +254,7 @@ export function PageLoader({ onComplete, onDone }: Props) {
     const { width: W, height: H } = ctx.canvas;
     ctx.clearRect(0, 0, W, H);
 
-    //  Phase-specific background nebula
+    // Phase-specific background nebula
     if (ph >= 1) {
       const nebOpacity = clamp((t - 1.0) / 2.0, 0, 1);
       if (nebOpacity > 0) {
@@ -286,7 +286,7 @@ export function PageLoader({ onComplete, onDone }: Props) {
       }
     }
 
-    //  Update & draw particles
+    // Update & draw particles
     const alive: Particle[] = [];
     ctx.save();
     for (const p of particles.current) {
@@ -372,7 +372,7 @@ export function PageLoader({ onComplete, onDone }: Props) {
     ctx.restore();
     particles.current = alive;
 
-    //  Draw the star itself (phases 2-4)
+    // Draw the star itself (phases 2-4)
     if (ph >= 2) {
       const starAge = clamp((t - 3.5) / 2.5, 0, 1); // 0 -> 1 over 2.5 s from phase 2
       const coreRadius = lerp(0, 38, Math.pow(starAge, 0.5));
@@ -485,7 +485,7 @@ export function PageLoader({ onComplete, onDone }: Props) {
       }
     }
 
-    //  Phase 5 supernova flash
+    // Phase 5 supernova flash
     if (ph === 5) {
       const novaAge = clamp((t - phaseClock.current) / 1.0, 0, 1);
       const novaAlpha = Math.max(0, 1 - novaAge * 2);
@@ -508,14 +508,14 @@ export function PageLoader({ onComplete, onDone }: Props) {
   function tickPhase(t: number, dt: number, cx: number, cy: number) {
     const ph = phase.current;
 
-    //  Phase 0 -> 1: Void -> Nebula (t = 0.5 s)
+    // Phase 0 -> 1: Void -> Nebula (t = 0.5 s)
     if (ph === 0 && t > 0.5) {
       phase.current = 1;
       // Seed initial dust cloud
       spawnDust(cx, cy, 120);
     }
 
-    //  Phase 1 continuing: gas infall (t = 0.5 -> 3.5 s)
+    // Phase 1 continuing: gas infall (t = 0.5 -> 3.5 s)
     if (ph === 1) {
       // Spawn gas continuously
       if (Math.random() < 0.55)
@@ -529,7 +529,7 @@ export function PageLoader({ onComplete, onDone }: Props) {
       }
     }
 
-    //  Phase 2: Protostar + jets (t = 3.5 -> 6.5 s)
+    // Phase 2: Protostar + jets (t = 3.5 -> 6.5 s)
     if (ph === 2) {
       if (Math.random() < 0.7) spawnJet(cx, cy, true);
       if (Math.random() < 0.7) spawnJet(cx, cy, false);

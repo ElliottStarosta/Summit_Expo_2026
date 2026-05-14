@@ -201,7 +201,7 @@ export function Hero({ loaded }: { loaded: boolean }) {
       svg.style.transform = `translate(${shiftX}px, ${shiftY}px)`;
     }
 
-    // ← Schedule through guard so visibility/intersection pause works every frame
+    // Schedule through guard so visibility/intersection pause works every frame
     rafRef.current = requestAnimationFrame(() => guardedRenderRef.current());
   }, []);
 
@@ -296,11 +296,17 @@ export function Hero({ loaded }: { loaded: boolean }) {
       const parent = canvas.parentElement;
       if (!parent) return;
 
+      const rect = parent.getBoundingClientRect();
+      if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+
       const DPR = Math.min(window.devicePixelRatio, 1.5); // capped
       const pw = parent.offsetWidth;
       const ph = parent.offsetHeight;
 
-      if (canvas.width !== Math.round(pw * DPR)) {
+      if (
+        canvas.width !== Math.round(pw * DPR) ||
+        canvas.height !== Math.round(ph * DPR)
+      ) {
         canvas.width = Math.round(pw * DPR);
         canvas.height = Math.round(ph * DPR);
         canvas.style.width = `${pw}px`;
@@ -408,17 +414,17 @@ export function Hero({ loaded }: { loaded: boolean }) {
           ease: "power2.out",
           y: 10,
         });
-        
-        gsap.to(pinRef.current, {
-          opacity: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: pinRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-          },
-        });
+
+        // gsap.to(pinRef.current, {
+        //  opacity: 0,
+        //  ease: "none",
+        //  scrollTrigger: {
+        //    trigger: pinRef.current,
+        //    start: "top top",
+        //    end: "bottom top",
+        //    scrub: true,
+        //  },
+        // });
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
