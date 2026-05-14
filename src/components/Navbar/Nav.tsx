@@ -822,9 +822,9 @@ export function Nav() {
                 <StarDot mag={mag} active={isActive} hovered={false} large />
               </span>
               <span className="overlay-star__label">{label}</span>
-              <span className="overlay-star__dist">
+              {/* <span className="overlay-star__dist">
                 {(mag * 12.4).toFixed(1)} ly
-              </span>
+              </span> */}
               {isActive && (
                 <>
                   <span className="overlay-star__pulse" />
