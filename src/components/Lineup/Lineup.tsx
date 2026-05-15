@@ -863,7 +863,12 @@ export function Lineup({
               <span className="lu-node__tag" aria-hidden="true">
                 {/* <span className="lu-node__tag-id">{e.designation}</span> */}
                 <span className="lu-node__tag-name">
-                  {e.name.split(" ")[0]}
+                  {e.name.includes("&")
+                    ? e.name
+                        .split(" & ")
+                        .map((n) => n.split(" ")[0])
+                        .join(" & ")
+                    : e.name.split(" ")[0]}
                 </span>
               </span>
             </button>
