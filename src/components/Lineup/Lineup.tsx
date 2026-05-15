@@ -16,7 +16,7 @@ export interface Exhibitor {
 }
 
 const DOC_BASE =
-  "https://docs.google.com/document/d/1p2tDbH2h-EyHYnDlP3Vih3a5o34Rr7vlNqYpT8hvZOI/edit?tab=t.0";
+  "https://docs.google.com/document/d/1p2tDbH2h-EyHYnDlP3Vih3a5o34Rr7vlNqYpT8hvZOI/edit?tab=t.0&rm=minimal";
 
 export const SUMMIT_EXHIBITORS: Exhibitor[] = [
   {
