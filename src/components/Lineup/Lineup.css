@@ -501,6 +501,42 @@
   opacity: 0.9;
 }
 
+/* Doc link button */
+.lu-modal__doc-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 1.6rem 0.4rem;
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--mc, #5080ff) 28%, rgba(60,90,160,0.15));
+  background: color-mix(in srgb, var(--mc, #5080ff) 7%, rgba(4,2,18,0.4));
+  color: color-mix(in srgb, var(--mc, #5080ff) 85%, white);
+  font-family: var(--font-ui, "Chakra Petch", monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.lu-modal__doc-btn:hover {
+  background: color-mix(in srgb, var(--mc, #5080ff) 18%, rgba(4,2,18,0.6));
+  border-color: color-mix(in srgb, var(--mc, #5080ff) 65%, transparent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--mc, #5080ff) 20%, transparent);
+  color: #fff;
+}
+.lu-modal__doc-btn-arrow {
+  margin-left: auto;
+  font-size: 0.7rem;
+  opacity: 0.6;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.lu-modal__doc-btn:hover .lu-modal__doc-btn-arrow {
+  opacity: 1;
+  transform: translate(2px, -2px);
+}
+
 /* Divider */
 .lu-modal__divider {
   height: 1px;

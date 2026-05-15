@@ -12,102 +12,126 @@ export interface Exhibitor {
   bio: string;
   project: string;
   projectDesc: string;
+  docUrl: string;
 }
+
+const DOC_BASE =
+  "https://docs.google.com/document/d/1p2tDbH2h-EyHYnDlP3Vih3a5o34Rr7vlNqYpT8hvZOI/edit?tab=t.0";
 
 export const SUMMIT_EXHIBITORS: Exhibitor[] = [
   {
     id: "01",
     name: "Algasem Zabarah",
-    role: "Engineering · Gr. 11",
+    role: "Engineering · Robotics",
     color: "#FF2D6B",
-    bio: "Passionate builder and provincial-level soccer player. Part of EOM's robotics team Spongebotics, and a certified Ontario Soccer Referee.",
+    bio: "Builder focused on systems that move and communicate. Part of EOM robotics and competitive soccer as a player, coach, and certified referee.",
     project: "Project Horizon",
-    projectDesc: "A fully custom-built quadcopter FPV drone — from CAD to circuits to firmware. Hand-soldered a custom RC transmitter and receiver from scratch, handling all radio comms between pilot and aircraft.",
+    projectDesc:
+      "A fully custom FPV quadcopter drone built from scratch — including CAD design, electronics assembly, firmware development, and flight testing. Features a flight controller, IMU stabilization, brushless motors, ESCs, and a custom-built RC transmitter/receiver for full radio control.",
+    docUrl: `${DOC_BASE}#heading=h.grynjb8ojchm`,
   },
   {
     id: "02",
     name: "Calin Olsen & Allen Su",
     role: "Hardware · Physics",
     color: "#4FA3E0",
-    bio: "Calin stays up late desoldering circuit boards and publishing 3D models on Makerworld. Allen reads plant biology and human health books, plays guitar, and is eyeing biotechnology.",
+    bio: "Calin focuses on 3D design, electronics, and prototyping. Allen explores biology, health sciences, and programming with interests in biotechnology.",
     project: "Electromagnetic Accelerator",
-    projectDesc: "A custom-built electromagnetic projectile accelerator demonstrating use cases in transport, aerospace, and experimentation — including impact testing, microsatellite deployment, and testing rapid acceleration on micro-organisms.",
+    projectDesc:
+      "A custom electromagnetic projectile accelerator demonstrating principles of electromagnetism and real-world applications in aerospace, impact testing, and microgravity experimentation.",
+    docUrl: `${DOC_BASE}#heading=h.q38nzi1p9hji`,
   },
   {
     id: "03",
     name: "Michael Tetelbaum",
-    role: "Systems · Gr. 11",
+    role: "Systems · Software",
     color: "#CC44FF",
-    bio: "Fascinated by systems hidden behind everyday tech. FRC veteran (teams 9127 & 7476), incoming intern at Nokia. Feynman quote tattooed on his brain.",
+    bio: "Interested in low-level systems, real-time computing, and robotics. FRC robotics experience and incoming software engineering intern.",
     project: "Audio in Motion",
-    projectDesc: "A real-time audio equalizer and visualizer in Java. Processes live audio playback, applies adjustable frequency filtering, and generates responsive visuals — DSP, waveform analysis, frequency decomposition, all in real time.",
+    projectDesc:
+      "A real-time audio equalizer and visualizer built in Java. Processes live audio, applies frequency filtering, and generates responsive visual output using digital signal processing techniques such as waveform analysis and frequency decomposition.",
+    docUrl: `${DOC_BASE}#heading=h.bkwjcpb5mmww`,
   },
   {
     id: "04",
     name: "Adarshpreet Singh",
     role: "AI · Developer",
     color: "#FF5C8A",
-    bio: "Sparked by a conversation with Richard Sutton at an AMII conference. APEGA Science Olympics medallist, Edmonton Science Fair rep, and AI advocate across Alberta high schools.",
+    bio: "AI developer focused on intelligent systems and human–AI interaction. Experience in robotics competitions, science fairs, and AI outreach initiatives.",
     project: "Agami",
-    projectDesc: "An advanced voice-interfaced AI agent that executes tasks autonomously via voice input and hand gesture controls — built on the philosophy that AI should feel natural, intuitive, and effortless.",
+    projectDesc:
+      "A voice-interfaced AI agent designed to execute tasks through natural interaction. Uses voice and gesture input to control devices and complete actions, aiming to make AI more intuitive and accessible.",
+    docUrl: `${DOC_BASE}#heading=h.hj26bpesfh3f`,
   },
   {
     id: "05",
     name: "Alex Liu",
     role: "Robotics · Electrical",
     color: "#3EC6FF",
-    bio: "Music, art, and film by day; programming and robotics by night. Aspiring electrical engineer who wants to merge creative interests with mechanical precision.",
+    bio: "Interested in electrical engineering, robotics, music, and visual arts, with a focus on combining creativity and technical systems.",
     project: "The Walking Machine",
-    projectDesc: "A showcase of humanoid robotics focused on locomotion, balance systems, servo coordination, and embedded electronics — demonstrating the engineering challenge of recreating stable human movement.",
+    projectDesc:
+      "A humanoid robotics system exploring locomotion, balance, and servo coordination. Focuses on replicating stable human-like movement through mechanical design and embedded control systems.",
+    docUrl: `${DOC_BASE}#heading=h.2qzay8bw6z01`,
   },
   {
     id: "06",
     name: "Kelvin Hu",
-    role: "Mathematics · Gr. 12",
+    role: "Mathematics · Research",
     color: "#E84FFF",
-    bio: "President of Math Club and number theory enthusiast. Has been hunting large primes since Grade 7.",
+    bio: "Math Club president and number theory enthusiast focused on prime numbers and mathematical patterns.",
     project: "Primes: Predict, Preselect, Produce",
-    projectDesc: "A novel method to predict where the next prime could be, and a faster technique to preselect prime candidates. Rooted in studying prime distribution and its critical role in modern cryptography.",
+    projectDesc:
+      "A study of prime number distribution with methods for identifying likely prime candidates. Explores computational techniques and the role of primes in modern cryptography.",
+    docUrl: `${DOC_BASE}#heading=h.tsgirun1crmi`,
   },
   {
     id: "07",
     name: "Alyn Te",
-    role: "Design · Gr. 12",
+    role: "Design · UI/UX",
     color: "#FF3A5C",
-    bio: "Creative visionary behind multiple Storyboard (Hackclub) submissions. Two-year FRC 7476 business member with deep interest in UI/UX, color theory, and graphic storytelling.",
+    bio: "Creative technologist focused on UI/UX design, storytelling, animation, and interactive systems.",
     project: "Refresh: Reload — Snapshot",
-    projectDesc: "A gesture-controlled photobooth removing the need for physical buttons. Computer vision recognizes hand gestures (peace sign to capture, thumbs-up to download), with voice narration for visual accessibility.",
+    projectDesc:
+      "A gesture- and voice-controlled photobooth designed for accessibility. Uses computer vision to detect intuitive hand gestures for capturing and downloading photos, with voice narration support for improved usability.",
+    docUrl: `${DOC_BASE}#heading=h.jk5c9p9vdl2k`,
   },
   {
     id: "08",
     name: "Borui Zhao",
-    role: "Languages · Developer",
+    role: "Programming Languages · Developer",
     color: "#5B8FFF",
-    bio: "Passionate about logic, frameworks, and developer tools. Wants to help developers with niche language requirements while deepening his own understanding of how languages work.",
+    bio: "Focused on programming language design, compiler systems, and developer tooling.",
     project: "Simpl",
-    projectDesc: "A programming language built from scratch using tree-sitter as the parser, enabling grammar reuse for both parsing and syntax highlighting. Novel approach that significantly improves parsing times.",
+    projectDesc:
+      "A custom programming language built using Tree-sitter for efficient parsing and syntax highlighting reuse. Demonstrates language design, grammar engineering, and performance-focused tooling.",
+    docUrl: `${DOC_BASE}#heading=h.rfgk6nxpb1s2`,
   },
   {
     id: "09",
     name: "Sky Jin",
-    role: "Game Dev · Gr. 12",
+    role: "Game Dev · Systems",
     color: "#BF40FF",
-    bio: "Specializes in C++ and Unreal Engine 5. Loves guitar and video games. Heading into CS or engineering this fall.",
+    bio: "Specializes in C++ and Unreal Engine 5, with interests in multiplayer systems, AI, and high-performance computing.",
     project: "Multiplayer Shooter",
-    projectDesc: "A custom-built multiplayer third-person shooter in Unreal Engine 5. Live interactive demo where attendees play networked matches — showcasing real-time server replication, client prediction, and cross-platform networking.",
+    projectDesc:
+      "A multiplayer third-person shooter built in Unreal Engine 5. Features a live playable demo with networked matches, showcasing server replication, client prediction, and real-time multiplayer systems.",
+    docUrl: `${DOC_BASE}#heading=h.h480ht4pwm3v`,
   },
   {
     id: "10",
     name: "Zoey Chen",
     role: "Mathematics · Engineering",
     color: "#FF1A8C",
-    bio: "Aspiring engineer fascinated by math and its applications. Deep into Rubik's Cube research and the Cosmere universe.",
+    bio: "Upcoming engineer with a strong interest in mathematics, especially group theory and combinatorial puzzles.",
     project: "On Cubes and Commutators",
-    projectDesc: "An elegant application of group theory to solve a Rubik's Cube of any size — thousands of lines of cube-solving and visualizing software from scratch, plus a dive into abstract algebra.",
+    projectDesc:
+      "A Rubik’s Cube solving and visualization system based on group theory. Includes custom algorithms and software exploring abstract algebra applied to cube-solving.",
+    docUrl: `${DOC_BASE}#heading=h.grc9erjvm69l`,
   },
 ];
 
-// Layout helpers 
+// Layout helpers
 
 interface StarPos {
   x: number;
@@ -185,7 +209,7 @@ function buildEdges(pos: StarPos[]): [number, number][] {
   return edges;
 }
 
-// Star field canvas 
+// Star field canvas
 
 function useSpaceCanvas(ref: React.RefObject<HTMLCanvasElement | null>) {
   const scrollRef = useRef(0);
@@ -404,7 +428,7 @@ function useSpaceCanvas(ref: React.RefObject<HTMLCanvasElement | null>) {
   );
 }
 
-// Main component 
+// Main component
 
 export function Lineup({
   exhibitors = SUMMIT_EXHIBITORS,
@@ -446,7 +470,7 @@ export function Lineup({
     const ctx = gsap.context(() => {
       const isMobile = window.innerWidth < 768;
 
-      // Header animation 
+      // Header animation
       ScrollTrigger.create({
         trigger: headerRef.current,
         start: `top ${isMobile ? "95%" : "80%"}`,
@@ -487,7 +511,7 @@ export function Lineup({
         },
       });
 
-      // Map fade in 
+      // Map fade in
       ScrollTrigger.create({
         trigger: mapRef.current,
         start: `top ${isMobile ? "95%" : "85%"}`,
@@ -503,7 +527,7 @@ export function Lineup({
         },
       });
 
-      // Stars + lines 
+      // Stars + lines
       const nodes = nodeRefs.current.filter(Boolean);
       gsap.set(nodes, { scale: 0, opacity: 0 });
       gsap.set(svgLineRefs.current.filter(Boolean), { opacity: 0 });
@@ -570,7 +594,7 @@ export function Lineup({
     return () => ctx.revert();
   }, []);
 
-  // Tooltip 
+  // Tooltip
   const handleMouseEnter = useCallback((idx: number) => {
     setHovered(idx);
     const tip = tooltipRef.current;
@@ -597,7 +621,7 @@ export function Lineup({
     });
   }, []);
 
-  // Modal open 
+  // Modal open
   const openModal = useCallback((idx: number) => {
     setModal(idx);
     document.body.style.overflow = "hidden";
@@ -681,6 +705,12 @@ export function Lineup({
           "-=0.1",
         )
         .fromTo(
+          q(".lu-modal__doc-btn"),
+          { opacity: 0, y: 10 },
+          { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" },
+          "-=0.05",
+        )
+        .fromTo(
           q(".lu-c"),
           { opacity: 0, scale: 0 },
           {
@@ -695,7 +725,7 @@ export function Lineup({
     });
   }, []);
 
-  // Modal close 
+  // Modal close
   const closeModal = useCallback(() => {
     const m = modalRef.current;
     if (!m) return;
@@ -930,6 +960,17 @@ export function Lineup({
                 <p className="lu-modal__project-name">{modalEx.project}</p>
                 <p className="lu-modal__project-desc">{modalEx.projectDesc}</p>
               </div>
+              <a
+                href={modalEx.docUrl}
+                className="lu-modal__doc-btn"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <i className="fa-solid fa-file-lines" />
+                <span>Full Profile</span>
+                <i className="fa-solid fa-arrow-up-right-from-square lu-modal__doc-btn-arrow" />
+              </a>
             </div>
 
             {/* Corner accents */}
