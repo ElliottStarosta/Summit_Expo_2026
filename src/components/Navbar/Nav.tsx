@@ -163,6 +163,10 @@ export function Nav() {
   const [starPositions, setStarPositions] =
     useState<[number, number][]>(generatePositions);
 
+  // const [isZh, setIsZh] = useState(() => {
+  //   return document.cookie.includes("lang=zh");
+  // });
+
   const tickRef = useRef(false);
   const drawProgress = useRef(0);
   const rafRef = useRef(0);
@@ -624,22 +628,22 @@ export function Nav() {
     else openMenu();
   }, [openMenu, closeMenu]);
 
-  const handleLangToggle = useCallback(() => {
-    if (isZh) {
-      const h = window.location.hostname;
-      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
-      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${h}`;
-      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${h}`;
-      document.cookie = `lang=en; path=/`;
-      window.location.reload();
-    } else {
-      const h = window.location.hostname;
-      document.cookie = `googtrans=/en/zh-CN; path=/`;
-      document.cookie = `googtrans=/en/zh-CN; path=/; domain=.${h}`;
-      document.cookie = `lang=zh; path=/`;
-      window.location.reload();
-    }
-  }, [isZh]);
+  // const handleLangToggle = useCallback(() => {
+  //   if (isZh) {
+  //     const h = window.location.hostname;
+  //     document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+  //     document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${h}`;
+  //     document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${h}`;
+  //     document.cookie = `lang=en; path=/`;
+  //     window.location.reload();
+  //   } else {
+  //     const h = window.location.hostname;
+  //     document.cookie = `googtrans=/en/zh-CN; path=/`;
+  //     document.cookie = `googtrans=/en/zh-CN; path=/; domain=.${h}`;
+  //     document.cookie = `lang=zh; path=/`;
+  //     window.location.reload();
+  //   }
+  // }, [isZh]);
 
   useEffect(() => {
     if (!logoImgRef.current) return;
@@ -789,12 +793,14 @@ export function Nav() {
           </span>
         </button>
 
+        {/*
         <button
           className="nav__lang-toggle nav__desktop-only"
           onClick={handleLangToggle}
         >
           {isZh ? "EN" : "中文"}
         </button>
+        */}
 
         {/* Hamburger */}
         <button
