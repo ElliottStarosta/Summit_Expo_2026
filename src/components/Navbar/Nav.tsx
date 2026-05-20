@@ -174,6 +174,10 @@ export function Nav() {
   const logoImgRef = useRef<HTMLImageElement>(null);
   const logoIdleTween = useRef<gsap.core.Tween | null>(null);
 
+  const [isZh, setIsZh] = useState(() => {
+    return document.cookie.includes("lang=zh");
+  });
+
   useEffect(() => {
     starPositionsRef.current = starPositions;
   }, [starPositions]);
@@ -320,7 +324,7 @@ export function Nav() {
 
     const draw = () => {
       rafRef.current = requestAnimationFrame(draw);
-     
+
       // Skip entirely when tab is hidden
       if (!isVisible || !navVisible) return;
 
@@ -392,7 +396,6 @@ export function Nav() {
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("visibilitychange", onVisibility);
     };
-    
   }, []);
 
   // Mobile overlay canvas
@@ -621,6 +624,23 @@ export function Nav() {
     else openMenu();
   }, [openMenu, closeMenu]);
 
+  const handleLangToggle = useCallback(() => {
+    if (isZh) {
+      const h = window.location.hostname;
+      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${h}`;
+      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${h}`;
+      document.cookie = `lang=en; path=/`;
+      window.location.reload();
+    } else {
+      const h = window.location.hostname;
+      document.cookie = `googtrans=/en/zh-CN; path=/`;
+      document.cookie = `googtrans=/en/zh-CN; path=/; domain=.${h}`;
+      document.cookie = `lang=zh; path=/`;
+      window.location.reload();
+    }
+  }, [isZh]);
+
   useEffect(() => {
     if (!logoImgRef.current) return;
     logoIdleTween.current = gsap.to(logoImgRef.current, {
@@ -765,8 +785,15 @@ export function Nav() {
         >
           <span className="nav__cta-text">Register</span>
           <span className="nav__cta-icon" aria-hidden="true">
-            ↗
+            <i className="fa-solid fa-arrow-up-right-from-square"></i>
           </span>
+        </button>
+
+        <button
+          className="nav__lang-toggle nav__desktop-only"
+          onClick={handleLangToggle}
+        >
+          {isZh ? "EN" : "中文"}
         </button>
 
         {/* Hamburger */}

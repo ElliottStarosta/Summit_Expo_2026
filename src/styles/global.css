@@ -14,6 +14,27 @@ body {
   color: var(--text-2);
   overflow-x: hidden;
   min-height: 100vh;
+
+  top: 0 !important;
+  position: static !important;
+}
+
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+iframe.goog-te-banner-frame {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+}
+
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
+.VIpgJd-ZVi9od-aZ2wEe-OiiCO,
+.VIpgJd-ZVi9od-aZ2wEe,
+.VIpgJd-ZVi9od-SmfZ-OiiCO,
+.VIpgJd-ZVi9od-l4eHX,
+[class^="VIpgJd"] {
+  display: none !important;
+  visibility: hidden !important;
 }
 
 /* Scrollbar */

@@ -42,6 +42,7 @@ function SectionFallback() {
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
+  
 
   useEffect(() => {
     if (!loaded) return;
