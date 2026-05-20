@@ -3,7 +3,7 @@
   background: linear-gradient(to bottom, rgba(4, 1, 11), #020008);
   overflow: hidden;
   padding: 8rem 0 5rem;
-  z-index: 4;
+  z-index: 1;
 }
 
 .reg__canvas {
@@ -547,7 +547,7 @@
     padding: 5rem 0 2rem;
   }
   .reg__inner {
-    padding: 5rem 1.1rem;
+    padding: 0 1.1rem;
     gap: 3.5rem;
   }
   .reg-card {

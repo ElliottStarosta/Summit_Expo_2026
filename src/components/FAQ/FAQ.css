@@ -482,6 +482,7 @@
 @media (max-width: 600px) {
   .faq {
     padding: 10rem 0 7rem;
+    margin-bottom: 0;
   }
   .faq__inner {
     padding: 0 1.1rem;
