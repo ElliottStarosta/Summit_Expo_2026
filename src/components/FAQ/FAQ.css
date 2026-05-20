@@ -499,3 +499,10 @@
     font-size: clamp(2rem, 8vw, 3rem);
   }
 }
+
+@media (max-width: 900px) and (orientation: landscape) {
+  .faq {
+    margin-bottom: 0;
+    padding-bottom: 4rem;
+  }
+}

@@ -554,3 +554,9 @@
     padding: 1.6rem;
   }
 }
+
+@media (max-width: 900px) and (orientation: landscape) {
+  .reg {
+    padding-top: 3rem;
+  }
+}
