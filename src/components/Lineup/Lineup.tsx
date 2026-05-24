@@ -129,6 +129,39 @@ export const SUMMIT_EXHIBITORS: Exhibitor[] = [
       "A Rubik’s Cube solving and visualization system based on group theory. Includes custom algorithms and software exploring abstract algebra applied to cube-solving.",
     docUrl: `${DOC_BASE}#heading=h.grc9erjvm69l`,
   },
+  {
+    id: "11",
+    name: "Umayer Ahmmed",
+    role: "Mechatronics · Robotics",
+    color: "#5B8FFF",
+    bio: "Student engineer and musician interested in robotics, neuroscience, EEG/EMG systems, and educational STEM technologies.",
+    project: "Handi-Bot",
+    projectDesc:
+      "An interactive robotic hand controlled through computer vision. Designed as an open-source educational robotics kit exploring prosthetics, machine learning, and accessible STEM engineering.",
+    docUrl: `${DOC_BASE}#heading=h.c21reqng0x4u`,
+  },
+  {
+    id: "12",
+    name: "Jerry Gao",
+    role: "Robotics · Accessibility",
+    color: "#dc2443",
+    bio: "Builder focused on experimental robotics, accessibility technology, and systems combining mechanics, electronics, and software.",
+    project: "The Writing Robot",
+    projectDesc:
+      "A general-purpose CNC writing machine capable of drawing, writing, and interactive gameplay. Originally developed as a Tic-Tac-Toe robot before evolving into a flexible computer-vision-assisted plotter system.",
+    docUrl: `${DOC_BASE}#heading=h.zcisy6u97njv`,
+  },
+  {
+    id: "13",
+    name: "Hashini Sivakumar",
+    role: "Biochemistry · Materials",
+    color: "#208af4",
+    bio: "Student interested in biomimicry, sustainable materials, biology, chemistry, and artistic expression through dance, painting, and music.",
+    project: "Castor Case",
+    projectDesc:
+      "A biodegradable packaging material inspired by beaver lodges and natural insulation systems. Demonstrates sustainable alternatives to traditional styrofoam using interactive thermal and structural analysis.",
+    docUrl: `${DOC_BASE}#heading=h.5kjtcd3ugda`,
+  },
 ];
 
 // Layout helpers
@@ -143,19 +176,25 @@ function seededRand(seed: number) {
 }
 
 function buildLayout(n: number): StarPos[] {
-  if (n === 0) return [];
-  if (n === 1) return [{ x: 50, y: 50 }];
-  const golden = Math.PI * (3 - Math.sqrt(5));
-  return Array.from({ length: n }, (_, i) => {
-    const r = Math.sqrt((i + 0.5) / n);
-    const th = i * golden;
-    const jx = (seededRand(42 + i * 2) - 0.5) * 9;
-    const jy = (seededRand(42 + i * 2 + 1) - 0.5) * 9;
-    return {
-      x: Math.min(92, Math.max(8, 50 + r * 44 * Math.cos(th) + jx)),
-      y: Math.min(90, Math.max(10, 50 + r * 42 * Math.sin(th) + jy)),
-    };
-  });
+  const CONSTELLATION: StarPos[] = [
+    { x: 20, y: 15 }, // top-left corner
+    { x: 50, y: 12 }, // top center
+    { x: 80, y: 15 }, // top-right corner
+    { x: 35, y: 32 }, // upper-left inner
+    { x: 65, y: 32 }, // upper-right inner
+    { x: 50, y: 48 }, // center
+    { x: 22, y: 55 }, // left
+    { x: 78, y: 55 }, // right
+    { x: 38, y: 68 }, // lower-left inner
+    { x: 62, y: 68 }, // lower-right inner
+    { x: 18, y: 82 }, // bottom-left corner
+    { x: 50, y: 85 }, // bottom center
+    { x: 82, y: 82 }, // bottom-right corner
+  ];
+  return Array.from(
+    { length: n },
+    (_, i) => CONSTELLATION[i] ?? { x: 50, y: 50 },
+  );
 }
 
 function buildEdges(pos: StarPos[]): [number, number][] {
@@ -210,7 +249,6 @@ function buildEdges(pos: StarPos[]): [number, number][] {
 }
 
 // Star field canvas
-
 function useSpaceCanvas(ref: React.RefObject<HTMLCanvasElement | null>) {
   const scrollRef = useRef(0);
   const visibleRef = useRef(true);
@@ -626,6 +664,14 @@ export function Lineup({
     setModal(idx);
     document.body.style.overflow = "hidden";
 
+    gsap.to(".nav", {
+      yPercent: -130,
+      opacity: 0,
+      duration: 0.45,
+      ease: "power3.in",
+      pointerEvents: "none",
+    });
+
     requestAnimationFrame(() => {
       const m = modalRef.current;
       if (!m) return;
@@ -735,6 +781,13 @@ export function Lineup({
         onComplete: () => {
           setModal(null);
           document.body.style.overflow = "";
+          gsap.to(".nav", {
+            yPercent: 0,
+            opacity: 1,
+            duration: 0.55,
+            ease: "power3.out",
+            clearProps: "pointerEvents",
+          });
         },
       })
       .to(m, {
