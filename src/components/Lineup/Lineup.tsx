@@ -21,13 +21,13 @@ const DOC_BASE =
 export const SUMMIT_EXHIBITORS: Exhibitor[] = [
   {
     id: "01",
-    name: "Algasem Zabarah",
+    name: "Algasem Zabarah & Zyad Hossameldien",
     role: "Engineering · Robotics",
     color: "#FF2D6B",
-    bio: "Builder focused on systems that move and communicate. Part of EOM robotics and competitive soccer as a player, coach, and certified referee.",
+    bio: "Algasem is a builder focused on systems that move and communicate — part of EOM robotics and competitive soccer as a player, coach, and certified referee. Zyad is a Grade 11 entrepreneur who founded his own tech services business, driven by one question: How can I make this easier? Next year, he'll serve as Co-President at Earl of March.",
     project: "Project Horizon",
     projectDesc:
-      "A fully custom FPV quadcopter drone built from scratch — including CAD design, electronics assembly, firmware development, and flight testing. Features a flight controller, IMU stabilization, brushless motors, ESCs, and a custom-built RC transmitter/receiver for full radio control.",
+      "A fully custom FPV quadcopter drone built from scratch — including CAD design, electronics assembly, firmware development, and flight testing. Features a flight controller, IMU stabilization, brushless motors, ESCs, and a custom-built RC transmitter/receiver with dual RF communication for full radio control.",
     docUrl: `${DOC_BASE}#heading=h.grynjb8ojchm`,
   },
   {
@@ -156,7 +156,7 @@ export const SUMMIT_EXHIBITORS: Exhibitor[] = [
     name: "Hashini Sivakumar",
     role: "Biochemistry · Materials",
     color: "#208af4",
-    bio: "Student interested in biomimicry, sustainable materials, biology, chemistry, and artistic expression through dance, painting, and music.",
+    bio: "Hashini is interested in biomimicry, sustainable materials, biology, chemistry, and artistic expression through dance, painting, and music.",
     project: "Castor Case",
     projectDesc:
       "A biodegradable packaging material inspired by beaver lodges and natural insulation systems. Demonstrates sustainable alternatives to traditional styrofoam using interactive thermal and structural analysis.",
