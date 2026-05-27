@@ -28,7 +28,7 @@ export const SUMMIT_EXHIBITORS: Exhibitor[] = [
     project: "Project Horizon",
     projectDesc:
       "A fully custom FPV quadcopter drone built from scratch — including CAD design, electronics assembly, firmware development, and flight testing. Features a flight controller, IMU stabilization, brushless motors, ESCs, and a custom-built RC transmitter/receiver with dual RF communication for full radio control.",
-    docUrl: `${DOC_BASE}#heading=h.grynjb8ojchm`,
+    docUrl: `${DOC_BASE}#heading=h.t93l4fonhn6r`,
   },
   {
     id: "02",
